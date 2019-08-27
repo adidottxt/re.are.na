@@ -2,7 +2,7 @@ import json
 
 from arena import Arena
 
-from config import ACCESS_TOKEN
+from .config import ACCESS_TOKEN
 
 client = Arena(ACCESS_TOKEN)
 
