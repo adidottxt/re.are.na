@@ -12,17 +12,17 @@ CLIENT = Arena(ACCESS_TOKEN)
 USED_BLOCKS = {}
 USED_CHANNELS = {}
 
-def get_random_blocks(number, username) -> List[str]:
+def get_random_blocks(number, user) -> List[str]:
     '''
     description:            get a number of random blocks from
                             a user's channels
 
     :param                  number: the number of blocks to return
-                            username: given user's username
+                            user: given user's slug/username
 
     :return                 block_ids: a list of random block IDs
     '''
-    return [get_random_block(get_random_channel(username)) for i in range(number)]
+    return [get_random_block(get_random_channel(user)) for i in range(number)]
 
 
 def get_random_channel(username) -> str:
@@ -74,16 +74,18 @@ def get_block_class(block_id) -> str:
     return(getattr(CLIENT.blocks.block(block_id), 'class'))
 
 
-def get_block_data(block_id, block_class):
+def get_block_data(block_id):
     '''
     description:            given a block_id and class/type, return the block's
                             data (output could vary depending on block class)
 
     :param                  block_id: the given block's unique id
-                            block_class: the given block's class/type
 
     :return                 block_data: the given block's data
     '''
+    # get block
+    # check for block type/class
+    # based on block type/class, return data in appropriate format
     pass
 
 
@@ -96,6 +98,7 @@ def check_block_unique(block_id) -> bool:
 
     :return                 True/False
     '''
+    # eventually swap this for database check
     return True if block_id not in USED_BLOCKS else False
 
 
@@ -109,4 +112,5 @@ def check_channel_unique(channel_id) -> bool:
 
     :return                 True/False
     '''
+    # eventually swap this for database check
     return True if channel_id not in USED_CHANNELS else False
