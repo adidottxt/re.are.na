@@ -1,31 +1,66 @@
 '''
 All code pertaining to are.na blocks
 '''
+import random
+from typing import List
+
 from arena import Arena
 
-from .config import ACCESS_TOKEN
+from config import ACCESS_TOKEN
 
-def get_random_channel() -> str:
+CLIENT = Arena(ACCESS_TOKEN)
+USED_BLOCKS = {}
+USED_CHANNELS = {}
+
+def get_random_blocks(number, username) -> List[str]:
+    '''
+    description:            get a number of random blocks from
+                            a user's channels
+
+    :param                  number: the number of blocks to return
+                            username: given user's username
+
+    :return                 block_ids: a list of random block IDs
+    '''
+    return [get_random_block(get_random_channel(username)) for i in range(number)]
+
+
+def get_random_channel(username) -> str:
     '''
     description:            get a random channel from a list of
                             a user's channels
 
-    :param                  N/A
+    :param                  username: given user's username
 
-    :return                 channel_id: the random channel's unique id
+    :return                 channel_slug: the random channel's unique URL
     '''
-    pass
+    channels, _ = CLIENT.users.user(username).channels(per_page=100)
+    channel_ids = {chan.slug for chan in channels if chan.published}
+    return random.sample(channel_ids, 1)[0]
 
-def get_random_block(channel_id) -> str:
+
+def get_random_block(channel_slug) -> int:
     '''
     description:            get a random block from a list of
                             blocks within a user's channel
 
-    :param                  channel_id: the channel's unique id
+    :param                  channel_slug: the channel's unique URL
 
     :return                 block_id: the random block's unique id
     '''
-    pass
+    channel = CLIENT.channels.channel(channel_slug)
+    channel_pages = channel.length // 100
+
+    if channel.length % 100 != 0:
+        channel_pages += 1
+
+    block_ids = {block.id \
+        for i in range(1, channel_pages+1) \
+        for block in channel.contents(page=i, per_page=100)[0]
+    }
+
+    return random.sample(block_ids, 1)
+
 
 def get_block_class(block_id) -> str:
     '''
@@ -36,7 +71,8 @@ def get_block_class(block_id) -> str:
 
     :return                 block_class: the given block's class/type
     '''
-    pass
+    return(getattr(CLIENT.blocks.block(block_id), 'class'))
+
 
 def get_block_data(block_id, block_class):
     '''
@@ -50,6 +86,7 @@ def get_block_data(block_id, block_class):
     '''
     pass
 
+
 def check_block_unique(block_id) -> bool:
     '''
     description:            given a block_id, check if the block has been
@@ -59,5 +96,17 @@ def check_block_unique(block_id) -> bool:
 
     :return                 True/False
     '''
-    pass
+    return True if block_id not in USED_BLOCKS else False
 
+
+def check_channel_unique(channel_id) -> bool:
+    '''
+    description:            given a channel_id, check if a block from
+                            the given channel has been displayed to the
+                            user before
+
+    :param                  channel_id: the given channel's unique id
+
+    :return                 True/False
+    '''
+    return True if channel_id not in USED_CHANNELS else False

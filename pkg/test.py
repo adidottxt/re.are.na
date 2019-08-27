@@ -1,15 +1,12 @@
-import json
-
-from arena import Arena
-
-from .config import ACCESS_TOKEN
-
-client = Arena(ACCESS_TOKEN)
+from blocks import get_random_blocks
 
 if __name__ == '__main__':
-    chan = client.channels.channel('photo-street')
-    blocks, page = chan.contents()
 
-    print(blocks[0].source)
-    print(getattr(blocks[1], 'class'))
+    print(get_random_blocks(3, 'adi'))
+
+    # chan.contents(page=1, per_page=100)
+    # for item in items:
+    #     print(item.title)
+    # print(blocks[0].source)
+    # print(getattr(blocks[1], 'class'))
 
