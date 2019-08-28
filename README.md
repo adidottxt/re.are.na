@@ -5,10 +5,8 @@ a [readwise](https://readwise.io/) for are.na blocks, if you will.<br>
 
 ### 🛠 things to do
 - <b>BACKEND</b>
-  * store URL on database, use that to send to frontend
-  * To send to front end:
-    + get data of all three blocks
-    + get class of all three blocks, present them accordingly
+  * Refactor code
+  * Figure out way to do check without creating test data
 - <b>FRONTEND</b>
   * refresh should give you three new blocks
   * depending on block class, create type-specific components
