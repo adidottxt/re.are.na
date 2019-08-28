@@ -1,6 +1,6 @@
 # 🥴 Three (are.na) Blocks A Day
 a web app that serves up three random blocks from your are.na profile.<br>
-a readwise for are.na blocks, if you will.<br>
+a [readwise](https://readwise.io/) for are.na blocks, if you will.<br>
 (three blocks a day keeps the doctor away...?)
 
 ### 🛠 things to do
