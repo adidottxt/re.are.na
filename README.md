@@ -5,10 +5,6 @@ a [readwise](https://readwise.io/) for are.na blocks, if you will.<br>
 
 ### 🛠 things to do
 - <b>BACKEND</b>
-  * Database work
-    + use GraphQL functions within `blocks.py` functions
-      - when given a new ID, check for both channel + block ID within db
-      - store 3 ids in a database such that you do not see the same block twice
   * To send to front end:
     + get data of all three blocks
     + get class of all three blocks, present them accordingly
