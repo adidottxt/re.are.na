@@ -5,7 +5,7 @@ from graphene_sqlalchemy import (
     SQLAlchemyConnectionField
 )
 
-from models import (
+from .models import (
     Channel as ChannelModel,
     Block as BlockModel
 )

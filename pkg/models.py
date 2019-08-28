@@ -25,13 +25,13 @@ Base.query = db_session.query_property()  # needed for querying
 class Channel(Base):
     __tablename__ = 'channel'
     channel_id = Column(Integer, primary_key=True)
-    channel_slug = Column(String)
+    slug = Column(String)
 
 
 class Block(Base):
     __tablename__ = 'block'
     block_id = Column(Integer, primary_key=True)
-    block_type = Column(String)
+    type = Column(String)
     channel_id = Column(Integer, ForeignKey('channel.channel_id'))
     channel = relationship(
         Channel,

@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 
-from models import db_session
-from schema import schema, ChannelNode
+from pkg.models import db_session
+from pkg.schema import schema, ChannelNode
 
 app = Flask(__name__)
 app.debug = True
