@@ -1,5 +1,6 @@
 # Config files
 config.py
+test.py
 
 # Database file
 database.sqlite3

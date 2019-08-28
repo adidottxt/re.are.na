@@ -6,11 +6,13 @@ from typing import List
 
 from arena import Arena
 
-from config import ACCESS_TOKEN
+from .config import ACCESS_TOKEN
+from .db import add_to_db_channel, add_to_db_block
 
 CLIENT = Arena(ACCESS_TOKEN)
 USED_BLOCKS = {}
 USED_CHANNELS = {}
+
 
 def get_random_blocks(number, user) -> List[str]:
     '''
@@ -35,8 +37,27 @@ def get_random_channel(username) -> str:
     :return                 channel_slug: the random channel's unique URL
     '''
     channels, _ = CLIENT.users.user(username).channels(per_page=100)
-    channel_ids = {chan.slug for chan in channels if chan.published}
-    return random.sample(channel_ids, 1)[0]
+    channel_slugs = {chan.slug for chan in channels if chan.published}
+
+    channel_slug = random.sample(channel_slugs, 1)[0]
+    channel_id = CLIENT.channels.channel(channel_slug).id
+
+    # use add_to_db_channel to add to database
+    add_to_db_channel(channel_id, channel_slug)
+
+    return channel_id
+
+
+def get_block_class(block_id) -> str:
+    '''
+    description:            given a block_id, return the block's
+                            class/type (image/text/link/media/attachment)
+
+    :param                  block_id: the random block's unique id
+
+    :return                 block_class: the given block's class/type
+    '''
+    return getattr(CLIENT.blocks.block(block_id), 'class')
 
 
 def get_random_block(channel_slug) -> int:
@@ -54,24 +75,19 @@ def get_random_block(channel_slug) -> int:
     if channel.length % 100 != 0:
         channel_pages += 1
 
-    block_ids = {block.id \
-        for i in range(1, channel_pages+1) \
+    block_ids = {
+        block.id
+        for i in range(1, channel_pages + 1)
         for block in channel.contents(page=i, per_page=100)[0]
     }
 
-    return random.sample(block_ids, 1)
+    while True:
+        block_id = int(random.sample(block_ids, 1)[0])
+        block_type = get_block_class(block_id)
+        if add_to_db_block(block_id, channel.id, block_type):
+            break
 
-
-def get_block_class(block_id) -> str:
-    '''
-    description:            given a block_id, return the block's
-                            class/type (image/text/link/media/attachment)
-
-    :param                  block_id: the random block's unique id
-
-    :return                 block_class: the given block's class/type
-    '''
-    return(getattr(CLIENT.blocks.block(block_id), 'class'))
+    return block_id
 
 
 def get_block_data(block_id):
@@ -86,31 +102,4 @@ def get_block_data(block_id):
     # get block
     # check for block type/class
     # based on block type/class, return data in appropriate format
-    pass
-
-
-def check_block_unique(block_id) -> bool:
-    '''
-    description:            given a block_id, check if the block has been
-                            displayed to the user before
-
-    :param                  block_id: the given block's unique id
-
-    :return                 True/False
-    '''
-    # eventually swap this for database check
-    return True if block_id not in USED_BLOCKS else False
-
-
-def check_channel_unique(channel_id) -> bool:
-    '''
-    description:            given a channel_id, check if a block from
-                            the given channel has been displayed to the
-                            user before
-
-    :param                  channel_id: the given channel's unique id
-
-    :return                 True/False
-    '''
-    # eventually swap this for database check
-    return True if channel_id not in USED_CHANNELS else False
+    print(block_id)

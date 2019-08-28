@@ -53,10 +53,11 @@ def add_to_db_channel(channel_id, slug) -> bool:
     :return                 True if added successfully, False otherwise
     '''
     try:
-        Base.metadata.create_all(bind=engine)
-        channel = Channel(channel_id=channel_id, slug=slug)
-        db_session.add(channel) # pylint:disable=no-member
-        db_session.commit() # pylint:disable=no-member
+        if check_unique_channel_id(channel_id):
+            Base.metadata.create_all(bind=engine)
+            channel = Channel(channel_id=channel_id, slug=slug)
+            db_session.add(channel) # pylint:disable=no-member
+            db_session.commit() # pylint:disable=no-member
         return True
     except DatabaseError:
         return False
@@ -72,10 +73,13 @@ def add_to_db_block(block_id, channel_id, block_type) -> bool:
     :return                 True if added successfully, False otherwise
     '''
     try:
-        Base.metadata.create_all(bind=engine)
-        block = Block(block_id=block_id, channel_id=channel_id, type=block_type)
-        db_session.add(block) # pylint:disable=no-member
-        db_session.commit() # pylint:disable=no-member
-        return True
+        if check_unique_block_id(block_id):
+            Base.metadata.create_all(bind=engine)
+            block = Block(block_id=block_id, channel_id=channel_id, type=block_type)
+            db_session.add(block) # pylint:disable=no-member
+            db_session.commit() # pylint:disable=no-member
+            return True
+        print("Error: Block ID has already been added to database")
+        return False
     except DatabaseError:
         return False
