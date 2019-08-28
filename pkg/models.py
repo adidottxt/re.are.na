@@ -24,6 +24,8 @@ DB_SESSION = scoped_session(sessionmaker(autocommit=False,
 
 Base = declarative_base()
 Base.query = DB_SESSION.query_property()  # needed for querying
+Base.metadata.drop_all(bind=ENGINE)
+Base.metadata.create_all(bind=ENGINE)
 
 
 class Channel(Base):  # pylint:disable=too-few-public-methods
@@ -43,6 +45,7 @@ class Block(Base):  # pylint:disable=too-few-public-methods
     block_id = Column(Integer, primary_key=True)
     type = Column(String)
     channel_id = Column(Integer, ForeignKey('channel.channel_id'))
+    block_url = Column(String)
     channel = relationship(
         Channel,
         backref=backref('blocks',

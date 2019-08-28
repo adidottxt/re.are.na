@@ -57,6 +57,21 @@ def get_block_class(block_id) -> str:
     '''
     return getattr(CLIENT.blocks.block(block_id), 'class')
 
+def get_block_data(block_id) -> str:
+    '''
+    description:            given a block_id, return the block's
+                            class/type (image/text/link/media/attachment)
+
+    :param                  block_id: the random block's unique id
+
+    :return                 block_class: the given block's class/type
+    '''
+    block_data = CLIENT.blocks.block(block_id)
+    if block_data.source:
+        return block_data.source['url']
+    if block_data.image:
+        return block_data.image['display']['url']
+    return block_data.content
 
 def get_random_block(channel_slug) -> int:
     '''
@@ -82,22 +97,8 @@ def get_random_block(channel_slug) -> int:
     while True:
         block_id = int(random.sample(block_ids, 1)[0])
         block_type = get_block_class(block_id)
-        if add_to_db_block(block_id, channel.id, block_type):
+        block_url = get_block_data(block_id)
+        if add_to_db_block(block_id, channel.id, block_type, block_url):
             break
 
     return block_id
-
-
-def get_block_data(block_id):
-    '''
-    description:            given a block_id and class/type, return the block's
-                            data (output could vary depending on block class)
-
-    :param                  block_id: the given block's unique id
-
-    :return                 block_data: the given block's data
-    '''
-    # get block
-    # check for block type/class
-    # based on block type/class, return data in appropriate format
-    print(block_id)

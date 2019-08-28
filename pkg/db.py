@@ -1,11 +1,24 @@
 '''
 database specific functions
 '''
+# pylint: disable=no-member
 from sqlalchemy.exc import DatabaseError
 
 from .models import DB_SESSION, ENGINE, Base, Channel, Block
 from .schema import SCHEMA
 from .constants import CHANNEL_CHECK, BLOCK_CHECK
+
+def add_test_data() -> None:
+    '''
+    add test data
+    '''
+    Base.metadata.drop_all(bind=ENGINE)
+    Base.metadata.create_all(bind=ENGINE)
+    test_chan = Channel(channel_id=0, slug='test_channel')
+    DB_SESSION.add(test_chan)
+    test_block = Block(block_id=0, channel_id=0, type='test', block_url='test')
+    DB_SESSION.add(test_block)
+    DB_SESSION.commit()
 
 
 def check_unique_channel_id(channel_id) -> bool:
@@ -65,7 +78,7 @@ def add_to_db_channel(channel_id, slug) -> bool:
         return False
 
 
-def add_to_db_block(block_id, channel_id, block_type) -> bool:
+def add_to_db_block(block_id, channel_id, block_type, block_url) -> bool:
     '''
     description:            add block information to our database
 
@@ -81,9 +94,11 @@ def add_to_db_block(block_id, channel_id, block_type) -> bool:
             block = Block(
                 block_id=block_id,
                 channel_id=channel_id,
-                type=block_type)
-            DB_SESSION.add(block)  # pylint:disable=no-member
-            DB_SESSION.commit()  # pylint:disable=no-member
+                type=block_type,
+                block_url=block_url
+            )
+            DB_SESSION.add(block)  # pylint: disable=no-member
+            DB_SESSION.commit()  # pylint: disable=no-member
             return True
         print("Error: Block ID has already been added to database")
         return False

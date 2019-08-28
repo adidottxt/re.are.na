@@ -6,6 +6,7 @@ from flask_graphql import GraphQLView
 
 from pkg.models import DB_SESSION
 from pkg.schema import SCHEMA
+from pkg.db import add_test_data
 
 APP = Flask(__name__)
 APP.debug = True
@@ -29,4 +30,5 @@ def shutdown_session(exception=None):  # pylint:disable=unused-argument
 
 
 if __name__ == '__main__':
+    add_test_data()
     APP.run()
