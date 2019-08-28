@@ -3,6 +3,7 @@ All code pertaining to are.na blocks
 '''
 import random
 from typing import List
+from werkzeug.exceptions import Unauthorized
 
 from arena import Arena
 
@@ -96,9 +97,12 @@ def get_random_block(channel_slug) -> int:
 
     while True:
         block_id = int(random.sample(block_ids, 1)[0])
-        block_type = get_block_class(block_id)
-        block_url = get_block_data(block_id)
-        if add_to_db_block(block_id, channel.id, block_type, block_url):
-            break
+        try:
+            block_type = get_block_class(block_id)
+            block_url = get_block_data(block_id)
+            if add_to_db_block(block_id, channel.id, block_type, block_url):
+                break
+        except Unauthorized:
+            pass
 
     return block_id
