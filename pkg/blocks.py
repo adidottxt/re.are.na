@@ -10,8 +10,6 @@ from .config import ACCESS_TOKEN
 from .db import add_to_db_channel, add_to_db_block
 
 CLIENT = Arena(ACCESS_TOKEN)
-USED_BLOCKS = {}
-USED_CHANNELS = {}
 
 
 def get_random_blocks(number, user) -> List[str]:

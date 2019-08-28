@@ -1,5 +1,5 @@
 '''
-constants / config
+constants
 '''
 
 CHANNEL_CHECK = '{ allChannels { edges { node { channelId slug } } } }'

@@ -1,25 +1,32 @@
+'''
+grapiql setup app
+'''
 from flask import Flask
 from flask_graphql import GraphQLView
 
-from pkg.models import db_session
-from pkg.schema import schema, ChannelNode
+from pkg.models import DB_SESSION
+from pkg.schema import SCHEMA
 
-app = Flask(__name__)
-app.debug = True
+APP = Flask(__name__)
+APP.debug = True
 
-app.add_url_rule(
+APP.add_url_rule(
     '/graphql',
-    view_func = GraphQLView.as_view(
+    view_func=GraphQLView.as_view(
         'graphql',
-        schema=schema,
+        schema=SCHEMA,
         graphiql=True
     )
 )
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
+
+@APP.teardown_appcontext
+def shutdown_session(exception=None):  # pylint:disable=unused-argument
+    '''
+    shut down database
+    '''
+    DB_SESSION.remove()
+
 
 if __name__ == '__main__':
-    app.run()
-
+    APP.run()
