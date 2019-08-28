@@ -5,10 +5,14 @@ a readwise for are.na blocks, if you will.<br>
 
 ### 🛠 things to do
 - <b>BACKEND</b>
-  * set up database
-  * store 3 ids in a database such that you do not see the same block twice
-  * get data of all three blocks
-  * get class of all three blocks, present them accordingly
+  * Database work
+    + set up mutations to allow database to be written to with graphql
+    + use GraphQL functions within `blocks.py` functions
+      - when given a new ID, check for both channel + block ID within db
+      - store 3 ids in a database such that you do not see the same block twice
+  * To send to front end:
+    + get data of all three blocks
+    + get class of all three blocks, present them accordingly
 - <b>FRONTEND</b>
   * refresh should give you three new blocks
   * depending on block class, create type-specific components
