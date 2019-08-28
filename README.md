@@ -6,7 +6,6 @@ a [readwise](https://readwise.io/) for are.na blocks, if you will.<br>
 ### 🛠 things to do
 - <b>BACKEND</b>
   * Database work
-    + set up mutations to allow database to be written to with graphql
     + use GraphQL functions within `blocks.py` functions
       - when given a new ID, check for both channel + block ID within db
       - store 3 ids in a database such that you do not see the same block twice

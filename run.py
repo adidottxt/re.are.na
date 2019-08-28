@@ -1,8 +1,8 @@
 '''
 run.py
 '''
-from pkg.db import check_channel_id
+from pkg.db import add_to_db_channel
 
 
 if __name__ == '__main__':
-    print(check_channel_id(1))
+    print(add_to_db_channel(3, 'music'))

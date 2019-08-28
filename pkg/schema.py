@@ -1,5 +1,5 @@
 import graphene
-from graphene import relay
+from graphene import relay, Mutation
 from graphene_sqlalchemy import (
     SQLAlchemyObjectType,
     SQLAlchemyConnectionField
