@@ -1,0 +1,25 @@
+#header-info {
+    margin-bottom: 120px;
+}
+
+p#header-info-text {
+    font-size: 16px;
+    margin-left: 12%;
+    color: #AEAEAE;
+}
+
+p#header-info-description {
+    font-size: 16px;
+    margin-left: 12%;
+    color: #9A9696;
+}
+
+hr {
+    width: 500px;
+    margin-left: 12%;
+    border-color: #E5E5E5;
+    background-color: #E5E5E5;
+    color: #E5E5E5;
+    height: 1px;
+    border: 0;
+}

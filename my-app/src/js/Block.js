@@ -1,6 +1,6 @@
 import React from "react"
 
-import "./Block.css"
+import "../css/Block.css"
 
 function Block(props) {
     return (

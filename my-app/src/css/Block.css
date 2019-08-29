@@ -3,12 +3,15 @@
     width: 500px;
     height: 500px;
     margin-left: 12%;
-    margin-bottom: 180px;
+    margin-bottom: 9%;
     float: left;
 }
 
 #block:hover {
-    opacity: 0.7;
+    opacity: 0.85;
+    border: 3px solid #C4C4C4;
+    margin-left: 11.9%;
+    margin-bottom: 8.78%;
 }
 
 img {

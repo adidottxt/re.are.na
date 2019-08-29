@@ -1,0 +1,52 @@
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 28px;
+}
+
+#rectangle {
+    width: 76%;
+    margin-top: 2%;
+    margin-left: 12%;
+    margin-right: 12%;
+    height: 100px;
+    border: 1px solid #17AC10;
+    margin-bottom: 60px;
+}
+
+#rectangle:hover {
+    border: 3px solid #17AC10;
+    margin-bottom: 56px;
+    margin-left: 11.92%;
+    margin-right: 11.92%;
+}
+
+#rectangle:hover #header-title {
+    margin-top: 2.2%;
+    margin-left: 2.35%;
+}
+
+#rectangle:hover #header-author {
+    margin-top: 2.65%;
+    margin-left: 2.30%;
+}
+
+#header-title {
+    margin-top: 2.3%;
+    margin-left: 2.4%;
+    float: left;
+    font-weight: bold;
+    color: #17AC10;
+}
+
+#header-author {
+    color: #17AC10;
+    margin-top: 2.8%;
+    margin-right: 2.4%;
+    float: right;
+    font-size: 18px;
+}
+
+a {
+    color: #17AC10;
+    text-decoration: none;
+}
