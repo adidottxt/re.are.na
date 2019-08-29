@@ -30,6 +30,11 @@ body {
     margin-left: 2.30%;
 }
 
+#rectangle:hover #header-blocks {
+    margin-top: 2.7%;
+    margin-left: 3.5%;
+}
+
 #header-title {
     margin-top: 2.3%;
     margin-left: 2.4%;
@@ -38,12 +43,20 @@ body {
     color: #17AC10;
 }
 
+#header-blocks {
+    margin-top: 2.85%;
+    margin-left: 3.5%;
+    font-size: 18px;
+    color: #17AC10;
+    float: left;
+}
+
 #header-author {
     color: #17AC10;
     margin-top: 2.8%;
     margin-right: 2.4%;
     float: right;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 a {
