@@ -1,0 +1,14 @@
+#block {
+    border: 1px solid #C4C4C4;
+    width: 500px;
+    height: 500px;
+    margin-left: 12%;
+    margin-bottom: 180px;
+    float: left;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
