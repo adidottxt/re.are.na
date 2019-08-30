@@ -19,13 +19,7 @@ function App() {
                 date='test-date'
             />
             <Row
-                src='https://d2w9rnfcy7mm78.cloudfront.net/1580881/original_eae97b74b09c9707caf977f53fe38b57.png?1515539345'
-                title='test-title'
-                channel='test-chan'
-                date='test-date'
-            />
-            <Row
-                src='https://d2w9rnfcy7mm78.cloudfront.net/2619145/original_d1009818b14274917d27b5a1a1757931.jpg?1535552897'
+                src='https://d2w9rnfcy7mm78.cloudfront.net/4633641/display_94c1620f3ef1f7d2dc7008d0849f39b8.png?1563197545'
                 title='test-title'
                 channel='test-chan'
                 date='test-date'

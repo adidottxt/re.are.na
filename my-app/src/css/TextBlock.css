@@ -14,6 +14,10 @@
     margin-bottom: 8.78%;
 }
 
+#block:hover .text-data {
+  margin: 9.9%;
+}
+
 .text-data {
     display: -webkit-box;
     -webkit-line-clamp: 20;
