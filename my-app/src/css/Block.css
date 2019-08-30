@@ -1,17 +1,15 @@
-#block {
-    border: 1px solid #C4C4C4;
+#media-block {
+    border: 3px solid #E5E5E5;
     width: 500px;
     height: 500px;
     margin-left: 12%;
-    margin-bottom: 9%;
+    margin-bottom: 8.7%;
     float: left;
 }
 
-#block:hover {
+#media-block:hover {
     opacity: 0.85;
     border: 3px solid #C4C4C4;
-    margin-left: 11.9%;
-    margin-bottom: 8.78%;
 }
 
 img {

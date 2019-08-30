@@ -4,7 +4,7 @@ import "../css/Block.css"
 
 function Block(props) {
     return (
-        <div id='block'>
+        <div id='media-block'>
           <a href={props.src}>
             <img
               src={props.src}
