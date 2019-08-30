@@ -4,6 +4,7 @@ import Header from "./js/Header"
 import Button from "./js/Button"
 import HeaderInfo from "./js/HeaderInfo"
 import Row from "./js/Row"
+import TextRow from "./js/TextRow"
 
 function App() {
     return (
@@ -27,6 +28,13 @@ function App() {
                 src='https://d2w9rnfcy7mm78.cloudfront.net/2619145/original_d1009818b14274917d27b5a1a1757931.jpg?1535552897'
                 title='test-title'
                 channel='test-chan'
+                date='test-date'
+            />
+            <TextRow
+                src='https://are.na/block/4184924'
+                text='testingtttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingesttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingesting'
+                title=''
+                channel='snippets'
                 date='test-date'
             />
             <Button text='Refresh' />

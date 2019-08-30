@@ -1,12 +1,12 @@
 import React from "react"
 
-import Block from "./Block"
+import TextBlock from "./TextBlock"
 import BlockInfo from "./BlockInfo"
 
-function Row(props) {
+function TextRow(props) {
     return (
       <div id = 'row'>
-            <Block src={props.src} />
+            <TextBlock src={props.src} text={props.text} />
             <BlockInfo
                 title={props.title}
                 channel={props.channel}
@@ -16,4 +16,4 @@ function Row(props) {
     )
 }
 
-export default Row
+export default TextRow

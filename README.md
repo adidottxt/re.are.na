@@ -8,7 +8,6 @@ A [readwise](https://readwise.io/) for are.na blocks, if you will.<br>
   * Refactor code
   * Figure out way to do check without creating test data
   * Functionality:
-    + add title, add-date, channel name, and image url (for ALL cases) to graphql
     + connect backend to frontend
     + set up refresh button
 - <b>FRONTEND</b>
