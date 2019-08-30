@@ -74,7 +74,17 @@ def get_block_data(block_id) -> str:
         return block_data.image['display']['url']
     return block_data.content
 
-def get_random_block(channel_slug) -> int:
+def get_block_title(block_id) -> str:
+    '''
+    description:            given a block_id, return the block's title
+
+    :param                  block_id: the random block's unique id
+
+    :return                 block_title: the given block's title
+    '''
+    return CLIENT.blocks.block(block_id).title
+
+def get_random_block(channel_id) -> int:
     '''
     description:            get a random block from a list of
                             blocks within a user's channel
@@ -83,7 +93,8 @@ def get_random_block(channel_slug) -> int:
 
     :return                 block_id: the random block's unique id
     '''
-    channel = CLIENT.channels.channel(channel_slug)
+    print('Channel ID', channel_id)
+    channel = CLIENT.channels.channel(channel_id)
     channel_pages = channel.length // 100
 
     if channel.length % 100 != 0:
@@ -98,11 +109,26 @@ def get_random_block(channel_slug) -> int:
     while True:
         block_id = int(random.sample(block_ids, 1)[0])
         try:
-            block_type = get_block_class(block_id)
-            block_url = get_block_data(block_id)
-            if add_to_db_block(block_id, channel.id, block_type, block_url):
+            block = CLIENT.blocks.block(block_id)
+            block_type = getattr(block, 'class')
+            image_url = block.image['display']['url'] \
+                if block_type in ('Image', 'Link', 'Media') \
+                else ''
+
+            block_data = {
+                'created_at': block.created_at[:10],
+                'block_type': getattr(block, 'class'),
+                'block_url': get_block_data(block_id),
+                'image_url': image_url,
+                'channel_title': channel.title,
+                'block_title': block.title,
+                'block_id': block_id,
+                'channel_id': channel_id
+            }
+            if add_to_db_block(block_data):
                 break
         except Unauthorized:
             pass
 
+    print('Block ID', block_id)
     return block_id

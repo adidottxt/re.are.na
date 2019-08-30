@@ -16,7 +16,16 @@ def add_test_data() -> None:
     Base.metadata.create_all(bind=ENGINE)
     test_chan = Channel(channel_id=0, slug='test_channel')
     DB_SESSION.add(test_chan)
-    test_block = Block(block_id=0, channel_id=0, type='test', block_url='test')
+    test_block = Block(
+        block_id=0,
+        channel_id=0,
+        block_type='test',
+        block_url='test',
+        image_url='test',
+        channel_title='test',
+        block_title='test',
+        block_create_date='test',
+    )
     DB_SESSION.add(test_block)
     DB_SESSION.commit()
 
@@ -78,7 +87,7 @@ def add_to_db_channel(channel_id, slug) -> bool:
         return False
 
 
-def add_to_db_block(block_id, channel_id, block_type, block_url) -> bool:
+def add_to_db_block(block_data) -> bool:
     '''
     description:            add block information to our database
 
@@ -89,13 +98,18 @@ def add_to_db_block(block_id, channel_id, block_type, block_url) -> bool:
     :return                 True if added successfully, False otherwise
     '''
     try:
+        block_id = block_data['block_id']
         if check_unique_block_id(block_id):
             Base.metadata.create_all(bind=ENGINE)
             block = Block(
+                block_create_date=block_data['created_at'],
+                block_title=block_data['block_title'],
+                channel_title=block_data['channel_title'],
                 block_id=block_id,
-                channel_id=channel_id,
-                type=block_type,
-                block_url=block_url
+                channel_id=block_data['channel_id'],
+                block_type=block_data['block_type'],
+                block_url=block_data['block_url'],
+                image_url=block_data['image_url']
             )
             DB_SESSION.add(block)  # pylint: disable=no-member
             DB_SESSION.commit()  # pylint: disable=no-member

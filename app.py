@@ -30,5 +30,5 @@ def shutdown_session(exception=None):  # pylint:disable=unused-argument
 
 
 if __name__ == '__main__':
-    add_test_data()
+    # add_test_data()
     APP.run()
