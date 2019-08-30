@@ -8,6 +8,7 @@ from .models import DB_SESSION, ENGINE, Base, Channel, Block
 from .schema import SCHEMA
 from .constants import CHANNEL_CHECK, BLOCK_CHECK
 
+
 def add_test_data() -> None:
     '''
     add test data

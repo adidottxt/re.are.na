@@ -58,6 +58,7 @@ def get_block_class(block_id) -> str:
     '''
     return getattr(CLIENT.blocks.block(block_id), 'class')
 
+
 def get_block_data(block_id) -> str:
     '''
     description:            given a block_id, return the block's
@@ -74,6 +75,7 @@ def get_block_data(block_id) -> str:
         return block_data.image['display']['url']
     return block_data.content
 
+
 def get_block_title(block_id) -> str:
     '''
     description:            given a block_id, return the block's title
@@ -83,6 +85,7 @@ def get_block_title(block_id) -> str:
     :return                 block_title: the given block's title
     '''
     return CLIENT.blocks.block(block_id).title
+
 
 def get_random_block(channel_id) -> int:
     '''
