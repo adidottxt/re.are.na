@@ -1,5 +1,6 @@
 import React from "react"
 
+import "./css/App.css"
 import Header from "./js/Header"
 import Button from "./js/Button"
 import HeaderInfo from "./js/HeaderInfo"
@@ -13,19 +14,21 @@ function App() {
             <HeaderInfo />
 
             <Row
-                src='https://d2w9rnfcy7mm78.cloudfront.net/4771939/original_1c3af1831f95e7d71d0674227c114072.jpg?1565150930'
+                imgsrc='https://d2w9rnfcy7mm78.cloudfront.net/4771939/original_1c3af1831f95e7d71d0674227c114072.jpg?1565150930'
+                linksrc='https://are.na/block/123123'
                 title='test-title'
                 channel='test-chan'
                 date='test-date'
             />
             <Row
-                src='https://d2w9rnfcy7mm78.cloudfront.net/4633641/display_94c1620f3ef1f7d2dc7008d0849f39b8.png?1563197545'
+                imgsrc='https://d2w9rnfcy7mm78.cloudfront.net/4633641/display_94c1620f3ef1f7d2dc7008d0849f39b8.png?1563197545'
                 title='test-title'
+                linksrc='https://are.na/block/123123'
                 channel='test-chan'
                 date='test-date'
             />
             <TextRow
-                src='https://are.na/block/4184924'
+                linksrc='https://are.na/block/4184924'
                 text='testingtttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingesttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingesting'
                 title=''
                 channel='snippets'

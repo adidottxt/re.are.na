@@ -1,5 +1,4 @@
 body {
-  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 28px;
 }
 
@@ -35,7 +34,7 @@ body {
 
 #header-author {
     color: #17AC10;
-    margin-top: 2.8%;
+    margin-top: 3%;
     margin-right: 2.4%;
     float: right;
     font-size: 16px;

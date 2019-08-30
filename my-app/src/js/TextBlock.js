@@ -5,8 +5,8 @@ import "../css/TextBlock.css"
 function TextBlock(props) {
     return (
         <div id='block'>
-          <a href={props.src}>
-            <div class='text-data'>{props.text}</div>
+          <a href={props.linksrc}>
+            <div className='text-data'>{props.text}</div>
           </a>
         </div>
     )
