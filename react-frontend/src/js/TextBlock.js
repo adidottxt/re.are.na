@@ -4,11 +4,11 @@ import "../css/TextBlock.css"
 
 function TextBlock(props) {
     return (
-        <div id='block'>
-          <a href={props.linksrc} target="_blank" rel="noopener noreferrer">
-            <div className='text-data'>{props.text}</div>
-          </a>
-        </div>
+        <a href={props.linksrc} target="_blank" rel="noopener noreferrer">
+          <div id='block'>
+              <div className='text-data'>{props.text}</div>
+          </div>
+        </a>
     )
 }
 
