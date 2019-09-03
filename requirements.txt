@@ -4,3 +4,4 @@ graphene_sqlalchemy==2.2.2
 Flask==1.1.1
 Flask-GraphQL==2.0.0
 pylint==2.3.1
+Flask-Cors==3.0.8

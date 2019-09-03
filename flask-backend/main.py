@@ -1,6 +1,8 @@
 import flask
 from flask_graphql import GraphQLView
+from flask_cors import CORS
 
+from pkg.models import DB_SESSION
 from pkg.schema import SCHEMA
 from pkg.blocks import get_random_blocks
 from pkg.db import add_test_data
@@ -24,4 +26,12 @@ print(get_random_blocks(3, 'adi'))
 def my_index():
     return flask.render_template("index.html")
 
+@app.teardown_appcontext
+def shutdown_session(exception=None):  # pylint:disable=unused-argument
+    '''
+    shut down database
+    '''
+    DB_SESSION.remove()
+
+CORS(app, resources={r'/graphql': {'origins': '*'}})
 app.run(debug=True, use_reloader=False)
