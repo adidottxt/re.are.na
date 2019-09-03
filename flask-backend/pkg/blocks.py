@@ -13,7 +13,7 @@ from .db import add_to_db_channel, add_to_db_block
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_random_blocks(number, user) -> List[str]:
+def get_random_blocks(number, user) -> List[int]:
     '''
     description:            get a number of random blocks from
                             a user's channels
@@ -29,6 +29,7 @@ def get_random_blocks(number, user) -> List[str]:
         print('Getting info on block {} of {}...'.format(i+1, number))
         blocks.append(get_random_block(get_random_channel(user)))
     return blocks
+
 
 def get_random_channel(username) -> str:
     '''
@@ -72,15 +73,6 @@ def get_block_url(block_id) -> str:
 
     :return                 block_class: the given block's class/type
     '''
-    # block_data = CLIENT.blocks.block(block_id)
-
-    # if getattr(block_data, 'class') == 'Text':
-    #     return block_data.content
-    # if block_data.source:
-    #     return block_data.source['url']
-    # if block_data.image:
-    #     return block_data.image['display']['url']
-    # return block_data.content
     return 'https://www.are.na/block/{}'.format(block_id)
 
 

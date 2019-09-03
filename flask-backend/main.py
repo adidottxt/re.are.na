@@ -1,3 +1,6 @@
+'''
+main module, where backend/server is created
+'''
 import flask
 from flask import request
 from flask_graphql import GraphQLView
@@ -19,13 +22,20 @@ APP.add_url_rule(
 )
 
 @APP.before_request
-def create_app():
+def get_block_data():
+    '''
+    where block data is downloaded via the are.na API
+    using functions in pkg
+    '''
     if request.method == 'POST':
         add_test_data()
         get_random_blocks(3, 'adi')
 
 @APP.route('/')
 def my_index():
+    '''
+    rendering index.html
+    '''
     return flask.render_template("index.html")
 
 @APP.teardown_appcontext
