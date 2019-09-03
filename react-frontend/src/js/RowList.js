@@ -5,6 +5,8 @@ import { graphql } from 'react-apollo'
 import Row from "./Row"
 import TextRow from "./TextRow"
 
+import "../css/RowList.css"
+
 const getBlocksDataQuery = gql`
 {
   allBlocks {
@@ -27,7 +29,11 @@ class RowList extends Component {
   displayBlocks() {
       var data = this.props.data;
       if (data.loading) {
-          return(<div>Loading blocks...</div>)
+          return (
+            <div id='loading-screen'>
+              <img src='../static/loading.gif' alt='loading' id='loading'/>
+            </div>
+          )
       } else {
           return data.allBlocks.edges.map(block => {
               if (block.node.blockType === 'Text') {

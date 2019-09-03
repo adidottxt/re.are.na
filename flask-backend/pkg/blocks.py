@@ -23,8 +23,12 @@ def get_random_blocks(number, user) -> List[str]:
 
     :return                 block_ids: a list of random block IDs
     '''
-    return [get_random_block(get_random_channel(user)) for i in range(number)]
-
+    # return [get_random_block(get_random_channel(user)) for i in range(number)]
+    blocks = []
+    for i in range(number):
+        print('Getting info on block {} of {}...'.format(i+1, number))
+        blocks.append(get_random_block(get_random_channel(user)))
+    return blocks
 
 def get_random_channel(username) -> str:
     '''
@@ -100,7 +104,6 @@ def get_random_block(channel_id) -> int:
 
     :return                 block_id: the random block's unique id
     '''
-    print('Channel ID', channel_id)
     channel = CLIENT.channels.channel(channel_id)
     channel_pages = channel.length // 100
 
@@ -140,6 +143,4 @@ def get_random_block(channel_id) -> int:
                 break
         except Unauthorized:
             pass
-
-    print('Block ID', block_id)
     return block_id
