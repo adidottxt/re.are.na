@@ -10,7 +10,7 @@ const getBlocksDataQuery = gql`
   allBlocks {
       edges {
           node {
-            imageUrl
+            blockContent
             blockId
             blockUrl
             blockType
@@ -23,36 +23,43 @@ const getBlocksDataQuery = gql`
 }
 `
 
-// function RowList(props) {
 class RowList extends Component {
+  displayBlocks() {
+      console.log(this.props.data)
+      var data = this.props.data;
+      if (data.loading) {
+          return(<div>Loading blocks...</div>)
+      } else {
+          return data.allBlocks.edges.map(block => {
+              if (block.node.blockType === 'Text') {
+                  console.log(block.node.blockType)
+                  return <TextRow
+                      linksrc={block.node.blockUrl}
+                      text={block.node.blockContent}
+                      title={block.node.blockTitle}
+                      channel={block.node.channelTitle}
+                      date={block.node.blockCreateDate}
+                  />
+              } else if (block.node.blockUrl !== 'test') {
+                    console.log(block.node.blockType)
+                    return <Row
+                      imgsrc={block.node.blockContent}
+                      linksrc={block.node.blockUrl}
+                      title={block.node.blockTitle}
+                      channel={block.node.channelTitle}
+                      date={block.node.blockCreateDate}
+                    />
+              } else {
+                  return '';
+              }
+          })
+      }
+  }
+
   render() {
-    console.log(this.props)
     return (
         <div>
-            <Row
-                imgsrc='https://d2w9rnfcy7mm78.cloudfront.net/4771939/original_1c3af1831f95e7d71d0674227c114072.jpg?1565150930'
-                linksrc='https://are.na/block/123123'
-                title='test-title'
-                channel='test-chan'
-                date='test-date'
-            />
-
-            <Row
-                imgsrc='https://d2w9rnfcy7mm78.cloudfront.net/4633641/display_94c1620f3ef1f7d2dc7008d0849f39b8.png?1563197545'
-                title='test-title'
-                linksrc='https://are.na/block/123124'
-                channel='test-chan'
-                date='test-date'
-            />
-
-            <TextRow
-                linksrc='https://are.na/block/4184924'
-                text='testingtttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingesttttttttttttttttttttttttttttttttttttttttttestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingestingesting'
-                title=''
-                channel='snippets'
-                date='test-date'
-            />
-
+            {this.displayBlocks()}
         </div>
     )
   }

@@ -22,7 +22,7 @@ def add_test_data() -> None:
         channel_id=0,
         block_type='test',
         block_url='test',
-        image_url='test',
+        block_content='test',
         channel_title='test',
         block_title='test',
         block_create_date='test',
@@ -110,7 +110,7 @@ def add_to_db_block(block_data) -> bool:
                 channel_id=block_data['channel_id'],
                 block_type=block_data['block_type'],
                 block_url=block_data['block_url'],
-                image_url=block_data['image_url']
+                block_content=block_data['block_content']
             )
             DB_SESSION.add(block)  # pylint: disable=no-member
             DB_SESSION.commit()  # pylint: disable=no-member

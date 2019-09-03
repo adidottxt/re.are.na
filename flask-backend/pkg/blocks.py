@@ -59,7 +59,7 @@ def get_block_class(block_id) -> str:
     return getattr(CLIENT.blocks.block(block_id), 'class')
 
 
-def get_block_data(block_id) -> str:
+def get_block_url(block_id) -> str:
     '''
     description:            given a block_id, return the block's
                             class/type (image/text/link/media/attachment)
@@ -68,12 +68,16 @@ def get_block_data(block_id) -> str:
 
     :return                 block_class: the given block's class/type
     '''
-    block_data = CLIENT.blocks.block(block_id)
-    if block_data.source:
-        return block_data.source['url']
-    if block_data.image:
-        return block_data.image['display']['url']
-    return block_data.content
+    # block_data = CLIENT.blocks.block(block_id)
+
+    # if getattr(block_data, 'class') == 'Text':
+    #     return block_data.content
+    # if block_data.source:
+    #     return block_data.source['url']
+    # if block_data.image:
+    #     return block_data.image['display']['url']
+    # return block_data.content
+    return 'https://www.are.na/block/{}'.format(block_id)
 
 
 def get_block_title(block_id) -> str:
@@ -114,15 +118,15 @@ def get_random_block(channel_id) -> int:
         try:
             block = CLIENT.blocks.block(block_id)
             block_type = getattr(block, 'class')
-            image_url = block.image['display']['url'] \
+            block_content = block.image['display']['url'] \
                 if block_type in ('Image', 'Link', 'Media') \
-                else ''
+                else block.content
 
             block_data = {
                 'created_at': block.created_at[:10],
                 'block_type': getattr(block, 'class'),
-                'block_url': get_block_data(block_id),
-                'image_url': image_url,
+                'block_url': get_block_url(block_id),
+                'block_content': block_content,
                 'channel_title': channel.title,
                 'block_title': block.title,
                 'block_id': block_id,

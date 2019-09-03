@@ -8,7 +8,7 @@ function Block(props) {
           <a href={props.linksrc}>
             <img
               src={props.imgsrc}
-              alt='testing'
+              alt='block'
             />
           </a>
         </div>
