@@ -2,7 +2,7 @@
 A web app that serves up three blocks picked at random from your are.na profile.<br>
 A [readwise](https://readwise.io/) for your are.na blocks, basically.<br>
 
-###  🛠Things to do
+### 🛠 Things to do
   * REFACTOR:
     + placeholder title for when title is empty
     + get rid of test data
