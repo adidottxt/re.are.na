@@ -4,6 +4,9 @@ config.py
 # Database file
 database.sqlite3
 
+# react build files
+react/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

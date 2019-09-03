@@ -120,10 +120,14 @@ def get_random_block(channel_id) -> int:
             block_type = getattr(block, 'class')
             block_content = block.image['display']['url'] \
                 if block_type in ('Image', 'Link', 'Media') \
+                else block.image['display']['url'] if block_type == 'Attachment' \
                 else block.content
 
+            block_date = block.created_at[:10]
+            block_date = '{}-{}'.format(block_date[5:], block_date[:4])
+
             block_data = {
-                'created_at': block.created_at[:10],
+                'created_at': block_date,
                 'block_type': getattr(block, 'class'),
                 'block_url': get_block_url(block_id),
                 'block_content': block_content,

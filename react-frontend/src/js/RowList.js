@@ -25,7 +25,6 @@ const getBlocksDataQuery = gql`
 
 class RowList extends Component {
   displayBlocks() {
-      console.log(this.props.data)
       var data = this.props.data;
       if (data.loading) {
           return(<div>Loading blocks...</div>)

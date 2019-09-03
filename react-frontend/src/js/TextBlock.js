@@ -5,7 +5,7 @@ import "../css/TextBlock.css"
 function TextBlock(props) {
     return (
         <div id='block'>
-          <a href={props.linksrc}>
+          <a href={props.linksrc} target="_blank" rel="noopener noreferrer">
             <div className='text-data'>{props.text}</div>
           </a>
         </div>
