@@ -10,5 +10,8 @@ A [readwise](https://readwise.io/) for your are.na blocks, basically.<br>
     + comment all code
     + pylint + mypy
     + update README.md with instructions
+    + tests!
+    + testing suite
+    + tox
     + longer term...
       - convert this to have this be a daily email as opposed to a web app
