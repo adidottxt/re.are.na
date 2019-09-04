@@ -39,16 +39,16 @@ class RowList extends Component {
       } else {
           var i;
           var highestRequest = 0;
-          console.log(data.allBlocks.edges)
+          var requestId = 0;
           for (i = 0; i < data.allBlocks.edges.length; i++) {
-              if (Number(data.allBlocks.edges[i].node.requestId) > highestRequest) {
-                  highestRequest = Number(data.allBlocks.edges[i].node.requestId);
+              requestId = Number(data.allBlocks.edges[i].node.requestId)
+              if (requestId > highestRequest) {
+                  highestRequest = requestId;
               }
           }
-          console.log(highestRequest)
           return data.allBlocks.edges.map(block => {
-              if (Number(block.node.requestId) !== 1 && Number(block.node.requestId) > highestRequest-3) {
-                console.log('number', Number(block.node.requestId))
+              requestId = block.node.requestId
+              if (requestId !== 1 && requestId > highestRequest-3) {
                 if (block.node.blockType === 'Text') {
                     return <TextRow
                         linksrc={block.node.blockUrl}
