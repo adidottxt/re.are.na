@@ -2,12 +2,12 @@ import React from "react"
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
-import Header from "./js/Header"
-import Button from "./js/Button"
-import HeaderInfo from "./js/HeaderInfo"
-import RowList from "./js/RowList"
+import Header from "./Header"
+import Button from "./Button"
+import HeaderInfo from "./HeaderInfo"
+import RowList from "./RowList"
 
-import "./css/App.css"
+import "../css/App.css"
 
 // Apollo Client setup
 const client = new ApolloClient({

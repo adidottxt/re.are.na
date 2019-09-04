@@ -89,7 +89,8 @@ def add_to_db_channel(channel_id, slug) -> bool:
             channel = Channel(channel_id=channel_id, slug=slug)
             DB_SESSION.add(channel)  # pylint:disable=no-member
             DB_SESSION.commit()  # pylint:disable=no-member
-        return True
+            return True
+        return False
     except DatabaseError:
         return False
 
