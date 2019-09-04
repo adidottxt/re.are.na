@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import '../css/Button.css'
 
-class Button extends React.Component {
+class Button extends Component {
     render() {
       return (
         <button id='button' onClick={this._refreshPage}>{this.props.text}</button>
