@@ -1,5 +1,6 @@
 '''
-Defining database models for sqlite3 tables
+models.py is where the database models for all tables in our sqlite3
+database are defined.
 '''
 
 from typing import Any
@@ -32,7 +33,8 @@ Base.metadata.create_all(bind=ENGINE)
 
 class Channel(Base):  # pylint:disable=too-few-public-methods
     '''
-    creating the channels table
+    description:            this is where the Channels table (and the
+                            table's schema) in our database is defined
     '''
     __tablename__ = 'channel'
     channel_id = Column(Integer, primary_key=True)
@@ -41,7 +43,8 @@ class Channel(Base):  # pylint:disable=too-few-public-methods
 
 class Block(Base):  # pylint:disable=too-few-public-methods
     '''
-    creating the blocks table
+    description:            this is where the Blocks table (and the
+                            table's schema) in our database is defined
     '''
     __tablename__ = 'block'
     block_id = Column(Integer)

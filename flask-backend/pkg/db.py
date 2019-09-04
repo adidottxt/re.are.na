@@ -1,5 +1,5 @@
 '''
-database specific functions
+db.py contains code that pertains to sqlite3/database-specific functions
 '''
 # pylint: disable=no-member
 from sqlalchemy.exc import DatabaseError
@@ -11,7 +11,10 @@ from .constants import CHANNEL_CHECK, BLOCK_CHECK
 
 def add_test_data() -> None:
     '''
-    add test data
+    description:            this function adds test data to the
+                            sqlite3 database used by this application
+
+    return:                 None
     '''
     Base.metadata.drop_all(bind=ENGINE)
     Base.metadata.create_all(bind=ENGINE)
@@ -36,9 +39,9 @@ def check_unique_channel_id(channel_id) -> bool:
     description:            check if a channel_id has been stored in
                             the database
 
-    :param                  channel_id: the given channel's unique id
+    param:                  channel_id: the given channel's unique id
 
-    :return                 True if channel is unique, False otherwise
+    return:                 True if channel is unique, False otherwise
     '''
     result = str(SCHEMA.execute(CHANNEL_CHECK).data)
     if "('channelId', '{}')".format(channel_id) not in result:
@@ -49,11 +52,12 @@ def check_unique_channel_id(channel_id) -> bool:
 def check_unique_block_id(block_id) -> bool:
     '''
     description:            check if a block_id has been stored in
-                            the database
+                            the database already to ensure that we're not
+                            using duplicate blocks in our application
 
-    :param                  block_id: the given block's unique id
+    param:                  block_id: the given block's unique id
 
-    :return                 True if block is unique, False otherwise
+    return:                 True if block is unique, False otherwise
     '''
     result = str(SCHEMA.execute(BLOCK_CHECK).data)
     if "('blockId', '{}')".format(block_id) not in result:
@@ -64,6 +68,8 @@ def check_unique_block_id(block_id) -> bool:
 def clear_database() -> None:
     '''
     description:            clear any data stored in the database
+
+    return:                 None
     '''
     DB_SESSION.remove()
 
@@ -72,10 +78,10 @@ def add_to_db_channel(channel_id, slug) -> bool:
     '''
     description:            add channel information to our database
 
-    :param                  channel_id: the given channel's unique id
+    param:                  channel_id: the given channel's unique id
                             slug: the given channel's slug
 
-    :return                 True if added successfully, False otherwise
+    return:                 True if added successfully, False otherwise
     '''
     try:
         if check_unique_channel_id(channel_id):
@@ -92,11 +98,11 @@ def add_to_db_block(block_data) -> bool:
     '''
     description:            add block information to our database
 
-    :param                  block_id: the given block's unique id
+    param:                  block_id: the given block's unique id
                             channel_id: the channel id for the given block
                             type: the block's type/class
 
-    :return                 True if added successfully, False otherwise
+    return:                 True if added successfully, False otherwise
     '''
     try:
         block_id = block_data['block_id']

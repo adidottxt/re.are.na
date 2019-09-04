@@ -1,5 +1,6 @@
 '''
-All code pertaining to are.na blocks
+blocks.py contains code that pertains to obtaining information
+about the are.na blocks to be presented on re.are.na
 '''
 import random
 from typing import List
@@ -19,10 +20,10 @@ def get_random_blocks(number, user) -> List[int]:
     description:            get a number of random blocks from
                             a user's channels
 
-    :param                  number: the number of blocks to return
+    param:                 number: the number of blocks to return
                             user: given user's slug/username
 
-    :return                 block_ids: a list of random block IDs
+    return:                block_ids: a list of random block IDs
     '''
     # return [get_random_block(get_random_channel(user)) \
     #         for i in range(number)]
@@ -38,9 +39,9 @@ def get_random_channel(username) -> str:
     description:            get a random channel from a list of
                             a user's channels
 
-    :param                  username: given user's username
+    param:                username: given user's username
 
-    :return                 channel_slug: the random channel's unique URL
+    return:                 channel_slug: the random channel's unique URL
     '''
     try:
         channels, _ = CLIENT.users.user(username).channels(per_page=100)
@@ -63,9 +64,9 @@ def get_random_block(channel_id) -> int:
     description:            get a random block from a list of
                             blocks within a user's channel
 
-    :param                  channel_slug: the channel's unique URL
+    param:                  channel_slug: the channel's unique URL
 
-    :return                 block_id: the random block's unique id
+    return:                 block_id: the random block's unique id
     '''
     channel = CLIENT.channels.channel(channel_id)
     channel_pages = channel.length // 100

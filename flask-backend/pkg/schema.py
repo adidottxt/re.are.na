@@ -1,5 +1,7 @@
 '''
-defining the schema for SQLAlchemy
+schema.py is where defining the schema for SQLAlchemy is defined via
+graphene, which allows us to use GraphQL to query information from the
+sqlite3 database set up in the other modules within pkg/
 '''
 # pylint:disable=too-few-public-methods, missing-docstring
 
@@ -18,7 +20,7 @@ from .models import (
 
 class ChannelNode(SQLAlchemyObjectType):
     '''
-    channel node
+    description:            This is where ChannelNode is defined
     '''
     class Meta:
         model = ChannelModel
@@ -27,7 +29,7 @@ class ChannelNode(SQLAlchemyObjectType):
 
 class ChannelConnections(relay.Connection):
     '''
-    channel connections
+    description:            This is where ChannelConnections is defined
     '''
     class Meta:
         node = ChannelNode
@@ -35,7 +37,7 @@ class ChannelConnections(relay.Connection):
 
 class BlockNode(SQLAlchemyObjectType):
     '''
-    block node
+    description:            This is where BlockNode is defined
     '''
     class Meta:
         model = BlockModel
@@ -44,7 +46,7 @@ class BlockNode(SQLAlchemyObjectType):
 
 class BlockConnections(relay.Connection):
     '''
-    block connections
+    description:            This is where BlockConnections is defined
     '''
     class Meta:
         node = BlockNode
@@ -52,14 +54,12 @@ class BlockConnections(relay.Connection):
 
 class Query(graphene.ObjectType):
     '''
-    defining how we can query
+    description:            This is where the ability to query the
+                            sqlite3 database via GraphQL is defined
     '''
     node = relay.Node.Field()
-    # no real reason to sort by primary key (block_id)
     all_blocks = SQLAlchemyConnectionField(BlockConnections)
-
-    # no real reason to sort by primary key (channel_id)
-    all_channels = SQLAlchemyConnectionField(ChannelConnections, sort=None)
+    all_channels = SQLAlchemyConnectionField(ChannelConnections)
 
 
 SCHEMA = graphene.Schema(query=Query)
