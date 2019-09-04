@@ -4,10 +4,12 @@ All code pertaining to are.na blocks
 import random
 from typing import List
 from werkzeug.exceptions import Unauthorized
+from requests import exceptions
 
 from arena import Arena
 
 from .config import ACCESS_TOKEN
+from .constants import HTTP_ERROR_MESSAGE
 from .db import add_to_db_channel, add_to_db_block
 
 CLIENT = Arena(ACCESS_TOKEN)
@@ -40,16 +42,20 @@ def get_random_channel(username) -> str:
 
     :return                 channel_slug: the random channel's unique URL
     '''
-    channels, _ = CLIENT.users.user(username).channels(per_page=100)
-    channel_slugs = {chan.slug for chan in channels if chan.published}
+    try:
+        channels, _ = CLIENT.users.user(username).channels(per_page=100)
+        channel_slugs = {chan.slug for chan in channels if chan.published}
 
-    channel_slug = random.sample(channel_slugs, 1)[0]
-    channel_id = CLIENT.channels.channel(channel_slug).id
+        channel_slug = random.sample(channel_slugs, 1)[0]
+        channel_id = CLIENT.channels.channel(channel_slug).id
 
-    add_to_db_channel(channel_id, channel_slug)
+        add_to_db_channel(channel_id, channel_slug)
 
-    return channel_id
+        return channel_id
 
+    except exceptions.HTTPError:
+        print(HTTP_ERROR_MESSAGE)
+        return ''
 
 def get_random_block(channel_id) -> int:
     '''
@@ -97,6 +103,6 @@ def get_random_block(channel_id) -> int:
             }
             if add_to_db_block(block_data):
                 break
-        except Unauthorized:
-            pass
+        except exceptions.HTTPError:
+            print(HTTP_ERROR_MESSAGE)
     return block_id
