@@ -19,6 +19,7 @@ const getBlocksDataQuery = gql`
             blockTitle
             blockCreateDate
             channelTitle
+            requestNumber
           }
       }
   }
@@ -26,6 +27,7 @@ const getBlocksDataQuery = gql`
 `
 
 class RowList extends Component {
+
   displayBlocks() {
       var data = this.props.data;
       if (data.loading) {
@@ -35,18 +37,24 @@ class RowList extends Component {
             </div>
           )
       } else {
+          var i;
+          var highestRequest = 0;
+          for (i = 0; i < data.allBlocks.edges.length; i++) {
+              if (data.allBlocks.edges[i].node.requestNumber > highestRequest) {
+                  highestRequest = data.allBlocks.edges[i].node.requestNumber;
+              }
+          }
           return data.allBlocks.edges.map(block => {
-              if (block.node.blockType === 'Text') {
-                  console.log(block.node.blockType)
-                  return <TextRow
-                      linksrc={block.node.blockUrl}
-                      text={block.node.blockContent}
-                      title={block.node.blockTitle}
-                      channel={block.node.channelTitle}
-                      date={block.node.blockCreateDate}
-                  />
-              } else if (block.node.blockUrl !== 'test') {
-                    console.log(block.node.blockType)
+              if (block.node.requestNumber !== 0 && block.node.requestNumber > highestRequest-3) {
+                if (block.node.blockType === 'Text') {
+                    return <TextRow
+                        linksrc={block.node.blockUrl}
+                        text={block.node.blockContent}
+                        title={block.node.blockTitle}
+                        channel={block.node.channelTitle}
+                        date={block.node.blockCreateDate}
+                    />
+                } else if (block.node.blockUrl !== 'test') {
                     return <Row
                       imgsrc={block.node.blockContent}
                       linksrc={block.node.blockUrl}
@@ -54,9 +62,8 @@ class RowList extends Component {
                       channel={block.node.channelTitle}
                       date={block.node.blockCreateDate}
                     />
-              } else {
-                  return '';
-              }
+                }
+              } return '';
           })
       }
   }

@@ -2,6 +2,8 @@
 Defining database models for sqlite3 tables
 '''
 
+from typing import Any
+
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -22,7 +24,7 @@ DB_SESSION = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=ENGINE))
 
-Base = declarative_base()
+Base = declarative_base() #type: Any
 Base.query = DB_SESSION.query_property()  # needed for querying
 Base.metadata.drop_all(bind=ENGINE)
 Base.metadata.create_all(bind=ENGINE)
@@ -50,6 +52,7 @@ class Block(Base):  # pylint:disable=too-few-public-methods
     block_content = Column(String)
     block_url = Column(String)
     block_create_date = Column(String)
+    request_number = Column(Integer)
     channel = relationship(
         Channel,
         backref=backref('blocks',

@@ -21,14 +21,14 @@ APP.add_url_rule(
     )
 )
 
+
 @APP.before_request
 def get_block_data():
     '''
     where block data is downloaded via the are.na API
     using functions in pkg
     '''
-    if request.method == 'POST':
-        add_test_data()
+    if request.method == 'POST' and request.content_length == 337:
         get_random_blocks(3, 'adi')
 
 @APP.route('/')
@@ -46,5 +46,6 @@ def shutdown_session(exception=None):  # pylint:disable=unused-argument
     DB_SESSION.remove()
 
 if __name__ == '__main__':
+    add_test_data()
     CORS(APP, resources={r'/graphql': {'origins': '*'}})
     APP.run(debug=True, use_reloader=False)

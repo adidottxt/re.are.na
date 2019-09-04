@@ -46,45 +46,9 @@ def get_random_channel(username) -> str:
     channel_slug = random.sample(channel_slugs, 1)[0]
     channel_id = CLIENT.channels.channel(channel_slug).id
 
-    # use add_to_db_channel to add to database
     add_to_db_channel(channel_id, channel_slug)
 
     return channel_id
-
-
-def get_block_class(block_id) -> str:
-    '''
-    description:            given a block_id, return the block's
-                            class/type (image/text/link/media/attachment)
-
-    :param                  block_id: the random block's unique id
-
-    :return                 block_class: the given block's class/type
-    '''
-    return getattr(CLIENT.blocks.block(block_id), 'class')
-
-
-def get_block_url(block_id) -> str:
-    '''
-    description:            given a block_id, return the block's
-                            class/type (image/text/link/media/attachment)
-
-    :param                  block_id: the random block's unique id
-
-    :return                 block_class: the given block's class/type
-    '''
-    return 'https://www.are.na/block/{}'.format(block_id)
-
-
-def get_block_title(block_id) -> str:
-    '''
-    description:            given a block_id, return the block's title
-
-    :param                  block_id: the random block's unique id
-
-    :return                 block_title: the given block's title
-    '''
-    return CLIENT.blocks.block(block_id).title
 
 
 def get_random_block(channel_id) -> int:
@@ -124,10 +88,10 @@ def get_random_block(channel_id) -> int:
             block_data = {
                 'created_at': block_date,
                 'block_type': getattr(block, 'class'),
-                'block_url': get_block_url(block_id),
+                'block_url': 'https://www.are.na/block/{}'.format(block_id),
                 'block_content': block_content,
                 'channel_title': channel.title,
-                'block_title': block.title,
+                'block_title': block.title if block.title else 'N/A',
                 'block_id': block_id,
                 'channel_id': channel_id
             }
