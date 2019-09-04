@@ -67,6 +67,7 @@ def return_request_count() -> int:
     REQUEST_COUNT += 1
     return REQUEST_COUNT
 
+
 def clear_database() -> None:
     '''
     description:            clear any data stored in the database

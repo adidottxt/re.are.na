@@ -24,7 +24,7 @@ DB_SESSION = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=ENGINE))
 
-Base = declarative_base() #type: Any
+Base = declarative_base()  # type: Any
 Base.query = DB_SESSION.query_property()  # needed for querying
 Base.metadata.drop_all(bind=ENGINE)
 Base.metadata.create_all(bind=ENGINE)

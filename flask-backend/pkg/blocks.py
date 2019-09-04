@@ -25,10 +25,11 @@ def get_random_blocks(number, user) -> List[int]:
 
     :return                 block_ids: a list of random block IDs
     '''
-    # return [get_random_block(get_random_channel(user)) for i in range(number)]
+    # return [get_random_block(get_random_channel(user)) \
+    #         for i in range(number)]
     blocks = []
     for i in range(number):
-        print('Getting info on block {} of {}...'.format(i+1, number))
+        print('Getting info on block {} of {}...'.format(i + 1, number))
         blocks.append(get_random_block(get_random_channel(user)))
     return blocks
 
@@ -56,6 +57,7 @@ def get_random_channel(username) -> str:
     except exceptions.HTTPError:
         print(HTTP_ERROR_MESSAGE)
         return ''
+
 
 def get_random_block(channel_id) -> int:
     '''

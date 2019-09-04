@@ -31,6 +31,7 @@ def get_block_data():
     if request.method == 'POST' and request.content_length == 337:
         get_random_blocks(3, 'adi')
 
+
 @APP.route('/')
 def my_index():
     '''
@@ -38,12 +39,14 @@ def my_index():
     '''
     return flask.render_template("index.html")
 
+
 @APP.teardown_appcontext
 def shutdown_session(exception=None):  # pylint:disable=unused-argument
     '''
     shut down database
     '''
     DB_SESSION.remove()
+
 
 if __name__ == '__main__':
     add_test_data()
