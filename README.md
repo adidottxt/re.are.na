@@ -4,11 +4,8 @@ A [readwise](https://readwise.io/) for your are.na blocks, basically.<br>
 
 ### 🛠 Things to do
   * REFACTOR:
-    + comment all code
-    + pylint + mypy
     + update README.md with instructions
-    + tests!
-    + testing suite
+    + unit tests
     + tox
     + make the front end responsive
     + longer term...
