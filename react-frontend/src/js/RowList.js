@@ -19,7 +19,7 @@ const getBlocksDataQuery = gql`
             blockTitle
             blockCreateDate
             channelTitle
-            requestNumber
+            requestId
           }
       }
   }
@@ -39,13 +39,16 @@ class RowList extends Component {
       } else {
           var i;
           var highestRequest = 0;
+          console.log(data.allBlocks.edges)
           for (i = 0; i < data.allBlocks.edges.length; i++) {
-              if (data.allBlocks.edges[i].node.requestNumber > highestRequest) {
-                  highestRequest = data.allBlocks.edges[i].node.requestNumber;
+              if (Number(data.allBlocks.edges[i].node.requestId) > highestRequest) {
+                  highestRequest = Number(data.allBlocks.edges[i].node.requestId);
               }
           }
+          console.log(highestRequest)
           return data.allBlocks.edges.map(block => {
-              if (block.node.requestNumber !== 0 && block.node.requestNumber > highestRequest-3) {
+              if (Number(block.node.requestId) !== 1 && Number(block.node.requestId) > highestRequest-3) {
+                console.log('number', Number(block.node.requestId))
                 if (block.node.blockType === 'Text') {
                     return <TextRow
                         linksrc={block.node.blockUrl}

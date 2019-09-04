@@ -28,7 +28,7 @@ def get_block_data():
     where block data is downloaded via the are.na API
     using functions in pkg
     '''
-    if request.method == 'POST' and request.content_length == 337:
+    if request.method == 'POST' and request.content_length == 333:
         get_random_blocks(3, 'adi')
 
 

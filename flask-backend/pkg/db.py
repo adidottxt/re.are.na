@@ -6,7 +6,7 @@ from sqlalchemy.exc import DatabaseError
 
 from .models import DB_SESSION, ENGINE, Base, Channel, Block
 from .schema import SCHEMA
-from .constants import CHANNEL_CHECK, BLOCK_CHECK, REQUEST_COUNT
+from .constants import CHANNEL_CHECK, BLOCK_CHECK
 
 
 def add_test_data() -> None:
@@ -20,7 +20,6 @@ def add_test_data() -> None:
     test_block = Block(
         block_id=0,
         channel_id=0,
-        request_number=0,
         block_type='test',
         block_url='test',
         block_content='test',
@@ -60,12 +59,6 @@ def check_unique_block_id(block_id) -> bool:
     if "('blockId', '{}')".format(block_id) not in result:
         return True
     return False
-
-
-def return_request_count() -> int:
-    global REQUEST_COUNT
-    REQUEST_COUNT += 1
-    return REQUEST_COUNT
 
 
 def clear_database() -> None:
@@ -118,7 +111,6 @@ def add_to_db_block(block_data) -> bool:
                 block_type=block_data['block_type'],
                 block_url=block_data['block_url'],
                 block_content=block_data['block_content'],
-                request_number=return_request_count(),
             )
             DB_SESSION.add(block)  # pylint: disable=no-member
             DB_SESSION.commit()  # pylint: disable=no-member

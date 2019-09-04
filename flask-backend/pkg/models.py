@@ -44,7 +44,7 @@ class Block(Base):  # pylint:disable=too-few-public-methods
     creating the blocks table
     '''
     __tablename__ = 'block'
-    block_id = Column(Integer, primary_key=True)
+    block_id = Column(Integer)
     channel_id = Column(Integer, ForeignKey('channel.channel_id'))
     channel_title = Column(String)
     block_title = Column(String)
@@ -52,7 +52,7 @@ class Block(Base):  # pylint:disable=too-few-public-methods
     block_content = Column(String)
     block_url = Column(String)
     block_create_date = Column(String)
-    request_number = Column(Integer)
+    request_id = Column(Integer, primary_key=True, autoincrement=True)
     channel = relationship(
         Channel,
         backref=backref('blocks',

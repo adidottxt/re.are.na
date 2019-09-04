@@ -3,7 +3,6 @@ All code pertaining to are.na blocks
 '''
 import random
 from typing import List
-from werkzeug.exceptions import Unauthorized
 from requests import exceptions
 
 from arena import Arena
