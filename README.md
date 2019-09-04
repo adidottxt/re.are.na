@@ -5,7 +5,7 @@ A [readwise](https://readwise.io/) for your are.na blocks, basically.<br>
 ### 🛠 Things to do
   * REFACTOR:
     + setup various dimensions so it doesn't break when you make things smaller
-    + placeholder title for when title is empty
+    + unauthorized blocks still not handled (HTTPError / requests...)
     + get rid of test data
     + comment all code
     + pylint + mypy
