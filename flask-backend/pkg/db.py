@@ -96,11 +96,17 @@ def add_to_db_channel(channel_id, slug) -> bool:
     return:                 True if added successfully, False otherwise
     '''
     try:
-        Base.metadata.create_all(bind=ENGINE)
+
+        # create new channel using channel id + slug
         channel = Channel(channel_id=channel_id, slug=slug)
+
+        # connect, add, and commit to database
+        Base.metadata.create_all(bind=ENGINE)
         DB_SESSION.add(channel)  # pylint:disable=no-member
         DB_SESSION.commit()  # pylint:disable=no-member
+
         return True
+
     except DatabaseError:
         return False
 
@@ -116,20 +122,24 @@ def add_to_db_block(block_data) -> bool:
     return:                 True if added successfully, False otherwise
     '''
     try:
-        block_id = block_data['block_id']
-        Base.metadata.create_all(bind=ENGINE)
+        # create block using block_data
         block = Block(
             block_create_date=block_data['created_at'],
             block_title=block_data['block_title'],
             channel_title=block_data['channel_title'],
-            block_id=block_id,
+            block_id=block_data['block_id'],
             channel_id=block_data['channel_id'],
             block_type=block_data['block_type'],
             block_url=block_data['block_url'],
             block_content=block_data['block_content'],
         )
+
+        # connect, add and commit to database
+        Base.metadata.create_all(bind=ENGINE)
         DB_SESSION.add(block)  # pylint: disable=no-member
         DB_SESSION.commit()  # pylint: disable=no-member
+
         return True
+
     except DatabaseError:
         return False
