@@ -1,10 +1,7 @@
 # 🔁 re.are.na
 A web app that enables spaced repetition for Are.na blocks -- serving up three
 random blocks from your profile.
-<br>
-<br>
 
------
 
 ### How to install
 1. Clone this repository.
@@ -17,17 +14,11 @@ random blocks from your profile.
   ACCESS_TOKEN = 'your are.na personal access token here'
   ```
 4. Run `./install.sh` to set up the application.
-<br>
-<br>
 
------
 
 ### How to run
 - Assuming you've installed the application correctly, `./run.sh`.
-<br>
-<br>
 
------
 
 ### Background
 [I've used Are.na](http://are.na/adi) for close to two years now. I've roughly created 100
