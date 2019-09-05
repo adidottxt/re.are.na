@@ -4,8 +4,7 @@ about the are.na blocks to be presented on re.are.na
 '''
 import random
 from typing import List
-from requests import exceptions
-from exceptions import HTTPError
+from urllib3.exceptions import HTTPError
 
 from arena import Arena
 
