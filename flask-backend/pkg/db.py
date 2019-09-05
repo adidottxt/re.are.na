@@ -6,7 +6,7 @@ from sqlalchemy.exc import DatabaseError
 
 from .models import DB_SESSION, ENGINE, Base, Channel, Block
 from .schema import SCHEMA
-from .constants import CHANNEL_CHECK, BLOCK_CHECK
+from .constants import CHANNEL_CHECK, BLOCK_CHECK, BLOCK, CHANNEL
 
 
 def add_test_data() -> None:
@@ -16,10 +16,17 @@ def add_test_data() -> None:
 
     return:                 None
     '''
+    # reset database
     Base.metadata.drop_all(bind=ENGINE)
     Base.metadata.create_all(bind=ENGINE)
+
+    # create test channel to be added to the database
     test_chan = Channel(channel_id=0, slug='test_channel')
+
+    # add test channel to the current session
     DB_SESSION.add(test_chan)
+
+    # create a test block to be added to the database
     test_block = Block(
         block_id=0,
         channel_id=0,
@@ -30,38 +37,43 @@ def add_test_data() -> None:
         block_title='test',
         block_create_date='test',
     )
+
+    # add test block to the current session
     DB_SESSION.add(test_block)
+
+    # commit test block + channel to database
     DB_SESSION.commit()
 
-
-def check_unique_channel_id(channel_id) -> bool:
+def check_unique_data(data_id, data_type) -> bool:
     '''
-    description:            check if a channel_id has been stored in
+    description:            check if a data_id has been stored in
                             the database
 
-    param:                  channel_id: the given channel's unique id
+    param:                  data_id: the given block/channel's unique id
 
-    return:                 True if channel is unique, False otherwise
+    return:                 True if block/channel is unique, False otherwise
     '''
-    result = str(SCHEMA.execute(CHANNEL_CHECK).data)
-    if "('channelId', '{}')".format(channel_id) not in result:
-        return True
-    return False
+    if data_type is CHANNEL:
+        # get channel data present in database with CHANNEL_CHECK graphql query
+        result = str(SCHEMA.execute(CHANNEL_CHECK).data)
 
+        # check if given channel id is present in result
+        # if it isn't, then channel id is unique, return True, else return False
+        if "('channelId', '{}')".format(data_id) not in result:
+            return True
+        return False
 
-def check_unique_block_id(block_id) -> bool:
-    '''
-    description:            check if a block_id has been stored in
-                            the database already to ensure that we're not
-                            using duplicate blocks in our application
+    if data_type is BLOCK:
+        # get block data present in database with BLOCK_CHECK graphql query
+        result = str(SCHEMA.execute(BLOCK_CHECK).data)
 
-    param:                  block_id: the given block's unique id
+        # check if given block is present in result
+        # if it isn't, then block id is unique, return True, else return False
+        if "('blockId', '{}')".format(data_id) not in result:
+            return True
+        return False
 
-    return:                 True if block is unique, False otherwise
-    '''
-    result = str(SCHEMA.execute(BLOCK_CHECK).data)
-    if "('blockId', '{}')".format(block_id) not in result:
-        return True
+    # return False if data_type is neither a block or a channel
     return False
 
 

@@ -9,12 +9,11 @@ from requests import exceptions
 from arena import Arena
 
 from .config import ACCESS_TOKEN
-from .constants import HTTP_ERROR_MESSAGE
+from .constants import HTTP_ERROR_MESSAGE, BLOCK, CHANNEL
 from .db import (
     add_to_db_channel,
     add_to_db_block,
-    check_unique_channel_id,
-    check_unique_block_id,
+    check_unique_data,
 )
 
 # start are.na client to be used across blocks.py
@@ -61,7 +60,7 @@ def get_random_channel(username) -> str:
             channel_id = CLIENT.channels.channel(channel_slug).id
 
             # check if channel has been added to database before
-            if check_unique_channel_id(channel_id):
+            if check_unique_data(channel_id, CHANNEL):
                 # add to database to ensure the next channel is unique
                 add_to_db_channel(channel_id, channel_slug)
 
@@ -103,7 +102,8 @@ def get_random_block(channel_id) -> int:
     while True:
         # get random block id
         block_id = int(random.sample(block_ids, 1)[0])
-        if check_unique_block_id(block_id):
+
+        if check_unique_data(block_id, BLOCK):
             try:
                 # get block info
                 block = CLIENT.blocks.block(block_id)
