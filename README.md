@@ -1,6 +1,6 @@
 # 🔁 re.are.na
-A web app that serves up three blocks picked at random from your Are.na
-profile, enabling spaced repetition for Are.na blocks.
+A web app that enables spaced repetition for Are.na blocks -- serving up three
+random blocks from your profile.
 
 
 ### How to install
