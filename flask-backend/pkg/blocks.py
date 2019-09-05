@@ -5,6 +5,7 @@ about the are.na blocks to be presented on re.are.na
 import random
 from typing import List
 from requests import exceptions
+from exceptions import HTTPError
 
 from arena import Arena
 
@@ -68,7 +69,7 @@ def get_random_channel(username) -> str:
                 return channel_id
 
         # HTTP error is usually down to the are.na API
-        except exceptions.HTTPError:
+        except HTTPError:
             print(HTTP_ERROR_MESSAGE)
 
 
@@ -140,7 +141,7 @@ def get_random_block(channel_id) -> int:
                     break
 
             # HTTP error is usually down to the are.na API
-            except exceptions.HTTPError:
+            except HTTPError:
                 print(HTTP_ERROR_MESSAGE)
 
     # return block_id if all is successful
