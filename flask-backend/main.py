@@ -7,11 +7,12 @@ from flask import Flask, request, render_template
 from flask_graphql import GraphQLView
 from flask_cors import CORS
 
-from pkg.models import DB_SESSION
 from pkg.schema import SCHEMA
 from pkg.blocks import get_random_blocks
-from pkg.db import add_test_data
+from pkg.db import add_test_data, clear_database
 
+
+# starting Flask application, adding graphiql url
 APP = Flask('__main__')
 APP.add_url_rule(
     '/graphql',
@@ -24,19 +25,20 @@ APP.add_url_rule(
 
 
 @APP.before_request
-def get_block_data():
+def get_block_data() -> None:
     '''
     description:            this is where block data is downloaded via the
                             are.na API, using functions defined in pkg/
 
     return:                 None
     '''
+    # only get blocks when specific request from UI is called
     if request.method == 'POST' and request.content_length == 333:
         get_random_blocks(3, 'adi')
 
 
 @APP.route('/')
-def my_index():
+def my_index() -> str:
     '''
     description:            this function renders the index.html file created
                             via React, to the endpoint defined above
@@ -47,7 +49,7 @@ def my_index():
 
 
 @APP.teardown_appcontext
-def shutdown_session(exception=None):  # pylint:disable=unused-argument
+def shutdown_session(exception=None) -> None:  # pylint:disable=unused-argument
     '''
     description:            this function shuts the database in
                             DB_SESSION down as part of shutting down the
@@ -55,10 +57,15 @@ def shutdown_session(exception=None):  # pylint:disable=unused-argument
 
     return:                 None
     '''
-    DB_SESSION.remove()
+    clear_database()
 
 
 if __name__ == '__main__':
+    # add test data to sqlite3 database
     add_test_data()
+
+    # enable cross origin resource sharing to allow front end access
     CORS(APP, resources={r'/graphql': {'origins': '*'}})
+
+    # run Flask app
     APP.run(debug=True, use_reloader=False)

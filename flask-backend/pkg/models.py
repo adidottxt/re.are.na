@@ -2,6 +2,7 @@
 models.py is where the database models for all tables in our sqlite3
 database are defined.
 '''
+# pylint:disable=too-few-public-methods
 
 from typing import Any
 
@@ -31,7 +32,7 @@ Base.metadata.drop_all(bind=ENGINE)
 Base.metadata.create_all(bind=ENGINE)
 
 
-class Channel(Base):  # pylint:disable=too-few-public-methods
+class Channel(Base):
     '''
     description:            this is where the Channels table (and the
                             table's schema) in our database is defined
@@ -41,7 +42,7 @@ class Channel(Base):  # pylint:disable=too-few-public-methods
     slug = Column(String)
 
 
-class Block(Base):  # pylint:disable=too-few-public-methods
+class Block(Base):
     '''
     description:            this is where the Blocks table (and the
                             table's schema) in our database is defined

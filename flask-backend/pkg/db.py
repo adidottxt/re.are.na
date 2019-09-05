@@ -84,13 +84,11 @@ def add_to_db_channel(channel_id, slug) -> bool:
     return:                 True if added successfully, False otherwise
     '''
     try:
-        if check_unique_channel_id(channel_id):
-            Base.metadata.create_all(bind=ENGINE)
-            channel = Channel(channel_id=channel_id, slug=slug)
-            DB_SESSION.add(channel)  # pylint:disable=no-member
-            DB_SESSION.commit()  # pylint:disable=no-member
-            return True
-        return False
+        Base.metadata.create_all(bind=ENGINE)
+        channel = Channel(channel_id=channel_id, slug=slug)
+        DB_SESSION.add(channel)  # pylint:disable=no-member
+        DB_SESSION.commit()  # pylint:disable=no-member
+        return True
     except DatabaseError:
         return False
 
@@ -107,22 +105,19 @@ def add_to_db_block(block_data) -> bool:
     '''
     try:
         block_id = block_data['block_id']
-        if check_unique_block_id(block_id):
-            Base.metadata.create_all(bind=ENGINE)
-            block = Block(
-                block_create_date=block_data['created_at'],
-                block_title=block_data['block_title'],
-                channel_title=block_data['channel_title'],
-                block_id=block_id,
-                channel_id=block_data['channel_id'],
-                block_type=block_data['block_type'],
-                block_url=block_data['block_url'],
-                block_content=block_data['block_content'],
-            )
-            DB_SESSION.add(block)  # pylint: disable=no-member
-            DB_SESSION.commit()  # pylint: disable=no-member
-            return True
-        print("Error: Block ID has already been added to database")
-        return False
+        Base.metadata.create_all(bind=ENGINE)
+        block = Block(
+            block_create_date=block_data['created_at'],
+            block_title=block_data['block_title'],
+            channel_title=block_data['channel_title'],
+            block_id=block_id,
+            channel_id=block_data['channel_id'],
+            block_type=block_data['block_type'],
+            block_url=block_data['block_url'],
+            block_content=block_data['block_content'],
+        )
+        DB_SESSION.add(block)  # pylint: disable=no-member
+        DB_SESSION.commit()  # pylint: disable=no-member
+        return True
     except DatabaseError:
         return False
