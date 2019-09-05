@@ -52,7 +52,7 @@ def get_random_channel(username) -> str:
             # get all of a given username's channels
             channels, _ = CLIENT.users.user(username).channels(per_page=100)
 
-            # get all channel unique URLs -- are.na/username/channel-slug)
+            # get all channel unique URLs -- are.na/username/channel-slug
             channel_slugs = {chan.slug for chan in channels if chan.published}
 
             # get random channel slug, and the corresponding channel id
