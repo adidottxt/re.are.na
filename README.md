@@ -42,13 +42,3 @@ to you via an email. I figured I could use a Readwise for are.na blocks,
 which led me to this. Given the personal nature of this project, my initial
 goal is to create a web app, and perhaps eventually create an email-based
 service as well.
-
-
-### Things to do
-- REFACTOR:
-  * unit tests
-  * tox
-  * make the front end responsive
-  * set up on docker?
-  * longer term...
-    + convert this to have this be a daily email as opposed to a web app
