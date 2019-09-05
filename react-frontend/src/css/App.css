@@ -1,3 +1,8 @@
 body {
   font-family: 'Helvetica Neue','Helvetica', 'Arial', sans-serif;
 }
+
+::selection {
+  background-color: #A4E4A1;
+  color: #FFFFFF;
+}
