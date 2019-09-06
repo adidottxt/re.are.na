@@ -18,12 +18,12 @@ const client = new ApolloClient({
 function App() {
     return (
         <ApolloProvider client={client}>
-            <div>
+            <>
                 <Header />
                 <HeaderInfo />
                 <RowList />
                 <Button text='Refresh' />
-            </div>
+            </>
         </ApolloProvider>
     )
 }

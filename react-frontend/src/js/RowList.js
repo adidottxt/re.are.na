@@ -73,9 +73,9 @@ class RowList extends Component {
 
   render() {
     return (
-        <div>
+        <>
             {this.displayBlocks()}
-        </div>
+        </>
     )
   }
 }
