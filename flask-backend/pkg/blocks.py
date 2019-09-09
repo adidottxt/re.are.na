@@ -34,9 +34,9 @@ def get_random_blocks(number, username) -> List[int]:
     blocks = []
     channels = get_random_channels(username, number)
 
-    for i in range(number):
-        print('Getting info on block {} of {}...'.format(i + 1, number))
-        blocks.append(get_random_block(channels[i]))
+    for count, channel in enumerate(channels):
+        print('Getting info on block {} of {}...'.format(count+1, len(channels)))
+        blocks.append(get_random_block(channel))
 
     return blocks
 
@@ -55,7 +55,7 @@ def get_random_channels(username, number) -> List[str]:
     while True:
         if count > 5:
             print(HTTP_ERROR_MESSAGE)
-            return final_channel_ids
+            return final_channel_ids[-3:]
         try:
             channels, _ = CLIENT.users.user(username).channels(per_page=100)
 
@@ -85,6 +85,14 @@ def get_random_channels(username, number) -> List[str]:
 
 
 def get_block_ids(channel) -> Set[int]:
+    '''
+    description:            get all block ids for a given channel
+
+    param:                  channel: the channel object returned from
+                            the are.na client
+
+    return:                 a set of all block_ids for the given channel
+    '''
     '''
     get all block ids for a given channel
     '''
@@ -123,6 +131,7 @@ def get_random_block(channel_id) -> int:
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):
+            # this doesn't work properly
             try:
                 block = CLIENT.blocks.block(block_id)
             except HTTPError:
