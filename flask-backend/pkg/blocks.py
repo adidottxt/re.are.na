@@ -3,7 +3,7 @@ blocks.py contains code that pertains to obtaining information
 about the are.na blocks to be presented on re.are.na
 '''
 import random
-from typing import List
+from typing import List, Set
 from urllib3.exceptions import HTTPError
 
 from arena import Arena
@@ -85,6 +85,27 @@ def get_random_channels(username, number) -> List[str]:
             print(HTTP_ERROR_MESSAGE)
 
 
+def get_block_ids(channel) -> Set[int]:
+    '''
+    get all block ids for a given channel
+    '''
+
+    # check how many pages are present based on length
+    # (each page holds 100 blocks)
+    channel_pages = channel.length // 100
+
+    # if < 100 blocks, then we have only 1 page
+    if channel.length % 100 != 0:
+        channel_pages += 1
+
+    # get all unique block ids within this channel (all pages)
+    return {
+        block.id
+        for i in range(1, channel_pages + 1)
+        for block in channel.contents(page=i, per_page=100)[0]
+    }
+
+
 def get_random_block(channel_id) -> int:
     '''
     description:            get a random block from a list of
@@ -96,46 +117,28 @@ def get_random_block(channel_id) -> int:
     '''
     channel = CLIENT.channels.channel(channel_id)
 
-    # check how many pages are present based on length
-    # (each page holds 100 blocks)
-    channel_pages = channel.length // 100
-
-    # if < 100 blocks, then we have only 1 page
-    if channel.length % 100 != 0:
-        channel_pages += 1
-
     # get all unique block ids within this channel (all pages)
-    block_ids = {
-        block.id
-        for i in range(1, channel_pages + 1)
-        for block in channel.contents(page=i, per_page=100)[0]
-    }
+    block_ids = get_block_ids(channel)
 
     while True:
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):
             try:
-                # get block info
-                # 403 UNAUTHORIZED HTTP ERROR HERE
-                # 404 NOT FOUND FOR URL GIVEN ERROR HERE
                 block = CLIENT.blocks.block(block_id)
             except HTTPError:
                 print(HTTP_ERROR_MESSAGE)
                 continue
 
-            # check block type
-            # (are.na's naming convention for this is class)
+            # are.na's naming convention for 'type' is class
             block_type = getattr(block, 'class')
 
             # get the block's content, which is a URL or text depending
             # on the block type
-            # TYPE ERROR HERE W ATTACHMENT
             block_content = block.image['display']['url'] \
                 if block_type in ('Image', 'Link', 'Media') \
                 else block.image['display']['url'] if block_type == 'Attachment' \
                 else block.content
-
 
             # get block creation date, format YYYY-MM-DD to MM-DD-YYYY
             block_date = block.created_at[:10]
