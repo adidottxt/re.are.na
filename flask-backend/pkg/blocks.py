@@ -106,6 +106,8 @@ def get_random_block(channel_id) -> int:
         if check_unique_data(block_id, BLOCK):
             try:
                 # get block info
+                # 403 UNAUTHORIZED HTTP ERROR HERE
+                # 404 NOT FOUND FOR URL GIVEN ERROR HERE
                 block = CLIENT.blocks.block(block_id)
 
                 # check block type
@@ -114,6 +116,7 @@ def get_random_block(channel_id) -> int:
 
                 # get the block's content, which is a URL or text depending
                 # on the block type
+                # TYPE ERROR HERE W ATTACHMENT
                 block_content = block.image['display']['url'] \
                     if block_type in ('Image', 'Link', 'Media') \
                     else block.image['display']['url'] if block_type == 'Attachment' \

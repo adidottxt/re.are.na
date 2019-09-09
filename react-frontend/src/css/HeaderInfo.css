@@ -1,7 +1,3 @@
-#header-info {
-    margin-bottom: 120px;
-}
-
 p#header-info-text {
     font-size: 16px;
     margin-left: 12%;
@@ -22,4 +18,32 @@ hr {
     color: #E5E5E5;
     height: 1px;
     border: 0;
+}
+
+@media (max-width: 1430px) {
+  p#header-info-text {
+      font-size: 14px;
+  }
+
+  p#header-info-description {
+      font-size: 14px;
+  }
+
+  hr {
+      width: 375px;
+  }
+}
+
+@media (max-width: 1040px) {
+  p#header-info-text {
+      font-size: 12px;
+  }
+
+  p#header-info-description {
+      font-size: 12px;
+  }
+
+  hr {
+      width: 300px;
+  }
 }

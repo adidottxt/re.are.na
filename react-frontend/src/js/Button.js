@@ -5,7 +5,9 @@ import '../css/Button.css'
 class Button extends Component {
     render() {
       return (
-        <button id='button' onClick={this._refreshPage}>{this.props.text}</button>
+        <div id='button-div'>
+          <button id='button' onClick={this._refreshPage}>{this.props.text}</button>
+        </div>
       )
     }
 

@@ -17,16 +17,16 @@ body {
 }
 
 #header-title {
-    margin-top: 2.3%;
-    margin-left: 2.4%;
+    margin-top: 32px;
+    margin-left: 30px;
     float: left;
     font-weight: bold;
     color: #17AC10;
 }
 
 #header-blocks {
-    margin-top: 2.85%;
-    margin-left: 3.5%;
+    margin-top: 40px;
+    margin-left: 50px;
     font-size: 18px;
     color: #17AC10;
     float: left;
@@ -34,8 +34,8 @@ body {
 
 #header-author {
     color: #17AC10;
-    margin-top: 3%;
-    margin-right: 2.4%;
+    margin-top: 42px;
+    margin-right: 30px;
     float: right;
     font-size: 16px;
 }
@@ -43,4 +43,24 @@ body {
 a {
     color: #17AC10;
     text-decoration: none;
+}
+
+@media (max-width: 1040px) {
+  body {
+    font-size: 24px;
+  }
+
+  #header-author {
+    font-size: 14px;
+  }
+
+  #header-blocks {
+    margin-top: 43px;
+    font-size: 16px;
+  }
+
+  #header-title {
+    margin-top: 36px;
+  }
+
 }

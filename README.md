@@ -17,7 +17,7 @@ random blocks from your profile.
 
 
 ### How to run
-- Assuming you've installed the application correctly, `./run.sh`.
+- Run `./run.sh`.
 
 
 ### Background
