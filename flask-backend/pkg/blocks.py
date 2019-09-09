@@ -49,17 +49,22 @@ def get_random_channels(username, number) -> List[str]:
 
     return:                 channel_slug: the random channel's unique URL
     '''
-    final_channel_ids = []
+    final_channel_ids = [] # type: List[str]
+    count = 0
 
     while True:
+        if count > 5:
+            print(HTTP_ERROR_MESSAGE)
+            print(final_channel_ids)
+            return final_channel_ids
         try:
             channels, _ = CLIENT.users.user(username).channels(per_page=100)
 
             # get all channel unique URLs -- are.na/username/channel-slug
-            all_channel_slugs = {chan.slug for chan in channels if chan.published}
+            all_chan_slugs = {chan.slug for chan in channels if chan.published}
 
             random_channel_slugs = [
-                random.sample(all_channel_slugs, 1)[0] \
+                random.sample(all_chan_slugs, 1)[0] \
                 for i in range(number)
             ]
 
@@ -72,6 +77,8 @@ def get_random_channels(username, number) -> List[str]:
 
             if len(final_channel_ids) == number:
                 return final_channel_ids
+
+            count += 1
 
         # HTTP error is usually down to the are.na API
         except HTTPError:
@@ -113,40 +120,40 @@ def get_random_block(channel_id) -> int:
                 # 403 UNAUTHORIZED HTTP ERROR HERE
                 # 404 NOT FOUND FOR URL GIVEN ERROR HERE
                 block = CLIENT.blocks.block(block_id)
-
-                # check block type
-                # (are.na's naming convention for this is class)
-                block_type = getattr(block, 'class')
-
-                # get the block's content, which is a URL or text depending
-                # on the block type
-                # TYPE ERROR HERE W ATTACHMENT
-                block_content = block.image['display']['url'] \
-                    if block_type in ('Image', 'Link', 'Media') \
-                    else block.image['display']['url'] if block_type == 'Attachment' \
-                    else block.content
-
-                # get block creation date, format YYYY-MM-DD to MM-DD-YYYY
-                block_date = block.created_at[:10]
-                block_date = '{}-{}'.format(block_date[5:], block_date[:4])
-
-                # create block data as a dict to be added to database
-                block_data = {
-                    'created_at': block_date,
-                    'block_type': getattr(block, 'class'),
-                    'block_url': 'https://www.are.na/block/{}'.format(block_id),
-                    'block_content': block_content,
-                    'channel_title': channel.title,
-                    'block_title': block.title if block.title else 'N/A',
-                    'block_id': block_id,
-                    'channel_id': channel_id
-                }
-
-                if add_to_db_block(block_data):
-                    break
-
-            # HTTP error is usually down to the are.na API
             except HTTPError:
                 print(HTTP_ERROR_MESSAGE)
+                continue
+
+            # check block type
+            # (are.na's naming convention for this is class)
+            block_type = getattr(block, 'class')
+
+            # get the block's content, which is a URL or text depending
+            # on the block type
+            # TYPE ERROR HERE W ATTACHMENT
+            block_content = block.image['display']['url'] \
+                if block_type in ('Image', 'Link', 'Media') \
+                else block.image['display']['url'] if block_type == 'Attachment' \
+                else block.content
+
+
+            # get block creation date, format YYYY-MM-DD to MM-DD-YYYY
+            block_date = block.created_at[:10]
+            block_date = '{}-{}'.format(block_date[5:], block_date[:4])
+
+            # create block data as a dict to be added to database
+            block_data = {
+                'created_at': block_date,
+                'block_type': getattr(block, 'class'),
+                'block_url': 'https://www.are.na/block/{}'.format(block_id),
+                'block_content': block_content,
+                'channel_title': channel.title,
+                'block_title': block.title if block.title else 'N/A',
+                'block_id': block_id,
+                'channel_id': channel_id
+            }
+
+            if add_to_db_block(block_data):
+                break
 
     return block_id
