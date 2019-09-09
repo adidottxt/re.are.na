@@ -3,10 +3,12 @@ blocks.py contains code that pertains to obtaining information
 about the are.na blocks to be presented on re.are.na
 '''
 import random
-from typing import List
+from typing import List, Set, Dict
 from urllib3.exceptions import HTTPError
 
 from arena import Arena
+from arena.channels import Channel
+from arena.blocks import Block
 
 from .config import ACCESS_TOKEN
 from .constants import HTTP_ERROR_MESSAGE, BLOCK, CHANNEL
@@ -20,69 +22,126 @@ from .db import (
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_random_blocks(number, user) -> List[int]:
+def get_all_channels(username: str) -> List[Channel]:
+    '''
+    description:            get a list of all Channel objects tied to
+                            the given user
+
+    param:                  username: the given user's username
+
+    return:                 A list of all the Channel objects tied to
+                            the given user
+    '''
+    return CLIENT.users.user(username).channels(per_page=100)[0]
+
+
+def get_block_object(block_id: int) -> Block:
+    '''
+    description:            get a block object with all of its data
+
+    param:                  block_id: the block's unique ID
+
+    return:                 Block object with all of its data
+    '''
+    return CLIENT.blocks.block(block_id)
+
+
+def get_channel_object(channel_id: int) -> Channel:
+    '''
+    description:            get a channel object with all of its data
+
+    param:                  channel_id: the channel's unique ID
+
+    return:                 Channel object with all of its data
+    '''
+    return CLIENT.channels.channel(channel_id)
+
+
+def get_channel_id(channel_slug: str) -> int:
+    '''
+    description:            get a channel's id from its slug
+
+    param:                  channel_slug: the channel's slug/URL
+
+    return:                 channel's unique ID
+    '''
+    return CLIENT.channels.channel(channel_slug).id
+
+
+def get_random_blocks(number: int, username: str) -> List[int]:
     '''
     description:            get a number of random blocks from
                             a user's channels
 
-    param:                 number: the number of blocks to return
+    param:                  number: the number of blocks to return
                             user: given user's slug/username
 
-    return:                block_ids: a list of random block IDs
+    return:                 block_ids: a list of random block IDs
     '''
     # this could be a list comprehension but for the print statement
     blocks = []
-    for i in range(number):
-        print('Getting info on block {} of {}...'.format(i + 1, number))
-        blocks.append(get_random_block(get_random_channel(user)))
+    channels = get_random_channels(number, username)
+
+    for count, channel in enumerate(channels):
+        print('Getting info on block {} of {}...'.format(count+1, len(channels)))
+        blocks.append(get_random_block(channel))
+
     return blocks
 
 
-def get_random_channel(username) -> str:
+def get_random_channels(number: int, username: str) -> List[int]:
     '''
     description:            get a random channel from a list of
                             a user's channels
 
-    param:                username: given user's username
+    param:                  username: given user's username
 
     return:                 channel_slug: the random channel's unique URL
     '''
+    final_channel_ids = [] # type: List[int]
+    count = 0
+
     while True:
-        try:
-            # get all of a given username's channels
-            channels, _ = CLIENT.users.user(username).channels(per_page=100)
 
-            # get all channel unique URLs -- are.na/username/channel-slug
-            channel_slugs = {chan.slug for chan in channels if chan.published}
-
-            # get random channel slug, and the corresponding channel id
-            channel_slug = random.sample(channel_slugs, 1)[0]
-            channel_id = CLIENT.channels.channel(channel_slug).id
-
-            # check if channel has been added to database before
-            if check_unique_data(channel_id, CHANNEL):
-                # add to database to ensure the next channel is unique
-                add_to_db_channel(channel_id, channel_slug)
-
-                # return channel id to be used to find a random block
-                return channel_id
-
-        # HTTP error is usually down to the are.na API
-        except HTTPError:
+        if count > 5:
             print(HTTP_ERROR_MESSAGE)
+            return final_channel_ids[-3:]
+
+        try:
+            channels = get_all_channels(username)
+        except HTTPError: # HTTP error is usually down to the are.na API
+            print(HTTP_ERROR_MESSAGE)
+            continue
+
+        # get all channel unique URLs -- are.na/username/channel-slug
+        all_chan_slugs = {chan.slug for chan in channels if chan.published}
+
+        random_channel_slugs = [
+            random.sample(all_chan_slugs, 1)[0] \
+            for i in range(number)
+        ]
+
+        for channel_slug in random_channel_slugs:
+            temp_channel_id = get_channel_id(channel_slug)
+
+            if check_unique_data(temp_channel_id, CHANNEL):
+                add_to_db_channel(temp_channel_id, channel_slug)
+                final_channel_ids.append(temp_channel_id)
+
+        if len(final_channel_ids) == number:
+            return final_channel_ids
+        count += 1
 
 
-def get_random_block(channel_id) -> int:
+def get_block_ids(channel: Channel) -> Set[int]:
     '''
-    description:            get a random block from a list of
-                            blocks within a user's channel
+    description:            get all block ids for a given channel
 
-    param:                  channel_slug: the channel's unique URL
+    param:                  channel: the channel object returned from
+                            the are.na client
 
-    return:                 block_id: the random block's unique id
+    return:                 a set of all block_ids for the given channel
     '''
-    # get channel info from the given channel id
-    channel = CLIENT.channels.channel(channel_id)
 
     # check how many pages are present based on length
     # (each page holds 100 blocks)
@@ -93,58 +152,78 @@ def get_random_block(channel_id) -> int:
         channel_pages += 1
 
     # get all unique block ids within this channel (all pages)
-    block_ids = {
+    return {
         block.id
         for i in range(1, channel_pages + 1)
         for block in channel.contents(page=i, per_page=100)[0]
     }
 
+
+def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
+    '''
+    description:            get all block data for a given block
+
+    param:                  block_id: the given block's block ID
+                            channel_title: the block's parent channel's title
+                            channel_id: the block's parent channel id
+
+    return:                 a set of all block_ids for the given channel
+    '''
+    block = get_block_object(block_id)
+
+    # are.na's naming convention for 'type' is class
+    block_type = getattr(block, 'class')
+
+    # get the block's content, which is a URL or text depending
+    # on the block type
+    block_content = block.image['display']['url'] \
+        if block_type in ('Image', 'Link', 'Media') \
+        else block.image['display']['url'] if block_type == 'Attachment' \
+        else block.content
+
+    # get block creation date, format YYYY-MM-DD to MM-DD-YYYY
+    block_date = block.created_at[:10]
+    block_date = '{}-{}'.format(block_date[5:], block_date[:4])
+
+    # create block data as a dict to be added to database
+    return {
+        'created_at': block_date,
+        'block_type': getattr(block, 'class'),
+        'block_url': 'https://www.are.na/block/{}'.format(block_id),
+        'block_content': block_content,
+        'channel_title': channel_title,
+        'block_title': block.title if block.title else 'N/A',
+        'block_id': block_id,
+        'channel_id': channel_id
+    }
+
+
+def get_random_block(channel_id: int) -> int:
+    '''
+    description:            get a random block from a list of
+                            blocks within a user's channel
+
+    param:                  channel_slug: the channel's unique URL
+
+    return:                 block_id: the random block's unique id
+    '''
+    channel = get_channel_object(channel_id)
+
+    # get all unique block ids within this channel (all pages)
+    block_ids = get_block_ids(channel)
+
     while True:
-        # get random block id
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):
+            # this doesn't work properly
             try:
-                # get block info
-                # 403 UNAUTHORIZED HTTP ERROR HERE
-                # 404 NOT FOUND FOR URL GIVEN ERROR HERE
-                block = CLIENT.blocks.block(block_id)
-
-                # check block type
-                # (are.na's naming convention for this is class)
-                block_type = getattr(block, 'class')
-
-                # get the block's content, which is a URL or text depending
-                # on the block type
-                # TYPE ERROR HERE W ATTACHMENT
-                block_content = block.image['display']['url'] \
-                    if block_type in ('Image', 'Link', 'Media') \
-                    else block.image['display']['url'] if block_type == 'Attachment' \
-                    else block.content
-
-                # get block creation date, format YYYY-MM-DD to MM-DD-YYYY
-                block_date = block.created_at[:10]
-                block_date = '{}-{}'.format(block_date[5:], block_date[:4])
-
-                # create block data as a dict to be added to database
-                block_data = {
-                    'created_at': block_date,
-                    'block_type': getattr(block, 'class'),
-                    'block_url': 'https://www.are.na/block/{}'.format(block_id),
-                    'block_content': block_content,
-                    'channel_title': channel.title,
-                    'block_title': block.title if block.title else 'N/A',
-                    'block_id': block_id,
-                    'channel_id': channel_id
-                }
-
-                # add to database, if it works, break from while loop
-                if add_to_db_block(block_data):
-                    break
-
-            # HTTP error is usually down to the are.na API
+                block_data = get_block_data(block_id, channel.title, channel_id)
             except HTTPError:
                 print(HTTP_ERROR_MESSAGE)
+                continue
 
-    # return block_id if all is successful
+            if add_to_db_block(block_data):
+                break
+
     return block_id

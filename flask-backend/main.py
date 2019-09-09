@@ -8,6 +8,7 @@ from flask_graphql import GraphQLView
 from flask_cors import CORS
 
 from pkg.schema import SCHEMA
+from pkg.constants import USERNAME
 from pkg.blocks import get_random_blocks
 from pkg.db import add_test_data, clear_database
 
@@ -34,7 +35,7 @@ def get_block_data() -> None:
     '''
     # only get blocks when specific request from UI is called
     if request.method == 'POST' and request.content_length == 333:
-        get_random_blocks(3, 'adi')
+        get_random_blocks(3, USERNAME)
 
 
 @APP.route('/')
