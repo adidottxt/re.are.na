@@ -2,6 +2,8 @@
 db.py contains code that pertains to sqlite3/database-specific functions
 '''
 # pylint: disable=no-member
+from typing import Dict
+
 from sqlalchemy.exc import DatabaseError
 
 from .models import DB_SESSION, ENGINE, Base, Channel, Block
@@ -44,7 +46,7 @@ def add_test_data() -> None:
     # commit test block + channel to database
     DB_SESSION.commit()
 
-def check_unique_data(data_id, data_type) -> bool:
+def check_unique_data(data_id: int, data_type: str) -> bool:
     '''
     description:            check if a data_id has been stored in
                             the database
@@ -58,7 +60,6 @@ def check_unique_data(data_id, data_type) -> bool:
         result = str(SCHEMA.execute(CHANNEL_CHECK).data)
 
         # check if given channel id is present in result
-        # if it isn't, then channel id is unique, return True, else return False
         if "('channelId', '{}')".format(data_id) not in result:
             return True
         return False
@@ -68,7 +69,6 @@ def check_unique_data(data_id, data_type) -> bool:
         result = str(SCHEMA.execute(BLOCK_CHECK).data)
 
         # check if given block is present in result
-        # if it isn't, then block id is unique, return True, else return False
         if "('blockId', '{}')".format(data_id) not in result:
             return True
         return False
@@ -86,7 +86,7 @@ def clear_database() -> None:
     DB_SESSION.remove()
 
 
-def add_to_db_channel(channel_id, slug) -> bool:
+def add_to_db_channel(channel_id: int, slug: str) -> bool:
     '''
     description:            add channel information to our database
 
@@ -111,7 +111,7 @@ def add_to_db_channel(channel_id, slug) -> bool:
         return False
 
 
-def add_to_db_block(block_data) -> bool:
+def add_to_db_block(block_data: Dict) -> bool:
     '''
     description:            add block information to our database
 

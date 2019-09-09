@@ -22,14 +22,20 @@ from .db import (
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_all_channels(username) -> List:
+def get_all_channels(username: str) -> List[Channel]:
     '''
-    get all channel data
+    description:            get a list of all Channel objects tied to
+                            the given user
+
+    param:                  username: the given user's username
+
+    return:                 A list of all the Channel objects tied to
+                            the given user
     '''
     return CLIENT.users.user(username).channels(per_page=100)[0]
 
 
-def get_block_object(block_id) -> Block:
+def get_block_object(block_id: int) -> Block:
     '''
     description:            get a block object with all of its data
 
@@ -40,7 +46,7 @@ def get_block_object(block_id) -> Block:
     return CLIENT.blocks.block(block_id)
 
 
-def get_channel_object(channel_id) -> Channel:
+def get_channel_object(channel_id: int) -> Channel:
     '''
     description:            get a channel object with all of its data
 
@@ -51,7 +57,7 @@ def get_channel_object(channel_id) -> Channel:
     return CLIENT.channels.channel(channel_id)
 
 
-def get_channel_id(channel_slug) -> int:
+def get_channel_id(channel_slug: str) -> int:
     '''
     description:            get a channel's id from its slug
 
@@ -62,7 +68,7 @@ def get_channel_id(channel_slug) -> int:
     return CLIENT.channels.channel(channel_slug).id
 
 
-def get_random_blocks(number, username) -> List[int]:
+def get_random_blocks(number: int, username: str) -> List[int]:
     '''
     description:            get a number of random blocks from
                             a user's channels
@@ -74,7 +80,7 @@ def get_random_blocks(number, username) -> List[int]:
     '''
     # this could be a list comprehension but for the print statement
     blocks = []
-    channels = get_random_channels(username, number)
+    channels = get_random_channels(number, username)
 
     for count, channel in enumerate(channels):
         print('Getting info on block {} of {}...'.format(count+1, len(channels)))
@@ -83,7 +89,7 @@ def get_random_blocks(number, username) -> List[int]:
     return blocks
 
 
-def get_random_channels(username, number) -> List[int]:
+def get_random_channels(number: int, username: str) -> List[int]:
     '''
     description:            get a random channel from a list of
                             a user's channels
@@ -124,11 +130,10 @@ def get_random_channels(username, number) -> List[int]:
 
         if len(final_channel_ids) == number:
             return final_channel_ids
-
         count += 1
 
 
-def get_block_ids(channel) -> Set[int]:
+def get_block_ids(channel: Channel) -> Set[int]:
     '''
     description:            get all block ids for a given channel
 
@@ -136,9 +141,6 @@ def get_block_ids(channel) -> Set[int]:
                             the are.na client
 
     return:                 a set of all block_ids for the given channel
-    '''
-    '''
-    get all block ids for a given channel
     '''
 
     # check how many pages are present based on length
@@ -157,9 +159,15 @@ def get_block_ids(channel) -> Set[int]:
     }
 
 
-def get_block_data(block_id, channel_title, channel_id) -> Dict:
+def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     '''
-    get all block data
+    description:            get all block data for a given block
+
+    param:                  block_id: the given block's block ID
+                            channel_title: the block's parent channel's title
+                            channel_id: the block's parent channel id
+
+    return:                 a set of all block_ids for the given channel
     '''
     block = get_block_object(block_id)
 
@@ -190,7 +198,7 @@ def get_block_data(block_id, channel_title, channel_id) -> Dict:
     }
 
 
-def get_random_block(channel_id) -> int:
+def get_random_block(channel_id: int) -> int:
     '''
     description:            get a random block from a list of
                             blocks within a user's channel
