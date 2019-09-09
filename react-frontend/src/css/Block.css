@@ -3,7 +3,6 @@
     width: 500px;
     height: 500px;
     margin-left: 12%;
-    margin-bottom: 8.7%;
     float: left;
 }
 
@@ -16,4 +15,39 @@ img {
     height: 100%;
     width: 100%;
     object-fit: contain;
+}
+
+@media (max-width: 1750px) {
+  #media-block {
+      width: 450px;
+      height: 450px;
+  }
+}
+
+@media (max-width: 1600px) {
+  #media-block {
+      width: 400px;
+      height: 400px;
+  }
+}
+
+@media (max-width: 1430px) {
+  #media-block {
+      width: 375px;
+      height: 375px;
+  }
+}
+
+@media (max-width: 1210px) {
+  #media-block {
+      width: 350px;
+      height: 350px;
+  }
+}
+
+@media (max-width: 1040px) {
+  #media-block {
+      width: 300px;
+      height: 300px;
+  }
 }
