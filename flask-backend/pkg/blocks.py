@@ -20,52 +20,58 @@ from .db import (
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_random_blocks(number, user) -> List[int]:
+def get_random_blocks(number, username) -> List[int]:
     '''
     description:            get a number of random blocks from
                             a user's channels
 
-    param:                 number: the number of blocks to return
+    param:                  number: the number of blocks to return
                             user: given user's slug/username
 
-    return:                block_ids: a list of random block IDs
+    return:                 block_ids: a list of random block IDs
     '''
     # this could be a list comprehension but for the print statement
     blocks = []
+    channels = get_random_channels(username, number)
+
     for i in range(number):
         print('Getting info on block {} of {}...'.format(i + 1, number))
-        blocks.append(get_random_block(get_random_channel(user)))
+        blocks.append(get_random_block(channels[i]))
+
     return blocks
 
-
-def get_random_channel(username) -> str:
+def get_random_channels(username, number) -> List[str]:
     '''
     description:            get a random channel from a list of
                             a user's channels
 
-    param:                username: given user's username
+    param:                  username: given user's username
 
     return:                 channel_slug: the random channel's unique URL
     '''
+    final_channel_ids = []
+
     while True:
         try:
-            # get all of a given username's channels
             channels, _ = CLIENT.users.user(username).channels(per_page=100)
 
             # get all channel unique URLs -- are.na/username/channel-slug
-            channel_slugs = {chan.slug for chan in channels if chan.published}
+            all_channel_slugs = {chan.slug for chan in channels if chan.published}
 
-            # get random channel slug, and the corresponding channel id
-            channel_slug = random.sample(channel_slugs, 1)[0]
-            channel_id = CLIENT.channels.channel(channel_slug).id
+            random_channel_slugs = [
+                random.sample(all_channel_slugs, 1)[0] \
+                for i in range(number)
+            ]
 
-            # check if channel has been added to database before
-            if check_unique_data(channel_id, CHANNEL):
-                # add to database to ensure the next channel is unique
-                add_to_db_channel(channel_id, channel_slug)
+            for channel_slug in random_channel_slugs:
+                temp_channel_id = CLIENT.channels.channel(channel_slug).id
 
-                # return channel id to be used to find a random block
-                return channel_id
+                if check_unique_data(temp_channel_id, CHANNEL):
+                    add_to_db_channel(temp_channel_id, channel_slug)
+                    final_channel_ids.append(temp_channel_id)
+
+            if len(final_channel_ids) == number:
+                return final_channel_ids
 
         # HTTP error is usually down to the are.na API
         except HTTPError:
@@ -81,7 +87,6 @@ def get_random_block(channel_id) -> int:
 
     return:                 block_id: the random block's unique id
     '''
-    # get channel info from the given channel id
     channel = CLIENT.channels.channel(channel_id)
 
     # check how many pages are present based on length
@@ -100,7 +105,6 @@ def get_random_block(channel_id) -> int:
     }
 
     while True:
-        # get random block id
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):
@@ -138,7 +142,6 @@ def get_random_block(channel_id) -> int:
                     'channel_id': channel_id
                 }
 
-                # add to database, if it works, break from while loop
                 if add_to_db_block(block_data):
                     break
 
@@ -146,5 +149,4 @@ def get_random_block(channel_id) -> int:
             except HTTPError:
                 print(HTTP_ERROR_MESSAGE)
 
-    # return block_id if all is successful
     return block_id
