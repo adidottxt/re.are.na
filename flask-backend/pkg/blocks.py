@@ -55,7 +55,6 @@ def get_random_channels(username, number) -> List[str]:
     while True:
         if count > 5:
             print(HTTP_ERROR_MESSAGE)
-            print(final_channel_ids)
             return final_channel_ids
         try:
             channels, _ = CLIENT.users.user(username).channels(per_page=100)

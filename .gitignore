@@ -1,8 +1,9 @@
 # TODO file
 TODO.md
 
-# Config files
+# Config/test files
 config.py
+test.py
 
 # Database file
 database.sqlite3
