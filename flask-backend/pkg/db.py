@@ -96,6 +96,7 @@ def clear_database() -> bool:
     except DatabaseError:
         return False
 
+
 def add_channel_to_db(channel_id: int, slug: str) -> bool:
     '''
     description:            add channel information to our database

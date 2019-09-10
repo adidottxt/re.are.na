@@ -18,6 +18,8 @@ clean:
 	@rm -rf .tox/;
 	@rm -rf re.are.na.egg-info/;
 	@rm -rf flask-backend/database.sqlite3;
+	@rm -rf flask-backend/tests/database.sqlite3;
+	@rm -rf flask-backend/tests/__pycache__;
 
 .PHONY: run
 run:
