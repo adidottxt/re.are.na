@@ -16,8 +16,7 @@ random blocks from your profile.
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
   - `source venv/bin/activate` to activate the virtual environment.
-  - `make install` to install the application.
-  - `make run` to run the application.
+  - `make all` to install and run the application.
 
 
 ### Background
