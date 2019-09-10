@@ -1,6 +1,9 @@
 # TODO file
 TODO.md
 
+# package lock that changes w every install
+react-frontend/package-lock.json
+
 # Config/test files
 config.py
 test.py

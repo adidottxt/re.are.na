@@ -3,7 +3,7 @@ A web app that enables spaced repetition for Are.na blocks -- serving up three
 random blocks from your profile.
 
 
-### How to install
+### How to install & run
 1. Clone this repository.
 2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications), filling out the required
   information. When you're done, you should have a personal access token on
@@ -13,11 +13,11 @@ random blocks from your profile.
   ```python
   ACCESS_TOKEN = 'your are.na personal access token here'
   ```
-4. Run `./install.sh` to set up the application.
-
-
-### How to run
-- Run `./run.sh`.
+4. Run the following instructions:
+  - `make venv` to set up a virtual environment.
+  - `source venv/bin/activate` to activate the virtual environment.
+  - `make install` to install the application.
+  - `make run` to run the application.
 
 
 ### Background
