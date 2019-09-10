@@ -13,8 +13,8 @@ from arena.blocks import Block
 from .config import ACCESS_TOKEN
 from .constants import HTTP_ERROR_MESSAGE, BLOCK, CHANNEL
 from .db import (
-    add_to_db_channel,
-    add_to_db_block,
+    add_channel_to_db,
+    add_block_to_db,
     check_unique_data,
 )
 
@@ -68,6 +68,25 @@ def get_channel_id(channel_slug: str) -> int:
     return CLIENT.channels.channel(channel_slug).id
 
 
+def get_blocks(count: int, total: int, channel_id: int) -> int:
+    '''
+    description:            wrapping get_random_block() with a print statement
+                            for clarity on back-end functionality
+
+    param:                  count: the block # that is being called
+                            total: how many blocks in total are being called
+                            channel: the channel ID of the channel we're
+                                     getting the block from
+
+    return:                 a block_id from the given channel
+    '''
+    '''
+    get random block + print statement for back end clarity
+    '''
+    print('Getting info on block {} of {}...'.format(count+1, total))
+    return get_random_block(channel_id)
+
+
 def get_random_blocks(number: int, username: str) -> List[int]:
     '''
     description:            get a number of random blocks from
@@ -78,16 +97,10 @@ def get_random_blocks(number: int, username: str) -> List[int]:
 
     return:                 block_ids: a list of random block IDs
     '''
-    # this could be a list comprehension but for the print statement
-
-    blocks = [] # type: List[int]
     channels = get_random_channels(number, username)
 
-    for count, channel in enumerate(channels):
-        print('Getting info on block {} of {}...'.format(count+1, len(channels)))
-        blocks.append(get_random_block(channel))
-
-    return blocks
+    return [get_blocks(count, len(channels), channel_id) \
+              for count, channel_id in enumerate(channels)]
 
 
 def get_random_channels(number: int, username: str) -> List[int]:
@@ -126,7 +139,7 @@ def get_random_channels(number: int, username: str) -> List[int]:
             temp_channel_id = get_channel_id(channel_slug)
 
             if check_unique_data(temp_channel_id, CHANNEL):
-                add_to_db_channel(temp_channel_id, channel_slug)
+                add_channel_to_db(temp_channel_id, channel_slug)
                 final_channel_ids.append(temp_channel_id)
 
         if len(final_channel_ids) == number:
@@ -224,7 +237,7 @@ def get_random_block(channel_id: int) -> int:
                 print(HTTP_ERROR_MESSAGE)
                 continue
 
-            if add_to_db_block(block_data):
+            if add_block_to_db(block_data):
                 break
 
     return block_id
