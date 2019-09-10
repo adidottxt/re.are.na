@@ -79,7 +79,8 @@ def get_random_blocks(number: int, username: str) -> List[int]:
     return:                 block_ids: a list of random block IDs
     '''
     # this could be a list comprehension but for the print statement
-    blocks = []
+
+    blocks = [] # type: List[int]
     channels = get_random_channels(number, username)
 
     for count, channel in enumerate(channels):

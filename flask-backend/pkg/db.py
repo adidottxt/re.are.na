@@ -11,40 +11,46 @@ from .schema import SCHEMA
 from .constants import CHANNEL_CHECK, BLOCK_CHECK, BLOCK, CHANNEL
 
 
-def add_test_data() -> None:
+def add_test_data() -> bool:
     '''
     description:            this function adds test data to the
                             sqlite3 database used by this application
 
     return:                 None
     '''
-    # reset database
-    Base.metadata.drop_all(bind=ENGINE)
-    Base.metadata.create_all(bind=ENGINE)
+    try:
+        # reset database
+        Base.metadata.drop_all(bind=ENGINE)
+        Base.metadata.create_all(bind=ENGINE)
 
-    # create test channel to be added to the database
-    test_chan = Channel(channel_id=0, slug='test_channel')
+        # create test channel to be added to the database
+        test_chan = Channel(channel_id=0, slug='test_channel')
 
-    # add test channel to the current session
-    DB_SESSION.add(test_chan)
+        # add test channel to the current session
+        DB_SESSION.add(test_chan)
 
-    # create a test block to be added to the database
-    test_block = Block(
-        block_id=0,
-        channel_id=0,
-        block_type='test',
-        block_url='test',
-        block_content='test',
-        channel_title='test',
-        block_title='test',
-        block_create_date='test',
-    )
+        # create a test block to be added to the database
+        test_block = Block(
+            block_id=0,
+            channel_id=0,
+            block_type='test',
+            block_url='test',
+            block_content='test',
+            channel_title='test',
+            block_title='test',
+            block_create_date='test',
+        )
 
-    # add test block to the current session
-    DB_SESSION.add(test_block)
+        # add test block to the current session
+        DB_SESSION.add(test_block)
 
-    # commit test block + channel to database
-    DB_SESSION.commit()
+        # commit test block + channel to database
+        DB_SESSION.commit()
+        return True
+
+    except DatabaseError:
+        return False
+
 
 def check_unique_data(data_id: int, data_type: str) -> bool:
     '''
@@ -77,14 +83,18 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
     return False
 
 
-def clear_database() -> None:
+def clear_database() -> bool:
     '''
     description:            clear any data stored in the database
 
     return:                 None
     '''
-    DB_SESSION.remove()
+    try:
+        DB_SESSION.remove()
+        return True
 
+    except DatabaseError:
+        return False
 
 def add_to_db_channel(channel_id: int, slug: str) -> bool:
     '''
