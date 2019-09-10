@@ -8,3 +8,5 @@ HTTP_ERROR_MESSAGE = 'HTTPError: are.na API may have issues, trying again...'
 BLOCK = 'block'
 CHANNEL = 'channel'
 USERNAME = 'adi'
+TEST_CHANNEL_ID = 469043
+TEST_BLOCK_ID = 4996042

@@ -140,14 +140,14 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
 
     param:                  username: given user's username
 
-    return:                 channel_slug: the random channel's unique URL
+    return:                 final_channel_ids: the random channels' unique ids
     '''
     final_channel_ids = [] # type: List[int]
     count = 0
 
     while True:
 
-        if count > 5:
+        if count == 3:
             print(HTTP_ERROR_MESSAGE)
             return final_channel_ids[-3:]
 
