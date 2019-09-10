@@ -138,7 +138,8 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
     description:            get a random channel from a list of
                             a user's channels
 
-    param:                  username: given user's username
+    param:                  number: the number of channels requested
+                            username: given user's username
 
     return:                 final_channel_ids: the random channels' unique ids
     '''

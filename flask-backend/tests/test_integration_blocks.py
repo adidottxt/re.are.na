@@ -9,10 +9,11 @@ from pkg.blocks import (
 )
 
 from pkg.constants import (
-    USERNAME,
     TEST_CHANNEL_ID,
     TEST_BLOCK_ID,
 )
+
+from pkg.config import USERNAME
 
 
 def test_get_random_blocks():
