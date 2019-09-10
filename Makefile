@@ -20,6 +20,7 @@ clean:
 	@rm -rf flask-backend/database.sqlite3;
 	@rm -rf flask-backend/tests/database.sqlite3;
 	@rm -rf flask-backend/tests/__pycache__;
+	@rm -rf .pytest_cache/;
 
 .PHONY: run
 run:
