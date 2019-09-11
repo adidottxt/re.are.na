@@ -3,9 +3,9 @@ import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 
 import Row from "./Row"
+import EmptyRow from "./EmptyRow"
 import TextRow from "./TextRow"
 
-import "../css/RowList.css"
 
 const getBlocksDataQuery = gql`
 {
@@ -32,9 +32,11 @@ class RowList extends Component {
       var data = this.props.data;
       if (data.loading) {
           return (
-            <div id='loading-screen'>
-              <img src='../static/loading.gif' alt='loading' id='loading'/>
-            </div>
+            <>
+              <EmptyRow />
+              <EmptyRow />
+              <EmptyRow />
+            </>
           )
       } else {
           var i;
