@@ -4,7 +4,7 @@ about the are.na blocks to be presented on re.are.na
 '''
 import random
 from typing import List, Set, Dict
-from urllib3.exceptions import HTTPError
+from requests import exceptions
 
 from arena import Arena
 from arena.channels import Channel
@@ -106,7 +106,8 @@ def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     '''
     try:
         block = get_block_object(block_id)
-    except HTTPError:
+
+    except exceptions.RequestException:
         return dict()
 
     # are.na's naming convention for 'type' is class
@@ -156,7 +157,9 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
 
         try:
             channels = get_all_user_channels(username)
-        except HTTPError: # HTTP error is usually down to the are.na API
+
+        # HTTP error is usually down to the are.na API
+        except exceptions.RequestException:
             print(HTTP_ERROR_MESSAGE)
             continue
 
@@ -201,6 +204,7 @@ def get_block_from_channel(channel_id: int) -> int:
         if check_unique_data(block_id, BLOCK):
             block_data = get_block_data(block_id, channel.title, channel_id)
             if not block_data:
+                print('one of these, do we only have 2?')
                 continue
             if add_block_to_db(block_data):
                 break
