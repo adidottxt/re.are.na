@@ -9,3 +9,4 @@ BLOCK = 'block'
 CHANNEL = 'channel'
 TEST_CHANNEL_ID = 469043
 TEST_BLOCK_ID = 4996042
+TEST_CHANNEL_SLUG = 'test-wdcl2dwjvri'

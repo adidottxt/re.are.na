@@ -150,7 +150,7 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
 
         if count == 3:
             print(HTTP_ERROR_MESSAGE)
-            return final_channel_ids[-3:]
+            return final_channel_ids[-number:]
 
         try:
             channels = get_all_user_channels(username)
