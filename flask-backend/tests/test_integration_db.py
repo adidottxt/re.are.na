@@ -116,9 +116,3 @@ def test_add_test_data():
     assert not check_unique_data(TEST_DB_BLOCK_ID, BLOCK)
 
     clear_database()
-
-
-def test_clear_database():
-    '''
-    test clear_database()
-    '''
