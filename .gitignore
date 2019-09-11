@@ -63,6 +63,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+flask-backend/tests/snapshots/
 
 # Translations
 *.mo

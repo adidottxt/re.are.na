@@ -147,8 +147,6 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
     count = 0
 
     while True:
-        print("stuck here")
-
         if count == 3:
             print(HTTP_ERROR_MESSAGE)
             return final_channel_ids[-number:]
@@ -222,9 +220,6 @@ def get_block_and_status(count: int, total: int, channel_id: int) -> int:
                                      getting the block from
 
     return:                 a block_id from the given channel
-    '''
-    '''
-    get random block + print statement for back end clarity
     '''
     print('Getting info on block {} of {}...'.format(count+1, total))
     return get_block_from_channel(channel_id)

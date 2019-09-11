@@ -77,7 +77,6 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
     if data_type is CHANNEL:
         # get channel data present in database with CHANNEL_CHECK graphql query
         result = str(SCHEMA.execute(CHANNEL_CHECK).data)
-        print(result)
 
         # check if given channel id is present in result
         if "('channelId', '{}')".format(data_id) not in result:
@@ -147,7 +146,6 @@ def add_block_to_db(block_data: Dict) -> bool:
     return:                 True if added successfully, False otherwise
     '''
     try:
-        print(block_data, "BEFORE")
         # create block using block_data
         block = Block(
             block_create_date=block_data['created_at'],

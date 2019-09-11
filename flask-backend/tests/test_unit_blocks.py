@@ -1,17 +1,16 @@
 '''
 Trying to test blocks
 '''
-from typing import List
-
 from pkg.blocks import (
-    get_channels_from_user,
     get_channel_id,
     get_block_object,
     get_channel_object,
     get_block_ids,
+    get_block_and_status,
+    get_block_from_channel,
+    get_block_data,
+    get_all_user_channels
 )
-
-from pkg.config import USERNAME
 
 from pkg.constants import (
     TEST_BLOCK_ID,
@@ -19,60 +18,72 @@ from pkg.constants import (
     TEST_CHANNEL_SLUG
 )
 
-def test_get_channels_from_user():
+from pkg.db import add_test_data, clear_database
+from pkg.config import USERNAME
+
+
+def test_get_all_user_channels(snapshot):
     '''
-    testing channel list
+    testing get_all_user_channels
     '''
-    channels = get_channels_from_user(1, USERNAME)
-
-    assert len(channels) == 1
-    assert isinstance(channels, List)
-    assert isinstance(channels[0], int)
-
-    more_channels = get_channels_from_user(2, USERNAME)
-
-    assert len(more_channels) == 2
-    assert isinstance(more_channels, List)
-    assert isinstance(more_channels[0], int)
-    assert isinstance(more_channels[1], int)
-    assert channels[0] not in more_channels
+    test_all_chans = get_all_user_channels(USERNAME)
+    snapshot.assert_match(test_all_chans)
 
 
-def test_get_block_object():
+def test_get_block_data(snapshot):
+    '''
+    testing get_block_data
+    '''
+    test_block = get_block_data(TEST_BLOCK_ID, 'test', TEST_CHANNEL_ID)
+    snapshot.assert_match(test_block)
+
+
+def test_get_block_object(snapshot):
     '''
     testing get_block_object
     '''
     test_block = get_block_object(TEST_BLOCK_ID)
-
-    assert str(test_block.created_at) == '2019-09-10T21:36:21.270Z'
-    assert getattr(test_block, 'class') == 'Text'
-    assert test_block.id == TEST_BLOCK_ID
-    assert test_block.base_class == 'Block'
-    assert test_block.content == 'test'
+    snapshot.assert_match(test_block)
 
 
-def test_get_channel_object():
+def test_get_channel_object(snapshot):
     '''
     testing get_channel_object'''
     test_channel = get_channel_object(TEST_CHANNEL_ID)
-
-    assert str(test_channel.created_at) == '2019-09-10T21:25:12.325Z'
-    assert test_channel.title == 'test'
-    assert test_channel.id == TEST_CHANNEL_ID
-    assert test_channel.status == 'closed'
-    assert test_channel.length == 1
-    assert test_channel.slug == TEST_CHANNEL_SLUG
+    snapshot.assert_match(test_channel)
 
 
-def test_get_channel_id():
+def test_get_channel_id(snapshot):
     '''
     testing get_channel_id
     '''
-    assert get_channel_id(TEST_CHANNEL_SLUG) == TEST_CHANNEL_ID
+    test_chan_id = get_channel_id(TEST_CHANNEL_SLUG)
+    snapshot.assert_match(test_chan_id)
 
 
-def test_get_block_ids():
+def test_get_block_ids(snapshot):
     '''
     testing get_block_ids
     '''
-    assert get_block_ids(get_channel_object(TEST_CHANNEL_ID)) == {TEST_BLOCK_ID}
+    block_ids = get_block_ids(get_channel_object(TEST_CHANNEL_ID))
+    snapshot.assert_match(block_ids)
+
+
+def test_get_block_and_status(snapshot):
+    '''
+    test get_block_and_status
+    '''
+    block = get_block_and_status(0, 1, TEST_CHANNEL_ID)
+    snapshot.assert_match(block)
+
+
+def test_get_block_from_channel(snapshot):
+    '''
+    test get_block_from_channel
+    '''
+    add_test_data()
+
+    block = get_block_from_channel(TEST_CHANNEL_ID)
+    snapshot.assert_match(block)
+
+    clear_database()
