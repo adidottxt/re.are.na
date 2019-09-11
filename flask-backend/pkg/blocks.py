@@ -13,8 +13,8 @@ from arena.blocks import Block
 from .config import ACCESS_TOKEN
 from .constants import HTTP_ERROR_MESSAGE, BLOCK, CHANNEL
 from .db import (
-    add_to_db_channel,
-    add_to_db_block,
+    add_channel_to_db,
+    add_block_to_db,
     check_unique_data,
 )
 
@@ -22,7 +22,7 @@ from .db import (
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_all_channels(username: str) -> List[Channel]:
+def get_all_user_channels(username: str) -> List[Channel]:
     '''
     description:            get a list of all Channel objects tied to
                             the given user
@@ -66,72 +66,6 @@ def get_channel_id(channel_slug: str) -> int:
     return:                 channel's unique ID
     '''
     return CLIENT.channels.channel(channel_slug).id
-
-
-def get_random_blocks(number: int, username: str) -> List[int]:
-    '''
-    description:            get a number of random blocks from
-                            a user's channels
-
-    param:                  number: the number of blocks to return
-                            user: given user's slug/username
-
-    return:                 block_ids: a list of random block IDs
-    '''
-    # this could be a list comprehension but for the print statement
-
-    blocks = [] # type: List[int]
-    channels = get_random_channels(number, username)
-
-    for count, channel in enumerate(channels):
-        print('Getting info on block {} of {}...'.format(count+1, len(channels)))
-        blocks.append(get_random_block(channel))
-
-    return blocks
-
-
-def get_random_channels(number: int, username: str) -> List[int]:
-    '''
-    description:            get a random channel from a list of
-                            a user's channels
-
-    param:                  username: given user's username
-
-    return:                 channel_slug: the random channel's unique URL
-    '''
-    final_channel_ids = [] # type: List[int]
-    count = 0
-
-    while True:
-
-        if count > 5:
-            print(HTTP_ERROR_MESSAGE)
-            return final_channel_ids[-3:]
-
-        try:
-            channels = get_all_channels(username)
-        except HTTPError: # HTTP error is usually down to the are.na API
-            print(HTTP_ERROR_MESSAGE)
-            continue
-
-        # get all channel unique URLs -- are.na/username/channel-slug
-        all_chan_slugs = {chan.slug for chan in channels if chan.published}
-
-        random_channel_slugs = [
-            random.sample(all_chan_slugs, 1)[0] \
-            for i in range(number)
-        ]
-
-        for channel_slug in random_channel_slugs:
-            temp_channel_id = get_channel_id(channel_slug)
-
-            if check_unique_data(temp_channel_id, CHANNEL):
-                add_to_db_channel(temp_channel_id, channel_slug)
-                final_channel_ids.append(temp_channel_id)
-
-        if len(final_channel_ids) == number:
-            return final_channel_ids
-        count += 1
 
 
 def get_block_ids(channel: Channel) -> Set[int]:
@@ -199,7 +133,51 @@ def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     }
 
 
-def get_random_block(channel_id: int) -> int:
+def get_channels_from_user(number: int, username: str) -> List[int]:
+    '''
+    description:            get a random channel from a list of
+                            a user's channels
+
+    param:                  number: the number of channels requested
+                            username: given user's username
+
+    return:                 final_channel_ids: the random channels' unique ids
+    '''
+    final_channel_ids = [] # type: List[int]
+    count = 0
+
+    while True:
+        if count == 3:
+            print(HTTP_ERROR_MESSAGE)
+            return final_channel_ids[-number:]
+
+        try:
+            channels = get_all_user_channels(username)
+        except HTTPError: # HTTP error is usually down to the are.na API
+            print(HTTP_ERROR_MESSAGE)
+            continue
+
+        # get all channel unique URLs -- are.na/username/channel-slug
+        all_chan_slugs = {chan.slug for chan in channels if chan.published}
+
+        random_channel_slugs = [
+            random.sample(all_chan_slugs, 1)[0] \
+            for i in range(number)
+        ]
+
+        for channel_slug in random_channel_slugs:
+            temp_channel_id = get_channel_id(channel_slug)
+
+            if check_unique_data(temp_channel_id, CHANNEL):
+                add_channel_to_db(temp_channel_id, channel_slug)
+                final_channel_ids.append(temp_channel_id)
+
+        if len(final_channel_ids) == number:
+            return final_channel_ids
+        count += 1
+
+
+def get_block_from_channel(channel_id: int) -> int:
     '''
     description:            get a random block from a list of
                             blocks within a user's channel
@@ -214,6 +192,7 @@ def get_random_block(channel_id: int) -> int:
     block_ids = get_block_ids(channel)
 
     while True:
+
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):
@@ -224,7 +203,39 @@ def get_random_block(channel_id: int) -> int:
                 print(HTTP_ERROR_MESSAGE)
                 continue
 
-            if add_to_db_block(block_data):
+            if add_block_to_db(block_data):
                 break
 
     return block_id
+
+
+def get_block_and_status(count: int, total: int, channel_id: int) -> int:
+    '''
+    description:            wrapping get_random_block() with a print statement
+                            for clarity on back-end functionality
+
+    param:                  count: the block # that is being called
+                            total: how many blocks in total are being called
+                            channel: the channel ID of the channel we're
+                                     getting the block from
+
+    return:                 a block_id from the given channel
+    '''
+    print('Getting info on block {} of {}...'.format(count+1, total))
+    return get_block_from_channel(channel_id)
+
+
+def get_random_blocks(number: int, username: str) -> List[int]:
+    '''
+    description:            get a number of random blocks from
+                            a user's channels
+
+    param:                  number: the number of blocks to return
+                            user: given user's slug/username
+
+    return:                 block_ids: a list of random block IDs
+    '''
+    channels = get_channels_from_user(number, username)
+
+    return [get_block_and_status(count, len(channels), channel_id) \
+              for count, channel_id in enumerate(channels)]

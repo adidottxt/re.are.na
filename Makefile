@@ -17,7 +17,12 @@ clean:
 	@rm -rf .mypy_cache/;
 	@rm -rf .tox/;
 	@rm -rf re.are.na.egg-info/;
+	@rm -rf database.sqlite3;
 	@rm -rf flask-backend/database.sqlite3;
+	@rm -rf flask-backend/pkg/__pycache__/;
+	@rm -rf flask-backend/tests/database.sqlite3;
+	@rm -rf flask-backend/tests/__pycache__/;
+	@rm -rf .pytest_cache/;
 
 .PHONY: run
 run:
