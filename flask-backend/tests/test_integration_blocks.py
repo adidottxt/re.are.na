@@ -50,7 +50,7 @@ def test_get_block_and_status():
     '''
     test get_block_and_status
     '''
-    block = get_block_and_status(1, 1, TEST_CHANNEL_ID)
+    block = get_block_and_status(0, 1, TEST_CHANNEL_ID)
     assert isinstance(block, int)
     assert block == TEST_BLOCK_ID
 

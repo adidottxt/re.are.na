@@ -147,6 +147,7 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
     count = 0
 
     while True:
+        print("stuck here")
 
         if count == 3:
             print(HTTP_ERROR_MESSAGE)
@@ -193,6 +194,7 @@ def get_block_from_channel(channel_id: int) -> int:
     block_ids = get_block_ids(channel)
 
     while True:
+
         block_id = int(random.sample(block_ids, 1)[0])
 
         if check_unique_data(block_id, BLOCK):

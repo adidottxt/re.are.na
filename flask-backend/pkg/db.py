@@ -6,9 +6,22 @@ from typing import Dict
 
 from sqlalchemy.exc import DatabaseError
 
-from .models import DB_SESSION, ENGINE, Base, Channel, Block
+from .models import (
+    DB_SESSION,
+    ENGINE,
+    Base,
+    Channel,
+    Block
+)
+
+from .constants import (
+    CHANNEL_CHECK,
+    BLOCK_CHECK,
+    BLOCK,
+    CHANNEL
+)
+
 from .schema import SCHEMA
-from .constants import CHANNEL_CHECK, BLOCK_CHECK, BLOCK, CHANNEL
 
 
 def add_test_data() -> bool:
@@ -64,6 +77,7 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
     if data_type is CHANNEL:
         # get channel data present in database with CHANNEL_CHECK graphql query
         result = str(SCHEMA.execute(CHANNEL_CHECK).data)
+        print(result)
 
         # check if given channel id is present in result
         if "('channelId', '{}')".format(data_id) not in result:
@@ -75,7 +89,7 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
         result = str(SCHEMA.execute(BLOCK_CHECK).data)
 
         # check if given block is present in result
-        if "('blockId', '{}')".format(data_id) not in result:
+        if "('blockId', {})".format(data_id) not in result:
             return True
         return False
 
@@ -133,6 +147,7 @@ def add_block_to_db(block_data: Dict) -> bool:
     return:                 True if added successfully, False otherwise
     '''
     try:
+        print(block_data, "BEFORE")
         # create block using block_data
         block = Block(
             block_create_date=block_data['created_at'],
