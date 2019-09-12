@@ -1,14 +1,14 @@
 import React from "react"
 
-import Block from "./Block"
+import MediaBlock from "./MediaBlock"
 import BlockInfo from "./BlockInfo"
 
 import "../css/Row.css"
 
-function Row(props) {
+function MediaRow(props) {
     return (
       <div id='row'>
-        <Block imgsrc={props.imgsrc} linksrc={props.linksrc} />
+        <MediaBlock imgsrc={props.imgsrc} linksrc={props.linksrc} />
         <BlockInfo
             title={props.title}
             channel={props.channel}
@@ -18,4 +18,4 @@ function Row(props) {
     )
 }
 
-export default Row
+export default MediaRow

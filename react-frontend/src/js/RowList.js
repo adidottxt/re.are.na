@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 
-import Row from "./Row"
+import MediaRow from "./MediaRow"
 import EmptyRow from "./EmptyRow"
 import TextRow from "./TextRow"
 
@@ -32,11 +32,11 @@ class RowList extends Component {
       var data = this.props.data;
       if (data.loading) {
           return (
-            <>
-              <EmptyRow />
-              <EmptyRow />
-              <EmptyRow />
-            </>
+              <>
+                  <EmptyRow />
+                  <EmptyRow />
+                  <EmptyRow />
+              </>
           )
       } else {
           var i;
@@ -51,23 +51,23 @@ class RowList extends Component {
           return data.allBlocks.edges.map(block => {
               requestId = block.node.requestId
               if (requestId !== 1 && requestId > highestRequest-3) {
-                if (block.node.blockType === 'Text') {
-                    return <TextRow
-                        linksrc={block.node.blockUrl}
-                        text={block.node.blockContent}
-                        title={block.node.blockTitle}
-                        channel={block.node.channelTitle}
-                        date={block.node.blockCreateDate}
-                    />
-                } else if (block.node.blockUrl !== 'test') {
-                    return <Row
-                      imgsrc={block.node.blockContent}
-                      linksrc={block.node.blockUrl}
-                      title={block.node.blockTitle}
-                      channel={block.node.channelTitle}
-                      date={block.node.blockCreateDate}
-                    />
-                }
+                  if (block.node.blockType === 'Text') {
+                      return <TextRow
+                          linksrc={block.node.blockUrl}
+                          text={block.node.blockContent}
+                          title={block.node.blockTitle}
+                          channel={block.node.channelTitle}
+                          date={block.node.blockCreateDate}
+                      />
+                  } else if (block.node.blockUrl !== 'test') {
+                      return <MediaRow
+                          imgsrc={block.node.blockContent}
+                          linksrc={block.node.blockUrl}
+                          title={block.node.blockTitle}
+                          channel={block.node.channelTitle}
+                          date={block.node.blockCreateDate}
+                      />
+                  }
               } return '';
           })
       }
