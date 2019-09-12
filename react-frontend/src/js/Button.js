@@ -1,20 +1,13 @@
-import React, { Component } from "react"
+import React from "react"
 
 import '../css/Button.css'
 
-class Button extends Component {
-    render() {
-      return (
-        <div id='button-div'>
-          <button id='button' onClick={this._refreshPage}>{this.props.text}</button>
-        </div>
-      )
-    }
-
-    _refreshPage() {
-        console.log('clicked');
-        window.location.reload();
-    }
+function Button(props) {
+    return (
+      <div id='button-div'>
+        <button id='button' onClick={() => console.log("clicked")}>{props.text}</button>
+      </div>
+    )
 }
 
 export default Button

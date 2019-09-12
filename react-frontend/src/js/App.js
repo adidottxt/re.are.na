@@ -6,6 +6,7 @@ import Header from "./Header"
 import Button from "./Button"
 import HeaderInfo from "./HeaderInfo"
 import RowList from "./RowList"
+import RowContextProvider from "./RowContext"
 
 import "../css/App.css"
 
@@ -21,11 +22,13 @@ function App() {
             <>
                 <Header />
                 <HeaderInfo />
-                <RowList />
-                <Button text='Refresh' />
+                <RowContextProvider>
+                  <RowList />
+                </RowContextProvider>
             </>
         </ApolloProvider>
     )
 }
 
+                  // <Button text='Refresh' />
 export default App
