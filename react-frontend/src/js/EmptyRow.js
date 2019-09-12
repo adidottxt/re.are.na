@@ -5,7 +5,7 @@ import BlockInfo from "./BlockInfo"
 
 import "../css/Row.css"
 
-function EmptyRow(props) {
+function EmptyRow() {
     return (
       <div id='row'>
         <EmptyBlock />

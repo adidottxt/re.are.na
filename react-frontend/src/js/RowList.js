@@ -1,11 +1,8 @@
 import React from "react"
 import { gql } from 'apollo-boost'
-// import { graphql } from 'react-apollo'
 import{ useQuery } from '@apollo/react-hooks'
 
-import MediaRow from "./MediaRow"
-import EmptyRow from "./EmptyRow"
-import TextRow from "./TextRow"
+import Row from "./Row"
 
 
 const getBlocksDataQuery = gql`
@@ -32,9 +29,9 @@ function RowList() {
     if (loading) {
         return (
             <>
-                <EmptyRow />
-                <EmptyRow />
-                <EmptyRow />
+                <Row type='Empty' />
+                <Row type='Empty' />
+                <Row type='Empty' />
             </>
         )
     }
@@ -55,17 +52,19 @@ function RowList() {
         requestId = block.node.requestId
         if (requestId !== 1 && requestId > highestRequest-3) {
             if (block.node.blockType === 'Text') {
-                return <TextRow
-                    linksrc={block.node.blockUrl}
-                    text={block.node.blockContent}
+                return <Row
+                    type='Text'
+                    link={block.node.blockUrl}
+                    content={block.node.blockContent}
                     title={block.node.blockTitle}
                     channel={block.node.channelTitle}
                     date={block.node.blockCreateDate}
                 />
             } else if (block.node.blockUrl !== 'test') {
-                return <MediaRow
-                    imgsrc={block.node.blockContent}
-                    linksrc={block.node.blockUrl}
+                return <Row
+                    type='Media'
+                    content={block.node.blockContent}
+                    link={block.node.blockUrl}
                     title={block.node.blockTitle}
                     channel={block.node.channelTitle}
                     date={block.node.blockCreateDate}
