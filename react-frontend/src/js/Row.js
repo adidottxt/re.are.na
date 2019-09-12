@@ -10,7 +10,8 @@ function Row(props) {
         return (
             <EmptyRow />
         )
-    } else if (props.type === 'Media') {
+    } else if (props.type === 'Media' || props.type === 'Link' || props.type === 'Image' || props.type === 'Attachment') {
+        console.log(props.type, 'media');
         return (
             <MediaRow
                 imgsrc={props.content}
@@ -21,6 +22,7 @@ function Row(props) {
             />
         )
     } else if (props.type === 'Text') {
+        console.log(props.type, 'text');
         return (
             <TextRow
                 text={props.content}

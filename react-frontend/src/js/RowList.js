@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
+import { useLazyQuery } from '@apollo/react-hooks'
 
 import Row from './Row'
 import { RowContext } from './RowContext'
@@ -27,58 +27,47 @@ const getBlocksDataQuery = gql`
 `
 
 function RowList() {
-    console.log('re-rendering')
-    const { loading, error, data } = useQuery(getBlocksDataQuery);
+
+    const [ getBlocks, {loading, data} ] = useLazyQuery(getBlocksDataQuery);
     const { rows, addRow } = useContext(RowContext);
+
+    if (data && !loading) {
+        var i;
+        var j = 1;
+        for (i = data.allBlocks.edges.length-3; i < data.allBlocks.edges.length; i++) {
+            addRow(
+                j,
+                data.allBlocks.edges[i].node.blockType,
+                data.allBlocks.edges[i].node.blockUrl,
+                data.allBlocks.edges[i].node.blockContent,
+                data.allBlocks.edges[i].node.blockTitle,
+                data.allBlocks.edges[i].node.channelTitle,
+                data.allBlocks.edges[i].node.blockCreateDate,
+            );
+            j++;
+          }
+    }
 
     if (loading) {
         return (
           <>
-            {rows.map(row => {
-              return (
-                  <Row type={row.type} />
+              {rows.map(row => {
+                return (
+                    <Row type={row.type} />
+                )}
               )}
-            )}
-            <div id='button-div'>
-              <button id='button' onClick={() => {
-                  console.log('first state');
-                  console.log('rows pre add');
-                  console.log(rows);
-                  // for (i = 1; i < data.allBlocks.edges.length; i++) {
-                  //     addRow(
-                  //         i,
-                  //         data.allBlocks.edges[i].node.blockType,
-                  //         data.allBlocks.edges[i].node.blockUrl,
-                  //         data.allBlocks.edges[i].node.blockContent,
-                  //         data.allBlocks.edges[i].node.blockTitle,
-                  //         data.allBlocks.edges[i].node.channelTitle,
-                  //         data.allBlocks.edges[i].node.blockCreateDate,
-                  //     )
-                  // }
-              }}>Refresh</button>
-            </div>
+              <div id='button-div'>
+                <button id='button' onClick={() => {
+                  getBlocks();
+                }}>Refresh</button>
+              </div>
           </>
         )
     }
 
-    else {
-        console.log('done loading');
+    else if (!loading) {
 
-        if (error) return "Error! $(error.message)";
-
-        var i = 0;
-        var highestRequest = 0;
-        var requestId = 0;
-
-        for (i = 0; i < data.allBlocks.edges.length; i++) {
-            requestId = Number(data.allBlocks.edges[i].node.requestId)
-            if (requestId > highestRequest) {
-                highestRequest = requestId;
-            }
-        }
-
-        console.log('post loading, these are the rows');
-        console.log(rows);
+        console.log(rows[1]);
 
         return (
           <>
@@ -97,24 +86,41 @@ function RowList() {
 
             <div id='button-div'>
               <button id='button' onClick={() => {
-                  console.log('second state');
-                  console.log(rows);
-                  for (i = 1; i < data.allBlocks.edges.length; i++) {
-                      addRow(
-                          i,
-                          data.allBlocks.edges[i].node.blockType,
-                          data.allBlocks.edges[i].node.blockUrl,
-                          data.allBlocks.edges[i].node.blockContent,
-                          data.allBlocks.edges[i].node.blockTitle,
-                          data.allBlocks.edges[i].node.channelTitle,
-                          data.allBlocks.edges[i].node.blockCreateDate,
-                      )
-                  }
+                  getBlocks();
               }}>Refresh</button>
             </div>
           </>
         )
     }
 }
+
+//         return rows.map(row => {
+//             if (row.type === 'Media' || row.type === 'Image' || row.type === 'Link' || row.type === 'Attachment') {
+//               return <Row
+//                   type='Media'
+//                   link={row.link}
+//                   content={row.content}
+//                   title={row.title}
+//                   channel={row.channel}
+//                   date={row.date}
+//               />
+//             } else if (row.type === 'Text') {
+//               return <Row
+//                   type={row.type}
+//                   link={row.link}
+//                   content={row.content}
+//                   title={row.title}
+//                   channel={row.channel}
+//                   date={row.date}
+//               />
+//             } else {
+//               return <Row
+//                   type='Empty'
+//               />
+//             }
+//         });
+//     } else {
+//         return null;
+//     }
 
 export default RowList
