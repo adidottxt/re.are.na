@@ -2,7 +2,7 @@ import React from "react"
 
 import "../css/Block.css"
 
-function Block(props) {
+function MediaBlock(props) {
     return (
         <div id='media-block'>
           <a href={props.linksrc} target="_blank" rel="noopener noreferrer">
@@ -15,4 +15,4 @@ function Block(props) {
     )
 }
 
-export default Block
+export default MediaBlock

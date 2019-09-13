@@ -3,9 +3,9 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
 import Header from "./Header"
-import Button from "./Button"
 import HeaderInfo from "./HeaderInfo"
-import RowList from "./RowList"
+import Content from "./Content"
+import ContentContextProvider from "./ContentContext"
 
 import "../css/App.css"
 
@@ -21,8 +21,9 @@ function App() {
             <>
                 <Header />
                 <HeaderInfo />
-                <RowList />
-                <Button text='Refresh' />
+                <ContentContextProvider>
+                  <Content />
+                </ContentContextProvider>
             </>
         </ApolloProvider>
     )
