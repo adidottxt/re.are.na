@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -42,26 +42,29 @@ function RowList() {
         refetch();
     }
 
-    if (loading) {
-        requestSent = true;
-    }
+    useEffect(() => {
+      if (loading) {
+          requestSent = true;
+      }
 
-    if ((networkStatus === 4) && setLoading) {
-        var new_data = [
-          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-        ];
-        addEmptyRows(new_data);
-        setLoading = false;
-        refetch();
-    }
+      if ((networkStatus === 4) && setLoading) {
+          var new_data = [
+            {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+            {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+            {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+          ];
+          addEmptyRows(new_data);
+          setLoading = false;
+          refetch();
+      }
 
-    if (!loading && data && requestSent) {
-        new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
-        addRows(new_data);
-        requestSent = false;
-    }
+      if (!loading && data && requestSent) {
+          new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
+          addRows(new_data);
+          requestSent = false;
+      }
+    });
+
 
     return (
       <>
