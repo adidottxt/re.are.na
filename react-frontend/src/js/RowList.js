@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { gql } from 'apollo-boost'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 
 import Row from './Row'
 import { RowContext } from './RowContext'
@@ -26,101 +26,53 @@ const getBlocksDataQuery = gql`
 }
 `
 
+var requestSent = false;
+
 function RowList() {
 
-    const [ getBlocks, {loading, data} ] = useLazyQuery(getBlocksDataQuery);
-    const { rows, addRow } = useContext(RowContext);
+    const {loading, data, refetch} = useQuery(getBlocksDataQuery);
+    const { rows, addRows } = useContext(RowContext);
+    console.log(loading);
 
-    if (data && !loading) {
-        var i;
-        var j = 1;
-        for (i = data.allBlocks.edges.length-3; i < data.allBlocks.edges.length; i++) {
-            addRow(
-                j,
-                data.allBlocks.edges[i].node.blockType,
-                data.allBlocks.edges[i].node.blockUrl,
-                data.allBlocks.edges[i].node.blockContent,
-                data.allBlocks.edges[i].node.blockTitle,
-                data.allBlocks.edges[i].node.channelTitle,
-                data.allBlocks.edges[i].node.blockCreateDate,
-            );
-            j++;
-          }
+    function refetchAndReload() {
+        requestSent = true;
+        refetch();
     }
 
     if (loading) {
-        return (
-          <>
-              {rows.map(row => {
-                return (
-                    <Row type={row.type} />
-                )}
-              )}
-              <div id='button-div'>
-                <button id='button' onClick={() => {
-                  getBlocks();
-                }}>Refresh</button>
-              </div>
-          </>
-        )
+        console.log('loading?')
+        requestSent = true;
     }
 
-    else if (!loading) {
-
-        console.log(rows[1]);
-
-        return (
-          <>
-            {rows.map(row => {
-              return (
-                  <Row
-                    type={row.type}
-                    link={row.link}
-                    content={row.content}
-                    title={row.title}
-                    channel={row.channel}
-                    date={row.date}
-                  />
-              )}
-            )}
-
-            <div id='button-div'>
-              <button id='button' onClick={() => {
-                  getBlocks();
-              }}>Refresh</button>
-            </div>
-          </>
-        )
+    if (!loading && data && requestSent) {
+        var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
+        addRows(new_data);
+        requestSent = false;
     }
+
+    return (
+      <>
+        {rows.map((row, index) => {
+          return (
+              <Row
+                key={index}
+                type={row.type}
+                link={row.link}
+                content={row.content}
+                title={row.title}
+                channel={row.channel}
+                date={row.date}
+              />
+          )}
+        )}
+
+        <div id='button-div'>
+          <button id='button' onClick={() => {
+              refetchAndReload();
+          }}>Refresh</button>
+        </div>
+      </>
+    )
 }
-
-//         return rows.map(row => {
-//             if (row.type === 'Media' || row.type === 'Image' || row.type === 'Link' || row.type === 'Attachment') {
-//               return <Row
-//                   type='Media'
-//                   link={row.link}
-//                   content={row.content}
-//                   title={row.title}
-//                   channel={row.channel}
-//                   date={row.date}
-//               />
-//             } else if (row.type === 'Text') {
-//               return <Row
-//                   type={row.type}
-//                   link={row.link}
-//                   content={row.content}
-//                   title={row.title}
-//                   channel={row.channel}
-//                   date={row.date}
-//               />
-//             } else {
-//               return <Row
-//                   type='Empty'
-//               />
-//             }
-//         });
-//     } else {
-//         return null;
-//     }
 
 export default RowList

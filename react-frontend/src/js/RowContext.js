@@ -4,17 +4,30 @@ export const RowContext = createContext();
 
 const RowContextProvider = (props) => {
     const [rows, setRows] = useState([
-      {type: 'Empty', link: '', content: '', title: '', channel: '', date: '', id:1},
-      {type: 'Empty', link: '', content: '', title: '', channel: '', date: '', id:2},
-      {type: 'Empty', link: '', content: '', title: '', channel: '', date: '', id:3},
+      {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+      {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+      {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
     ])
 
-    const addRow = (id, type, link, content, title, channel, date) => {
-        setRows(rows[id-1] = {type: type, link: link, content: content, title: title, channel: channel, date: date, id: id});
+    const addRows = (new_rows) => {
+      console.log('before', rows);
+      setRows(new_rows.map(row => {
+          return (
+              {
+                type: row.node.blockType,
+                link: row.node.blockUrl,
+                content: row.node.blockContent,
+                channel: row.node.channelTitle,
+                date: row.node.blockCreateDate,
+                title: row.node.blockTitle,
+              }
+          )
+      }))
+      console.log('after', rows);
     }
 
     return (
-      <RowContext.Provider value={{rows, addRow}}>
+      <RowContext.Provider value={{rows, addRows}}>
         {props.children}
       </RowContext.Provider>
     )
