@@ -5,10 +5,10 @@ random blocks from your profile.
 
 ### How to install & run
 1. Clone this repository.
-2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications), filling out the required
-  information. When you're done, you should have a personal access token on
-  the application's page, and the link to said page should look like
-  something like this: `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
+2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications). information. When
+  you're done, you should have a personal access token on the application's
+  page, the link to which should look like this:
+  `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
 3. Create the file `re.are.na/flask-backend/pkg/config.py`, as below:
   ```python
   ACCESS_TOKEN = 'your are.na personal access token here'
@@ -20,24 +20,25 @@ random blocks from your profile.
 
 
 ### Background
-[I've used Are.na](http://are.na/adi) for close to two years now. I've roughly created 100
-channels and saved over 6000 blocks, and use it to organize all sorts
-of content and resources.
+The idea for this app comes from using [Readwise](https://readwise.io) -- a service that allows you to
+easily revisit Kindle highlights. Readwise claims to use the [Spaced Repetition](https://en.wikipedia.org/wiki/Spaced_repetition)
+technique by resurfacing 3-5 highlights to you via a daily email.
 
-Over that time, my use case for coming back to blocks I've already
-saved has usually where I realize I've saved a resource that I need, or if
-I'm looking for something in-depth to read or peruse.
+For the sake of context, [I've used Are.na](http://are.na/adi) for close to two years now. I've
+created ~100 channels, saved 6000+ blocks, and use it to organize all sorts of
+content and resources.
 
-As with most forms of research or reading, I've noticed that the most
-interesting connections, learnings, and thoughts arise from coming back to a
-block <i>well after</i> first adding the block to a channel. This, however,
-would only really occur if I randomly stumbled into a block I added a few
-weeks, months, or years ago.
+My use cases for Are.na have generally been to:
+1) store digital content, and
+2) find content I've stored -- particularly when I'm either looking for a
+resource I've saved before, or when I'm looking for something in-depth to
+read or peruse.
 
-The idea for this application came about when using [Readwise](https://readwise.io) -- a
-product/service that essentially uses the technique of [Spaced Repetition](https://en.wikipedia.org/wiki/Spaced_repetition) to
-make it easy to revisit Kindle highlights, resurfacing a few highlights back
-to you via an email. I figured I could use a Readwise for are.na blocks,
-which led me to this. Given the personal nature of this project, my initial
-goal is to create a web app, and perhaps eventually create an email-based
-service as well.
+My second use case has a nice side-effect, viz., looking for specific blocks
+leads to me stumbling into blocks that I'd forgotten about. Some are
+interesting to stumble into because I may force myself to _actually_ spend the
+time reading that PDF I'd been putting off. Others are interesting to stumble
+into to come back to a block months after adding it to a channel.
+
+Tl;dr -- I figured I could use a Readwise for are.na blocks, which led me to
+this.
