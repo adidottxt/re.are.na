@@ -58,7 +58,7 @@ function RowList() {
           refetch();
       }
 
-      if (!loading && data && requestSent) {
+      if (!loading && requestSent) {
           new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
           addRows(new_data);
           requestSent = false;
