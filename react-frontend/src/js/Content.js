@@ -7,6 +7,9 @@ import { ContentContext } from './ContentContext'
 
 import '../css/Content.css'
 
+
+var requestSent = false;
+var setLoading = true;
 const getBlocksDataQuery = gql`
 {
   allBlocks {
@@ -25,9 +28,6 @@ const getBlocksDataQuery = gql`
   }
 }
 `
-
-var requestSent = false;
-var setLoading = true;
 
 function Content() {
 
