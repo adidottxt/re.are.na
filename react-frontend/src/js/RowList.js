@@ -27,25 +27,38 @@ const getBlocksDataQuery = gql`
 `
 
 var requestSent = false;
+var setLoading = true;
 
 function RowList() {
 
-    const {loading, data, refetch} = useQuery(getBlocksDataQuery);
-    const { rows, addRows } = useContext(RowContext);
-    console.log(loading);
+    const { loading, data, refetch, networkStatus } = useQuery(getBlocksDataQuery, {
+        notifyOnNetworkStatusChange: true,
+    });
+    const { rows, addRows, addEmptyRows } = useContext(RowContext);
 
     function refetchAndReload() {
+        setLoading = true;
         requestSent = true;
         refetch();
     }
 
     if (loading) {
-        console.log('loading?')
         requestSent = true;
     }
 
+    if ((networkStatus === 4) && setLoading) {
+        var new_data = [
+          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+          {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+        ];
+        addEmptyRows(new_data);
+        setLoading = false;
+        refetch();
+    }
+
     if (!loading && data && requestSent) {
-        var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
+        new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
         addRows(new_data);
         requestSent = false;
     }

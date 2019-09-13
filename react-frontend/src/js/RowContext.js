@@ -10,7 +10,6 @@ const RowContextProvider = (props) => {
     ])
 
     const addRows = (new_rows) => {
-      console.log('before', rows);
       setRows(new_rows.map(row => {
           return (
               {
@@ -23,11 +22,25 @@ const RowContextProvider = (props) => {
               }
           )
       }))
-      console.log('after', rows);
+    }
+
+    const addEmptyRows = (new_rows) => {
+      setRows(new_rows.map(row => {
+          return (
+              {
+                type: row.type,
+                link: row.link,
+                content: row.content,
+                channel: row.channel,
+                date: row.date,
+                title: row.title,
+              }
+          )
+      }))
     }
 
     return (
-      <RowContext.Provider value={{rows, addRows}}>
+      <RowContext.Provider value={{rows, addRows, addEmptyRows}}>
         {props.children}
       </RowContext.Provider>
     )
