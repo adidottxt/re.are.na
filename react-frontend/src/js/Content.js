@@ -3,9 +3,9 @@ import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
 import Row from './Row'
-import { RowContext } from './RowContext'
+import { ContentContext } from './ContentContext'
 
-import '../css/Button.css'
+import '../css/Content.css'
 
 const getBlocksDataQuery = gql`
 {
@@ -29,12 +29,12 @@ const getBlocksDataQuery = gql`
 var requestSent = false;
 var setLoading = true;
 
-function RowList() {
+function Content() {
 
     const { loading, data, refetch, networkStatus } = useQuery(getBlocksDataQuery, {
         notifyOnNetworkStatusChange: true,
     });
-    const { rows, addRows, addEmptyRows } = useContext(RowContext);
+    const { rows, addRows, addEmptyRows } = useContext(ContentContext);
 
     function refetchAndReload() {
         setLoading = true;
@@ -91,4 +91,4 @@ function RowList() {
     )
 }
 
-export default RowList
+export default Content

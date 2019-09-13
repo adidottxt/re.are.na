@@ -204,7 +204,6 @@ def get_block_from_channel(channel_id: int) -> int:
         if check_unique_data(block_id, BLOCK):
             block_data = get_block_data(block_id, channel.title, channel_id)
             if not block_data:
-                print('one of these, do we only have 2?')
                 continue
             if add_block_to_db(block_data):
                 break

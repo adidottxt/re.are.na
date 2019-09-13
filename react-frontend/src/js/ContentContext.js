@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 
-export const RowContext = createContext();
+export const ContentContext = createContext();
 
-const RowContextProvider = (props) => {
+const ContentContextProvider = (props) => {
     const [rows, setRows] = useState([
       {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
       {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
@@ -40,10 +40,10 @@ const RowContextProvider = (props) => {
     }
 
     return (
-      <RowContext.Provider value={{rows, addRows, addEmptyRows}}>
+      <ContentContext.Provider value={{rows, addRows, addEmptyRows}}>
         {props.children}
-      </RowContext.Provider>
+      </ContentContext.Provider>
     )
 }
 
-export default RowContextProvider
+export default ContentContextProvider
