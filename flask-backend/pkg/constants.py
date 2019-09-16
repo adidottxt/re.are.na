@@ -5,6 +5,7 @@ constants
 # these are the GraphQL queries for info on all channels and all blocks
 CHANNEL_CHECK = '{ allChannels { edges { node { channelId } } } }'
 BLOCK_CHECK = '{ allBlocks { edges { node { blockId } } } }'
+REQUEST_LENGTH = 314
 
 # this is the HTTP error message displayed when the are.na API acts up
 HTTP_ERROR_MESSAGE = 'HTTPError: are.na API may have issues, trying again...'

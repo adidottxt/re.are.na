@@ -5,9 +5,9 @@ random blocks from your profile.
 
 ### How to install & run
 1. Clone this repository.
-2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications). information. When
-  you're done, you should have a personal access token on the application's
-  page, the link to which should look like this:
+2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications). When you're done, you
+  should have a personal access token on the application's page, the link to
+  which should look like this:
   `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
 3. Create the file `re.are.na/flask-backend/pkg/config.py`, as below:
   ```python
@@ -32,17 +32,17 @@ For the sake of context, [I've used Are.na](http://are.na/adi) for close to two 
 created ~100 channels, saved 6000+ blocks, and use it to organize all sorts of
 content and resources.
 
-My use cases for Are.na have generally been to:
-1) store digital content, and
-2) find content I've stored -- particularly when I'm either looking for a
+My use cases for Are.na generally involve:
+1) storing digital content, and
+2) finding content I've stored -- particularly when I'm either looking for a
 resource I've saved before, or when I'm looking for something in-depth to
 read or peruse.
 
 My second use case has a nice side-effect, viz., looking for specific blocks
 leads to me stumbling into blocks that I'd forgotten about. Some are
 interesting to stumble into because I may force myself to _actually_ spend the
-time reading that PDF I'd been putting off. Others are interesting to stumble
-into to come back to a block months after adding it to a channel.
+time, say, reading that PDF I'd been putting off. Others are interesting to
+stumble into to come back to a block months after adding it to a channel.
 
-Tl;dr -- I figured I could use a Readwise for are.na blocks, which led me to
-this.
+TL;DR -- I figured I could use a Readwise for are.na blocks, which led me to
+building this.

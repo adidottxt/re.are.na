@@ -79,7 +79,6 @@ def get_block_ids(channel: Channel) -> Set[int]:
     '''
 
     # check how many pages are present based on length
-    # (each page holds 100 blocks)
     channel_pages = channel.length // 100
 
     # if < 100 blocks, then we have only 1 page
@@ -113,8 +112,7 @@ def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     # are.na's naming convention for 'type' is class
     block_type = getattr(block, 'class')
 
-    # get the block's content, which is a URL or text depending
-    # on the block type
+    # get the block's content, which is URL/text based on block type
     block_content = block.image['display']['url'] \
         if block_type in ('Image', 'Link', 'Media') \
         else block.image['display']['url'] if block_type == 'Attachment' \
@@ -137,9 +135,9 @@ def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     }
 
 
-def get_channels_from_user(number: int, username: str) -> List[int]:
+def get_channels(number: int, username: str) -> List[int]:
     '''
-    description:            get a random channel from a list of
+    description:            get random channels from a list of
                             a user's channels
 
     param:                  number: the number of channels requested
@@ -211,7 +209,7 @@ def get_block_from_channel(channel_id: int) -> int:
     return block_id
 
 
-def get_block_and_status(count: int, total: int, channel_id: int) -> int:
+def get_block(count: int, total: int, channel_id: int) -> int:
     '''
     description:            wrapping get_random_block() with a print statement
                             for clarity on back-end functionality
@@ -237,7 +235,7 @@ def get_random_blocks(number: int, username: str) -> List[int]:
 
     return:                 block_ids: a list of random block IDs
     '''
-    channels = get_channels_from_user(number, username)
+    channels = get_channels(number, username)
 
-    return [get_block_and_status(count, len(channels), channel_id) \
+    return [get_block(count, len(channels), channel_id) \
               for count, channel_id in enumerate(channels)]

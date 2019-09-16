@@ -5,7 +5,7 @@ from typing import List
 
 from pkg.blocks import (
     get_random_blocks,
-    get_channels_from_user
+    get_channels
 )
 
 from pkg.config import USERNAME
@@ -15,13 +15,13 @@ def test_get_channels_from_user():
     '''
     testing channel list
     '''
-    channels = get_channels_from_user(1, USERNAME)
+    channels = get_channels(1, USERNAME)
 
     assert len(channels) == 1
     assert isinstance(channels, List)
     assert isinstance(channels[0], int)
 
-    more_channels = get_channels_from_user(2, USERNAME)
+    more_channels = get_channels(2, USERNAME)
 
     assert len(more_channels) == 2
     assert isinstance(more_channels, List)
