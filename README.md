@@ -12,6 +12,7 @@ random blocks from your profile.
 3. Create the file `re.are.na/flask-backend/pkg/config.py`, as below:
   ```python
   ACCESS_TOKEN = 'your are.na personal access token here'
+  USERNAME = 'your are.na username here'
   ```
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
