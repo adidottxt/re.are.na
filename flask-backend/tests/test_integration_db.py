@@ -13,7 +13,6 @@ from pkg.constants import (
     BLOCK,
     CHANNEL,
     TEST_DB_CHANNEL_ID,
-    TEST_DB_CHANNEL_SLUG,
     TEST_DB_BLOCK_ID
 )
 
@@ -24,13 +23,13 @@ def test_check_unique_data():
     '''
     clear_database()
 
-    add_channel_to_db(5, TEST_DB_CHANNEL_SLUG)
+    add_channel_to_db(5)
     assert not check_unique_data(5, CHANNEL)
     assert check_unique_data(1, CHANNEL)
 
     clear_database()
 
-    add_channel_to_db(6, TEST_DB_CHANNEL_SLUG)
+    add_channel_to_db(6)
     assert check_unique_data(2, CHANNEL)
     assert not check_unique_data(6, CHANNEL)
 
@@ -99,7 +98,7 @@ def test_add_channel_to_db():
     '''
     clear_database()
 
-    add_channel_to_db(24, TEST_DB_CHANNEL_SLUG)
+    add_channel_to_db(24)
     assert not check_unique_data(24, CHANNEL)
 
     clear_database()

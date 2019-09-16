@@ -1,9 +1,9 @@
 import React from "react"
 
-import EmptyBlock from "./EmptyBlock"
-import BlockInfo from "./BlockInfo"
+import EmptyBlock from "../blocks/EmptyBlock"
+import BlockInfo from "../blocks/BlockInfo"
 
-import "../css/Row.css"
+import "../../css/Row.css"
 
 function EmptyRow() {
   return (

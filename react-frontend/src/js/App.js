@@ -2,10 +2,10 @@ import React from "react"
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 
-import Header from "./Header"
-import HeaderInfo from "./HeaderInfo"
-import Content from "./Content"
-import ContentContextProvider from "./ContentContext"
+import Header from "./header/Header"
+import HeaderInfo from "./header/HeaderInfo"
+import Content from "./content/Content"
+import ContentContextProvider from "./content/ContentContext"
 
 import "../css/App.css"
 

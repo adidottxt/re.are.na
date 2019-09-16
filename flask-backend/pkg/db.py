@@ -37,7 +37,7 @@ def add_test_data() -> bool:
         Base.metadata.create_all(bind=ENGINE)
 
         # create test channel to be added to the database
-        test_chan = Channel(channel_id=0, slug='test_channel')
+        test_chan = Channel(channel_id=0)
 
         # add test channel to the current session
         DB_SESSION.add(test_chan)
@@ -110,19 +110,18 @@ def clear_database() -> bool:
         return False
 
 
-def add_channel_to_db(channel_id: int, slug: str) -> bool:
+def add_channel_to_db(channel_id: int) -> bool:
     '''
     description:            add channel information to our database
 
     param:                  channel_id: the given channel's unique id
-                            slug: the given channel's slug
 
     return:                 True if added successfully, False otherwise
     '''
     try:
 
-        # create new channel using channel id + slug
-        channel = Channel(channel_id=channel_id, slug=slug)
+        # create new channel using channel id
+        channel = Channel(channel_id=channel_id)
 
         # connect, add, and commit to database
         Base.metadata.create_all(bind=ENGINE)

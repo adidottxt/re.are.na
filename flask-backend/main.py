@@ -34,7 +34,7 @@ def get_block_data() -> None:
     return:                 None
     '''
     # only get blocks when specific request from UI is called
-    if request.method == 'POST' and request.content_length == 333:
+    if request.method == 'POST' and request.content_length == 314:
         get_random_blocks(3, USERNAME)
 
 

@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../css/Block.css"
+import "../../css/Block.css"
 
 function MediaBlock(props) {
   return (

@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from "react"
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
-import Row from './Row'
+import Row from '../rows/Row'
 import { ContentContext } from './ContentContext'
 
-import '../css/Content.css'
+import '../../css/Content.css'
 
 
 var requestSent = false;
 var setLoading = true;
+const refetchValue = 4;
 const getBlocksDataQuery = gql`
 {
   allBlocks {
@@ -22,7 +23,6 @@ const getBlocksDataQuery = gql`
         blockTitle
         blockCreateDate
         channelTitle
-        requestId
       }
     }
   }
@@ -36,6 +36,9 @@ function Content() {
   });
   const { rows, addRows, addEmptyRows } = useContext(ContentContext);
 
+  // wrapper function to set our global bools to true
+  // this is done to add empty rows to the context and ensure that
+  // we use the new data we receive when loading is set back to false
   function refetchAndReload() {
     setLoading = true;
     requestSent = true;
@@ -43,23 +46,23 @@ function Content() {
   }
 
   useEffect(() => {
+    // mark requestSent to true if loading is true (which is set by Apollo)
     if (loading) {
       requestSent = true;
     }
 
-    if ((networkStatus === 4) && setLoading) {
-      var new_data = [
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-      ];
-      addEmptyRows(new_data);
+    // if refetchAndReload() is run and the networkStatus is set to 4,
+    // add empty rows to signal loading, then refetch() to update UI
+    if ((networkStatus === refetchValue) && setLoading) {
+      addEmptyRows();
       setLoading = false;
       refetch();
     }
 
+    // if loading is False but a request was sent
+    // we have data to update the UI with
     if (!loading && requestSent) {
-      new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
+      var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
       addRows(new_data);
       requestSent = false;
     }
