@@ -24,12 +24,12 @@ clean:
 	@rm -rf flask-backend/tests/__pycache__/;
 	@rm -rf .pytest_cache/;
 
-.PHONY: run
-run:
-	@cd react-frontend/; \
-	npm run build; \
-	cd ../flask-backend; \
+.PHONY: flask
+flask:
+	@cd flask-backend; \
 	python3 main.py; \
 
-.PHONY: all
-all: install run
+.PHONY: react
+react:
+	@cd react-frontend/; \
+	yarn start; \
