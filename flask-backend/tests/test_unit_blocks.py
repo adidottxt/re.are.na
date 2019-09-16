@@ -6,7 +6,7 @@ from pkg.blocks import (
     get_block_object,
     get_channel_object,
     get_block_ids,
-    get_block_and_status,
+    get_block,
     get_block_from_channel,
     get_block_data,
     get_all_user_channels
@@ -73,7 +73,7 @@ def test_get_block_and_status(snapshot):
     '''
     test get_block_and_status
     '''
-    block = get_block_and_status(0, 1, TEST_CHANNEL_ID)
+    block = get_block(0, 1, TEST_CHANNEL_ID)
     snapshot.assert_match(block)
 
 

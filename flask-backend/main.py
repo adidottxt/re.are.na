@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 from pkg.schema import SCHEMA
 from pkg.config import USERNAME
+from pkg.constants import REQUEST_LENGTH
 from pkg.blocks import get_random_blocks
 from pkg.db import add_test_data, clear_database
 
@@ -34,7 +35,7 @@ def get_block_data() -> None:
     return:                 None
     '''
     # only get blocks when specific request from UI is called
-    if request.method == 'POST' and request.content_length == 314:
+    if request.method == 'POST' and request.content_length == REQUEST_LENGTH:
         get_random_blocks(3, USERNAME)
 
 
