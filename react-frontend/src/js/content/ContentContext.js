@@ -2,12 +2,14 @@ import React, { createContext, useState } from 'react';
 
 export const ContentContext = createContext();
 
+const empty_rows = [
+  {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+  {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+  {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
+]
+
 const ContentContextProvider = (props) => {
-  const [rows, setRows] = useState([
-    {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-    {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-    {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-  ])
+  const [rows, setRows] = useState(empty_rows)
 
   const addRows = (new_rows) => {
     setRows(new_rows.map(row => {
@@ -24,8 +26,8 @@ const ContentContextProvider = (props) => {
     }))
   }
 
-  const addEmptyRows = (new_rows) => {
-    setRows(new_rows.map(row => {
+  const addEmptyRows = () => {
+    setRows(empty_rows.map(row => {
       return (
         {
           type: row.type,

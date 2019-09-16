@@ -49,18 +49,13 @@ function Content() {
     }
 
     if ((networkStatus === refetchValue) && setLoading) {
-      var new_data = [
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-        {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
-      ];
-      addEmptyRows(new_data);
+      addEmptyRows();
       setLoading = false;
       refetch();
     }
 
     if (!loading && requestSent) {
-      new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
+      var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
       addRows(new_data);
       requestSent = false;
     }
