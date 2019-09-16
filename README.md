@@ -19,7 +19,7 @@ random blocks from your profile.
   - `make install` to install the application.
   - `make flask` to run the back-end / Flask server.
   - `make react` (in a separate terminal window) to run the front-end / React
-    portions of this application.
+    portion of this application.
 
 
 ### Background
