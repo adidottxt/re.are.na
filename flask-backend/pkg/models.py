@@ -39,7 +39,6 @@ class Channel(Base):
     '''
     __tablename__ = 'channel'
     channel_id = Column(Integer, primary_key=True)
-    slug = Column(String)
 
 
 class Block(Base):

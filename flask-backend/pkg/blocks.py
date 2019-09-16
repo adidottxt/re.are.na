@@ -175,7 +175,7 @@ def get_channels_from_user(number: int, username: str) -> List[int]:
             temp_channel_id = get_channel_id(channel_slug)
 
             if check_unique_data(temp_channel_id, CHANNEL):
-                add_channel_to_db(temp_channel_id, channel_slug)
+                add_channel_to_db(temp_channel_id)
                 final_channel_ids.append(temp_channel_id)
 
         if len(final_channel_ids) == number:
