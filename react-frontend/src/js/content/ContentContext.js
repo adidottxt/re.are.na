@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react';
 
 export const ContentContext = createContext();
 
+// global empty_rows as placeholders for whenever we need to load new data
 const empty_rows = [
   {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
   {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
@@ -11,6 +12,7 @@ const empty_rows = [
 const ContentContextProvider = (props) => {
   const [rows, setRows] = useState(empty_rows)
 
+  // set rows to use the data passed in via new_rows
   const addRows = (new_rows) => {
     setRows(new_rows.map(row => {
       return (
@@ -26,6 +28,7 @@ const ContentContextProvider = (props) => {
     }))
   }
 
+  // set rows to use global empty_rows
   const addEmptyRows = () => {
     setRows(empty_rows.map(row => {
       return (

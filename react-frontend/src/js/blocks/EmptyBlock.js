@@ -5,7 +5,7 @@ import "../../css/EmptyBlock.css"
 function EmptyBlock(props) {
   return (
     <div id='empty-block'>
-      <img src='../static/loading.gif' alt='loading' id='loading'/>
+      <img src='loading.gif' alt='loading' id='loading'/>
     </div>
   )
 }

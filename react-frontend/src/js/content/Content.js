@@ -36,6 +36,9 @@ function Content() {
   });
   const { rows, addRows, addEmptyRows } = useContext(ContentContext);
 
+  // wrapper function to set our global bools to true
+  // this is done to add empty rows to the context and ensure that
+  // we use the new data we receive when loading is set back to false
   function refetchAndReload() {
     setLoading = true;
     requestSent = true;
@@ -43,16 +46,21 @@ function Content() {
   }
 
   useEffect(() => {
+    // mark requestSent to true if loading is true (which is set by Apollo)
     if (loading) {
       requestSent = true;
     }
 
+    // if refetchAndReload() is run and the networkStatus is set to 4,
+    // add empty rows to signal loading, then refetch() to update UI
     if ((networkStatus === refetchValue) && setLoading) {
       addEmptyRows();
       setLoading = false;
       refetch();
     }
 
+    // if loading is False but a request was sent
+    // we have data to update the UI with
     if (!loading && requestSent) {
       var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
       addRows(new_data);
