@@ -12,11 +12,15 @@ random blocks from your profile.
 3. Create the file `re.are.na/flask-backend/pkg/config.py`, as below:
   ```python
   ACCESS_TOKEN = 'your are.na personal access token here'
+  USERNAME = 'your are.na username here'
   ```
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
   - `source venv/bin/activate` to activate the virtual environment.
-  - `make all` to install and run the application.
+  - `make install` to install the application.
+  - `make flask` to run the back-end / Flask server.
+  - `make react` (in a separate terminal window) to run the front-end / React
+    portion of this application.
 
 
 ### Background
