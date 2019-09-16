@@ -1,9 +1,9 @@
 import React from "react"
 
-import MediaBlock from "./MediaBlock"
-import BlockInfo from "./BlockInfo"
+import MediaBlock from "../blocks/MediaBlock"
+import BlockInfo from "../blocks/BlockInfo"
 
-import "../css/Row.css"
+import "../../css/Row.css"
 
 function MediaRow(props) {
   return (

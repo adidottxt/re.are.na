@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../css/HeaderInfo.css"
+import "../../css/HeaderInfo.css"
 
 function HeaderInfo() {
   return (

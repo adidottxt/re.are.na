@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../css/EmptyBlock.css"
+import "../../css/EmptyBlock.css"
 
 function EmptyBlock(props) {
   return (

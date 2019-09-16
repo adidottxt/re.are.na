@@ -1,9 +1,9 @@
 import React from "react"
 
-import TextBlock from "./TextBlock"
-import BlockInfo from "./BlockInfo"
+import TextBlock from "../blocks/TextBlock"
+import BlockInfo from "../blocks/BlockInfo"
 
-import "../css/Row.css"
+import "../../css/Row.css"
 
 function TextRow(props) {
   return (

@@ -2,14 +2,15 @@ import React, { useContext, useEffect } from "react"
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
-import Row from './Row'
+import Row from '../rows/Row'
 import { ContentContext } from './ContentContext'
 
-import '../css/Content.css'
+import '../../css/Content.css'
 
 
 var requestSent = false;
 var setLoading = true;
+const refetchValue = 4;
 const getBlocksDataQuery = gql`
 {
   allBlocks {
@@ -47,7 +48,7 @@ function Content() {
       requestSent = true;
     }
 
-    if ((networkStatus === 4) && setLoading) {
+    if ((networkStatus === refetchValue) && setLoading) {
       var new_data = [
         {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},
         {type: 'Empty', link: '', content: '', title: '', channel: '', date: ''},

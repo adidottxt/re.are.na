@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../css/TextBlock.css"
+import "../../css/TextBlock.css"
 
 function TextBlock(props) {
   return (

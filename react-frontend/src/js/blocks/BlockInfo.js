@@ -1,6 +1,6 @@
 import React from "react"
 
-import "../css/BlockInfo.css"
+import "../../css/BlockInfo.css"
 
 function BlockInfo(props) {
   return (
