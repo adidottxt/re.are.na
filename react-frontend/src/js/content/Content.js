@@ -23,7 +23,6 @@ const getBlocksDataQuery = gql`
         blockTitle
         blockCreateDate
         channelTitle
-        requestId
       }
     }
   }
