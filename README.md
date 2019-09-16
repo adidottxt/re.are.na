@@ -16,7 +16,10 @@ random blocks from your profile.
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
   - `source venv/bin/activate` to activate the virtual environment.
-  - `make all` to install and run the application.
+  - `make install` to install the application.
+  - `make flask` to run the back-end / Flask server.
+  - `make react` (in a separate terminal window) to run the front-end / React
+    portions of this application.
 
 
 ### Background
