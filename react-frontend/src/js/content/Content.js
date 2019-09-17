@@ -37,8 +37,8 @@ function Content() {
   const { rows, addRows, addEmptyRows } = useContext(ContentContext);
 
   // wrapper function to set our global bools to true
-  // this is done to add empty rows to the context and ensure that
-  // we use the new data we receive when loading is set back to false
+  // to add empty rows to the context and
+  // to ensure that we use the new data we receive
   function refetchAndReload() {
     setLoading = true;
     requestSent = true;
