@@ -6,7 +6,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from email_content import HTML, FINAL_HTML
+from email_content import FINAL_HTML
 from config import PW, EMAIL
 
 # Create message container - the correct MIME type is multipart/alternative.
