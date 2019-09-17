@@ -3,6 +3,7 @@ blocks.py contains code that pertains to obtaining information
 about the are.na blocks to be presented on re.are.na
 '''
 import random
+import itertools
 from typing import List, Set, Dict
 from requests import exceptions
 
@@ -146,13 +147,8 @@ def get_channels(number: int, username: str) -> List[int]:
     return:                 final_channel_ids: the random channels' unique ids
     '''
     final_channel_ids = [] # type: List[int]
-    count = 0
 
-    while True:
-        if count == 3:
-            print(HTTP_ERROR_MESSAGE)
-            return final_channel_ids[-number:]
-
+    for _ in itertools.repeat(None, 3):
         try:
             channels = get_all_user_channels(username)
 
@@ -178,7 +174,9 @@ def get_channels(number: int, username: str) -> List[int]:
 
         if len(final_channel_ids) == number:
             return final_channel_ids
-        count += 1
+
+    print(HTTP_ERROR_MESSAGE)
+    return final_channel_ids[-number:]
 
 
 def get_block_from_channel(channel_id: int) -> int:

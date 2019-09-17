@@ -74,7 +74,7 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
 
     return:                 True if block/channel is unique, False otherwise
     '''
-    if data_type is CHANNEL:
+    if data_type == CHANNEL:
         # get channel data present in database with CHANNEL_CHECK graphql query
         result = str(SCHEMA.execute(CHANNEL_CHECK).data)
 
@@ -83,7 +83,7 @@ def check_unique_data(data_id: int, data_type: str) -> bool:
             return True
         return False
 
-    if data_type is BLOCK:
+    if data_type == BLOCK:
         # get block data present in database with BLOCK_CHECK graphql query
         result = str(SCHEMA.execute(BLOCK_CHECK).data)
 

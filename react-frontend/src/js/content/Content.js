@@ -8,8 +8,8 @@ import { ContentContext } from './ContentContext'
 import '../../css/Content.css'
 
 
-var requestSent = false;
-var setLoading = true;
+let requestSent = false;
+let setLoading = true;
 const refetchValue = 4;
 const getBlocksDataQuery = gql`
 {
