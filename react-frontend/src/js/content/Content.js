@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
 
@@ -7,9 +7,6 @@ import { ContentContext } from './ContentContext'
 
 import '../../css/Content.css'
 
-
-let requestSent = false;
-let setLoading = true;
 const refetchValue = 4;
 const getBlocksDataQuery = gql`
 {
@@ -36,36 +33,40 @@ function Content() {
   });
   const { rows, addRows, addEmptyRows } = useContext(ContentContext);
 
+  let requestSent = useRef(false)
+  let setLoading = useRef(false)
+
   // wrapper function to set our global bools to true
   // to add empty rows to the context and
   // to ensure that we use the new data we receive
   function refetchAndReload() {
-    setLoading = true;
-    requestSent = true;
+    setLoading.current = true;
+    requestSent.current = true;
     refetch();
   }
 
   useEffect(() => {
     // mark requestSent to true if loading is true (which is set by Apollo)
     if (loading) {
-      requestSent = true;
+      requestSent.current = true;
     }
 
     // if refetchAndReload() is run and the networkStatus is set to 4,
     // add empty rows to signal loading, then refetch() to update UI
-    if ((networkStatus === refetchValue) && setLoading) {
+    if ((networkStatus === refetchValue) && setLoading.current) {
       addEmptyRows();
-      setLoading = false;
+      setLoading.current = false;
       refetch();
     }
 
     // if loading is False but a request was sent
     // we have data to update the UI with
-    if (!loading && requestSent) {
+    if (!loading && requestSent.current) {
       var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
       addRows(new_data);
-      requestSent = false;
+      requestSent.current = false;
     }
+
   });
 
   return (
