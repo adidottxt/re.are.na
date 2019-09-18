@@ -8,7 +8,8 @@ venv:
 .PHONY: install
 install:
 	@pip install --upgrade pip; \
-	pip install -r requirements.txt; \
+	pip install poetry==0.12.17; \
+	poetry install; \
 	cd client/; \
 	npm install; \
 
