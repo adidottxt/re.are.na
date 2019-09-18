@@ -1,18 +1,22 @@
-version: '3'
+version: '3.4'
 
 services:
   server:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
     ports:
-      - "5001:5000"
-        #client:
-        #  container_name: client
-        #  build: .
-        #  volumes:
-        #    - ./client:/usr/src/app
-        #  ports:
-        #    - "3001:3000"
-        #  depends_on:
-        #    - server
+      - "5000:5000"
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: "Dockerfile.react"
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server

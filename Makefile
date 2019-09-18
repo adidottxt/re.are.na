@@ -13,6 +13,11 @@ install:
 	cd client/; \
 	npm install; \
 
+.PHONY: node install
+node install:
+	cd client/; \
+	npm install; \
+
 .PHONY: clean
 clean:
 	@rm -rf .mypy_cache/;
