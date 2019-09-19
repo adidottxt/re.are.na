@@ -38,3 +38,8 @@ flask:
 react:
 	@cd client/; \
 	yarn start; \
+
+.PHONY: email
+email:
+	@cd server; \
+	python3 main.py --email; \

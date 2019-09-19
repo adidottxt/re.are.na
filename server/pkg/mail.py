@@ -9,9 +9,21 @@ from email.mime.text import MIMEText
 
 from pkg.config import PW, EMAIL
 
-def create_content(data_id, data_content, block_type) -> str:
+def create_content(data_id: str, data_content: str, block_type: str) -> str:
     '''
-    create html content to sub in
+    description:            create html content to be used to substitute
+                            specific values in full email html using jinja
+
+    param:                  data_id: this could be the block_id or the channel
+                                     title in the case of block info
+
+                            data_content: block_content, or block add date.
+
+                            block_type: either 'Text', or 'Info', the rest
+                                        are considered media.
+
+    return:                 a string representation of the html code to be
+                            used to substitute in using jinja
     '''
     if block_type == 'Text':
         return "<a href='https://are.na/block/{0}' style=' text-decoration: \
@@ -22,6 +34,7 @@ def create_content(data_id, data_content, block_type) -> str:
                 data_id,
                 data_content
             )
+
     if block_type == 'Info':
         return '<br><p style="color: #9A9696;"><b>channel&nbsp;&nbsp;/&nbsp;\
             &nbsp;</b>{0}</p><p style="color: #9A9696; margin-top:-5px;"><b>\
@@ -29,6 +42,7 @@ def create_content(data_id, data_content, block_type) -> str:
                 data_id,
                 data_content
             )
+
     return "<a href='https://are.na/block/{0}'><img src='{1}' style='\
         height: 100%; width: 100%; object-fit: contain;'/></a>".format(
             data_id,
@@ -36,9 +50,14 @@ def create_content(data_id, data_content, block_type) -> str:
         )
 
 
-def send_email(html_content) -> None:
+def send_email(html_content: str) -> None:
     '''
-    send email!
+    description:            given html content / a html file in string format,
+                            send an email
+
+    param:                  html_content: the content of the email to be sent
+
+    return:                 N/A
     '''
     # Create message container - the correct MIME type is multipart/alternative.
     msg = MIMEMultipart('alternative')
