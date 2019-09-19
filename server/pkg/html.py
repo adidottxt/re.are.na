@@ -5,12 +5,13 @@ html waiting to be subbed
 JINJA_HTML = '''
 <html>
   <head></head>
-  <body style="font-family: Arial; font-size: 28px; width: 500px;">
-    <table cellspacing="0" cellpadding="10" width="100%">
+  <body style="font-family: Arial; font-size: 28px; width: 600px;">
+  <br>
+    <table cellspacing="0" cellpadding="1" width="100%" margin-top="25px">
       <tr>
         <td width="100%">
           <div id='rectangle'  style="
-            width: 500px;
+            width: 600px;
             height: 100px;
             border: 3px solid #A4E4A1;
             margin-bottom: 25px;
@@ -18,7 +19,7 @@ JINJA_HTML = '''
           >
             <p id='header-title' style="
               font-size: 28px;
-              margin-left: 10%;
+              margin-left: 60px;
               float: left;
               font-weight: bold;
               text-decoration: none;
@@ -31,18 +32,18 @@ JINJA_HTML = '''
               </a>
             </p>
             <p id='header-blocks' style="
-              margin-left: 10%;
+              margin-left: 60px;
               float: left;
               font-size: 16px;
-              margin-top: 7.5%;
+              margin-top: 39px;
               ">
                 3 blocks
             </p>
             <p id='header-author' style="
               font-size: 16px;
               float: right;
-              margin-top: 7.5%;
-              margin-right: 6.5%;
+              margin-top: 39px;
+              margin-right: 39px;
             ">
               <a href='https://are.na/adi' style="
                 color: #17AC10;
@@ -55,7 +56,7 @@ JINJA_HTML = '''
         </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <div id='header-info'>
@@ -68,14 +69,14 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <hr style="
           border-color: #E5E5E5;
           background-color: #E5E5E5;
           color: #E5E5E5;
-          width: 25%;
+          width: 50%;
           float: left;
           height: 1px;
           border: 0;"
@@ -83,7 +84,7 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <p id='header-info-description' style="
@@ -97,13 +98,13 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <div id='block-1' style="
           border: 3px solid #F6F6F6;
-          width: 500px;
-          height: 500px;
+          width: 600px;
+          height: 600px;
           margin-top: 8%;
         ">
           {{ block1 }}
@@ -111,13 +112,24 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
+      <tr>
+      <td>
+        <div id='block-1-info' style="
+            font-size: 18px;
+        ">
+          {{ block1_info }}
+        </div>
+      </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <div id='block-2' style="
           border: 3px solid #F6F6F6;
-          width: 500px;
-          height: 500px;
+          width: 600px;
+          height: 600px;
           margin-top: 8%;
         ">
           {{ block2 }}
@@ -125,13 +137,24 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
+      <tr>
+      <td>
+        <div id='block-1-info' style="
+            font-size: 18px;
+        ">
+          {{ block2_info }}
+        </div>
+      </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <div id='block-3' style="
           border: 3px solid #F6F6F6;
-          width: 500px;
-          height: 500px;
+          width: 600px;
+          height: 600px;
           margin-top: 8%;
         ">
           {{ block3 }}
@@ -139,7 +162,18 @@ JINJA_HTML = '''
       </td>
       </tr>
     </table>
-    <table cellspacing="0" cellpadding="10" width="100%">
+    <table cellspacing="0" cellpadding="1" width="100%">
+      <tr>
+      <td>
+        <div id='block-1-info' style="
+            font-size: 18px;
+        ">
+          {{ block3_info }}
+        </div>
+      </td>
+      </tr>
+    </table>
+    <table cellspacing="0" cellpadding="1" width="100%">
       <tr>
       <td>
         <div>
@@ -149,7 +183,7 @@ JINJA_HTML = '''
             margin-bottom: 10%;
             color: #9A9696;
           ">
-            see you tomorrow <br><br>-A
+            see you tomorrow,<br><br>-A
           </footer>
         </div>
       </td>

@@ -12,10 +12,10 @@ from jinja2 import Template
 from pkg.schema import SCHEMA
 from pkg.config import USERNAME
 from pkg.constants import REQUEST_LENGTH, DATA_CHECK
+from pkg.html import JINJA_HTML
 from pkg.blocks import get_random_blocks
 from pkg.db import add_test_data, clear_database
-from pkg.send_email import create_content, send_email
-from pkg.html.jinja import JINJA_HTML
+from pkg.mail import create_content, send_email
 
 
 # starting Flask application, adding graphiql url
@@ -54,24 +54,32 @@ def get_blocks_for_email() -> None:
 
     # execute query to database using GraphQL query
     data = SCHEMA.execute(DATA_CHECK).data['allBlocks']['edges'][1:]
-
     content = []
+
     # get data, parse for info on each block
     for block in data:
+
+        block_id = block['node']['blockId']
+        block_content = block['node']['blockContent']
+        block_channel = block['node']['channelTitle']
+        block_add_date = block['node']['blockCreateDate']
+
         if block['node']['blockType'] == 'Text':
-            block_id = block['node']['blockId']
-            block_content = block['node']['blockContent']
             content.append(create_content(block_id, block_content, 'Text'))
         else:
-            block_id = block['node']['blockId']
-            block_content = block['node']['blockContent']
             content.append(create_content(block_id, block_content, 'Media'))
 
+        content.append(create_content(block_channel, block_add_date, 'Info'))
+
+    # create email content with data
     email_template = Template(JINJA_HTML)
     email_content = email_template.render(
         block1=content[0],
-        block2=content[1],
-        block3=content[2],
+        block1_info=content[1],
+        block2=content[2],
+        block2_info=content[3],
+        block3=content[4],
+        block3_info=content[5],
     )
 
     # send email with final html
@@ -103,16 +111,11 @@ def shutdown_session(exception=None) -> None:  # pylint:disable=unused-argument
 
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == '--email':
-        print('email time!')
-
         # add test data to sqlite3 database
         add_test_data()
 
         # get data for email
         get_blocks_for_email()
-
-        # run Flask app
-        # APP.run(host='0.0.0.0', debug=True, use_reloader=False)
 
 
     else:
