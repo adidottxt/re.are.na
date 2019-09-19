@@ -5,6 +5,26 @@ constants
 # these are the GraphQL queries for info on all channels and all blocks
 CHANNEL_CHECK = '{ allChannels { edges { node { channelId } } } }'
 BLOCK_CHECK = '{ allBlocks { edges { node { blockId } } } }'
+
+# this is used to query the database on the backend for email functionality
+DATA_CHECK = '''
+{
+  allBlocks {
+    edges {
+      node {
+        blockContent
+        blockId
+        blockUrl
+        blockType
+        blockTitle
+        blockCreateDate
+        channelTitle
+      }
+    }
+  }
+}
+'''
+
 REQUEST_LENGTH = 314
 
 # this is the HTTP error message displayed when the are.na API acts up

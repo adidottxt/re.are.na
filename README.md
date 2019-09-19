@@ -3,7 +3,7 @@ A web app that enables spaced repetition for Are.na blocks -- serving up three
 random blocks from your profile.
 
 
-### How to install & run
+### How to install
 1. Clone this repository.
 2. Create an application on [Are.na's developer page](https://dev.are.na/oauth/applications). When you're done, you
   should have a personal access token on the application's page, the link to
@@ -18,10 +18,26 @@ random blocks from your profile.
   - `make venv` to set up a virtual environment.
   - `source venv/bin/activate` to activate the virtual environment.
   - `make install` to install the application.
-  - `make flask` to run the back-end / Flask server.
-  - `make react` (in a separate terminal window) to run the front-end / React
-    portion of this application.
 
+### How to run the web app
+1. `make flask` to run the back-end / Flask server.
+2. `make react` (in a separate terminal window) to run the front-end / React
+  portion of this application.
+
+### How to run the (unsecure) email service
+1. Assuming you would like to schedule a job where you get three blocks
+  sent to your email every day (for the sake of simplicity, sent to and from
+  your own email), first open `re.are.na/server/pkg/config.py` and add the
+  following info:
+  ```python
+  EMAIL: 'your email ID'
+  PW: 'your email password'
+  ```
+2. Once you've added the above info to your `config.py` file, run `make email`.
+
+  (this should go without saying, but do <b>not</b> commit `config.py` to any
+  public repositories, and consider using a throwaway email ID/address for
+  this particular project)
 
 ### Background
 The idea for this app comes from using [Readwise](https://readwise.io) -- a service that allows you to
