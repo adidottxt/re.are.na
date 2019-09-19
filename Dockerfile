@@ -41,7 +41,6 @@ USER kip2
 RUN mkdir /home/kip2/src
 WORKDIR /home/kip2/src
 
-COPY --chown=kip2:kip2 README.md .
 COPY --chown=kip2:kip2 Makefile .
 COPY --chown=kip2:kip2 client client
 
