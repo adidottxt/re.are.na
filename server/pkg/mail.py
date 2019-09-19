@@ -9,6 +9,7 @@ from email.mime.text import MIMEText
 
 from pkg.config import PW, EMAIL
 
+
 def create_content(data_id: str, data_content: str, block_type: str) -> str:
     '''
     description:            create html content to be used to substitute
