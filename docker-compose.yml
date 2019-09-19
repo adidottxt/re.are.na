@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  server:
+    build:
+      context: .
+      target: flask
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "5000:5000"
+  client:
+    container_name: client
+    build:
+      context: .
+      target: react
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server

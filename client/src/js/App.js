@@ -11,7 +11,7 @@ import "../css/App.css"
 
 // Apollo Client setup
 const client = new ApolloClient({
-  uri: 'http://127.0.0.1:5000/graphql'
+  uri: 'http://localhost:5000/graphql'
 })
 
 
