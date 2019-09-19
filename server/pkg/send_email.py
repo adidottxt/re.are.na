@@ -6,29 +6,50 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from read_html import FINAL_HTML
-from config import PW, EMAIL
+from pkg.config import PW, EMAIL
 
-# Create message container - the correct MIME type is multipart/alternative.
-MSG = MIMEMultipart('alternative')
-MSG['Subject'] = "Link"
-MSG['From'] = EMAIL
-MSG['To'] = EMAIL
+def create_content(block_id, block_content, block_type) -> str:
+    '''
+    create html content to sub in
+    '''
+    if block_type == 'Text':
+        return "<a href='https://are.na/block/{0}' style='text-decoration: none;'><div style='\
+            overflow: hidden; word-wrap: break-word; color: #9A9696;\
+            object-fit: contain; text-decoration: none;'>{1}</div></a>".format(
+                block_id,
+                block_content
+            )
+    return "<a href='https://are.na/block/{0}'><img src='{1}' style='\
+        height: 100%; width: 100%; object-fit: contain;'/></a>".format(
+            block_id,
+            block_content
+        )
 
-# Record the MIME types of both parts - text/plain and text/html.
-PART1 = MIMEText(FINAL_HTML, 'html')
 
-# Attach parts into message container.
-# According to RFC 2046, the last part of a multipart message, in this case
-# the HTML message, is best and preferred.
-MSG.attach(PART1)
+def send_email(html_content) -> None:
+    '''
+    send email!
+    '''
+    # Create message container - the correct MIME type is multipart/alternative.
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Link"
+    msg['From'] = EMAIL
+    msg['To'] = EMAIL
 
-# Send the message via local SMTP server.
-MAIL = smtplib.SMTP('smtp.gmail.com', 587)
+    # Record the MIME types of both parts - text/plain and text/html.
+    content = MIMEText(html_content, 'html')
 
-MAIL.ehlo()
-MAIL.starttls()
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML message, is best and preferred.
+    msg.attach(content)
 
-MAIL.login(EMAIL, PW)
-MAIL.sendmail(EMAIL, EMAIL, MSG.as_string())
-MAIL.quit()
+    # Send the message via local SMTP server.
+    mail = smtplib.SMTP('smtp.gmail.com', 587)
+
+    mail.ehlo()
+    mail.starttls()
+
+    mail.login(EMAIL, PW)
+    mail.sendmail(EMAIL, EMAIL, msg.as_string())
+    mail.quit()

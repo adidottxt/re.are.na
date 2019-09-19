@@ -1,3 +1,8 @@
+'''
+html waiting to be subbed
+'''
+
+JINJA_HTML = '''
 <html>
   <head></head>
   <body style="font-family: Arial; font-size: 28px; width: 500px;">
@@ -99,16 +104,9 @@
           border: 3px solid #F6F6F6;
           width: 500px;
           height: 500px;
-          margin-top: 15%;
+          margin-top: 8%;
         ">
-          <a href='' target="_blank" rel="noopener noreferrer">
-            <div id='data'>
-              <img
-                src=''
-                alt='block'
-              />
-            </div>
-          </a>
+          {{ block1 }}
         </div>
       </td>
       </tr>
@@ -120,16 +118,9 @@
           border: 3px solid #F6F6F6;
           width: 500px;
           height: 500px;
-          margin-top: 15%;
+          margin-top: 8%;
         ">
-          <a href='' target="_blank" rel="noopener noreferrer">
-            <div id='data'>
-              <img
-                src=''
-                alt='block'
-              />
-            </div>
-          </a>
+          {{ block2 }}
         </div>
       </td>
       </tr>
@@ -141,16 +132,9 @@
           border: 3px solid #F6F6F6;
           width: 500px;
           height: 500px;
-          margin-top: 15%;
+          margin-top: 8%;
         ">
-          <a href='' target="_blank" rel="noopener noreferrer">
-            <div id='data'>
-              <img
-                src=''
-                alt='block'
-              />
-            </div>
-          </a>
+          {{ block3 }}
         </div>
       </td>
       </tr>
@@ -173,3 +157,4 @@
     </table>
   </body>
 </html>
+'''

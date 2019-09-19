@@ -20,8 +20,11 @@ clean:
 	@rm -rf re.are.na.egg-info/;
 	@rm -rf database.sqlite3;
 	@rm -rf server/database.sqlite3;
+	@rm -rf server/pkg/database.sqlite3;
 	@rm -rf server/tests/database.sqlite3;
+	@rm -rf server/__pycache__/;
 	@rm -rf server/pkg/__pycache__/;
+	@rm -rf server/pkg/html/__pycache__/;
 	@rm -rf server/tests/__pycache__/;
 	@rm -rf server/tests/snapshots/__pycache__/;
 	@rm -rf .pytest_cache/;
