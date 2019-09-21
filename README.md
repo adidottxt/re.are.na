@@ -30,8 +30,8 @@ random blocks from your profile.
   your own email), first open `re.are.na/server/pkg/config.py` and add the
   following info:
   ```python
-  EMAIL: 'your email ID'
-  PW: 'your email password'
+  EMAIL = 'your email ID'
+  PW = 'your email password'
   ```
 2. Once you've added the above info to your `config.py` file, run `make email`.
 
