@@ -1,6 +1,6 @@
 FROM python:3.7.3-slim-stretch as base
 
-RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+RUN apt-get update -y && apt-get install -yq \
       build-essential \
       libsqlite3-dev \
       make \
