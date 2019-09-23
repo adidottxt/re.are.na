@@ -35,14 +35,13 @@ ENTRYPOINT make flask
 
 FROM node:latest as node
 
-RUN useradd -u 1001 -m kip2
-USER kip2
+USER node
 
-RUN mkdir /home/kip2/src
-WORKDIR /home/kip2/src
+RUN mkdir /home/node/src
+WORKDIR /home/node/src
 
-COPY --chown=kip2:kip2 Makefile .
-COPY --chown=kip2:kip2 client client
+COPY --chown=node:node Makefile .
+COPY --chown=node:node client client
 
 EXPOSE 3000
 
