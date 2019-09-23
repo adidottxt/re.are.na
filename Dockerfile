@@ -21,16 +21,18 @@ RUN mkdir /home/kip/src
 WORKDIR /home/kip/src
 
 # copy server setup files
-COPY --chown=kip:kip Makefile .
 COPY --chown=kip:kip pyproject.toml .
 COPY --chown=kip:kip poetry.lock .
+
+# install python packages using poetry
+RUN poetry install
+
+# copy remaining files
+COPY --chown=kip:kip Makefile .
 COPY --chown=kip:kip server server
 
 # expose endpoint
 EXPOSE 5000
-
-# install python packages using poetry
-RUN poetry install
 
 ########
 
