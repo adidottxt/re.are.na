@@ -8,6 +8,7 @@ RUN apt-get update -y && apt-get install -yq \
       && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip
+# RUN pip install poetry==0.12.17
 
 RUN useradd -u 1000 -m kip
 USER kip
@@ -18,12 +19,16 @@ WORKDIR /home/kip/src
 COPY --chown=kip:kip requirements.txt .
 COPY --chown=kip:kip README.md .
 COPY --chown=kip:kip Makefile .
+# COPY --chown=kip:kip pyproject.toml .
+# COPY --chown=kip:kip poetry.lock .
 
 COPY --chown=kip:kip server server
 
 EXPOSE 5000
 
 RUN pip install --user -r requirements.txt
+# RUN poetry config settings.virtualenvs.create false
+# RUN poetry install
 
 ########
 
