@@ -32,7 +32,7 @@ clean:
 .PHONY: flask
 flask:
 	@cd server; \
-	python3 main.py; \
+	poetry run python3 main.py; \
 
 .PHONY: react
 react:

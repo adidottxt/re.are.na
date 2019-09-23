@@ -8,6 +8,7 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
       && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip
+RUN pip install poetry==0.12.17
 
 RUN useradd -u 1000 -m kip
 USER kip
@@ -15,15 +16,16 @@ USER kip
 RUN mkdir /home/kip/src
 WORKDIR /home/kip/src
 
-COPY --chown=kip:kip requirements.txt .
 COPY --chown=kip:kip README.md .
 COPY --chown=kip:kip Makefile .
+COPY --chown=kip:kip pyproject.toml .
+COPY --chown=kip:kip poetry.lock .
 
 COPY --chown=kip:kip server server
 
 EXPOSE 5000
 
-RUN pip install --user -r requirements.txt
+RUN poetry install
 
 ########
 
@@ -35,14 +37,13 @@ ENTRYPOINT make flask
 
 FROM node:latest as node
 
-RUN useradd -u 1001 -m kip2
-USER kip2
+USER node
 
-RUN mkdir /home/kip2/src
-WORKDIR /home/kip2/src
+RUN mkdir /home/node/src
+WORKDIR /home/node/src
 
-COPY --chown=kip2:kip2 Makefile .
-COPY --chown=kip2:kip2 client client
+COPY --chown=node:node Makefile .
+COPY --chown=node:node client client
 
 EXPOSE 3000
 
@@ -51,6 +52,7 @@ EXPOSE 3000
 FROM node as react
 
 RUN npm install
+
 ENTRYPOINT make react
 
 ########
