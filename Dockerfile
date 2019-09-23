@@ -50,6 +50,7 @@ EXPOSE 3000
 FROM node as react
 
 RUN npm install
+
 ENTRYPOINT make react
 
 ########
