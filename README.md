@@ -9,7 +9,7 @@ random blocks from your profile.
   should have a personal access token on the application's page, the link to
   which should look like this:
   `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
-3. Create the file `re.are.na/flask-backend/pkg/config.py`, as below:
+3. Create the file `re.are.na/server/pkg/config.py`, as below:
   ```python
   ACCESS_TOKEN = 'your are.na personal access token here'
   USERNAME = 'your are.na username here'
@@ -30,8 +30,8 @@ random blocks from your profile.
   your own email), first open `re.are.na/server/pkg/config.py` and add the
   following info:
   ```python
-  EMAIL: 'your email ID'
-  PW: 'your email password'
+  EMAIL = 'your email ID'
+  PW = 'your email password'
   ```
 2. Once you've added the above info to your `config.py` file, run `make email`.
 
