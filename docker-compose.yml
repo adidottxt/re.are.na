@@ -10,6 +10,8 @@ services:
       - .:/usr/src/app
     ports:
       - "5000:5000"
+    env_file:
+      - .env
   client:
     container_name: client
     build:

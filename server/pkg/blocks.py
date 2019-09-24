@@ -4,7 +4,7 @@ about the are.na blocks to be presented on re.are.na
 '''
 import random
 import itertools
-from typing import List, Set, Dict
+from typing import List, Set, Dict, Optional
 from requests import exceptions
 
 from arena import Arena
@@ -223,7 +223,7 @@ def get_block(count: int, total: int, channel_id: int) -> int:
     return get_block_from_channel(channel_id)
 
 
-def get_random_blocks(number: int, username: str) -> List[int]:
+def get_random_blocks(number: int, username: Optional[str]) -> List[int]:
     '''
     description:            get a number of random blocks from
                             a user's channels

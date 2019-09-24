@@ -10,7 +10,7 @@ from flask_cors import CORS
 from jinja2 import Template
 
 from pkg.schema import SCHEMA
-from pkg.config import USERNAME
+from pkg.config import ARENA_USERNAME
 from pkg.constants import REQUEST_LENGTH, DATA_CHECK
 from pkg.html import JINJA_HTML
 from pkg.blocks import get_random_blocks
@@ -40,7 +40,7 @@ def get_block_data() -> None:
     '''
     # only get blocks when specific request from UI is called
     if request.method == 'POST' and request.content_length == REQUEST_LENGTH:
-        get_random_blocks(3, USERNAME)
+        get_random_blocks(3, ARENA_USERNAME)
 
 
 def get_blocks_for_email() -> None:
@@ -50,7 +50,7 @@ def get_blocks_for_email() -> None:
 
     return:                 None
     '''
-    get_random_blocks(3, USERNAME)
+    get_random_blocks(3, ARENA_USERNAME)
 
     # execute query to database using GraphQL query
     data = SCHEMA.execute(DATA_CHECK).data['allBlocks']['edges'][1:]
@@ -110,6 +110,7 @@ def shutdown_session(exception=None) -> None:  # pylint:disable=unused-argument
 
 
 if __name__ == '__main__':
+
     if len(sys.argv) > 1 and sys.argv[1] == '--email':
         # add test data to sqlite3 database
         add_test_data()
