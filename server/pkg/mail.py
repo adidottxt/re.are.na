@@ -7,7 +7,7 @@ from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from pkg.config import PW, EMAIL
+from pkg.config import EMAIL_FUNCTION_PW, EMAIL_FUNCTION_ID
 
 
 def create_content(data_id: str, data_content: str, block_type: str) -> str:
