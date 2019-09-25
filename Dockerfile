@@ -50,13 +50,6 @@ ENTRYPOINT make flask
 
 ########
 
-FROM base as test
-
-# run tox to go through pylint, mypy, and pytest
-ENTRYPOINT tox
-
-########
-
 FROM node:latest as react-dev
 
 # switch to node user given we're using the node base image
@@ -78,3 +71,10 @@ RUN npm install
 
 # run make react to start the client
 ENTRYPOINT make react
+
+########
+
+FROM base as test
+
+# run tox to go through pylint, mypy, and pytest
+ENTRYPOINT tox

@@ -9,10 +9,10 @@ random blocks from your profile.
   should have a personal access token on the application's page, the link to
   which should look like this:
   `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
-3. Create the file `re.are.na/server/pkg/config.py`, as below:
+3. Create the file `re.are.na/.env`, as below:
   ```python
-  ACCESS_TOKEN = 'your are.na personal access token here'
-  USERNAME = 'your are.na username here'
+  ACCESS_TOKEN='your are.na personal access token here'
+  ARENA_USERNAME = 'your are.na username here'
   ```
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
@@ -27,11 +27,10 @@ random blocks from your profile.
 ### How to run the (unsecure) email service
 1. Assuming you would like to schedule a job where you get three blocks
   sent to your email every day (for the sake of simplicity, sent to and from
-  your own email), first open `re.are.na/server/pkg/config.py` and add the
-  following info:
+  your own email), first open `re.are.na/.env` and add the following info:
   ```python
-  EMAIL = 'your email ID'
-  PW = 'your email password'
+  EMAIL_FUNCTION_ID='your email ID'
+  EMAIL_FUNCTION_PW='your email password'
   ```
 2. Once you've added the above info to your `config.py` file, run `make email`.
 
