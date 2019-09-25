@@ -19,10 +19,12 @@ random blocks from your profile.
   - `source venv/bin/activate` to activate the virtual environment.
   - `make install` to install the application.
 
+
 ### How to run the web app
-1. `make flask` to run the back-end / Flask server.
-2. `make react` (in a separate terminal window) to run the front-end / React
+1. `make server` to run the back-end / Flask server.
+2. `make client` (in a separate terminal window) to run the front-end / React
   portion of this application.
+
 
 ### How to run the (unsecure) email service
 1. Assuming you would like to schedule a job where you get three blocks
@@ -61,3 +63,11 @@ stumble into to come back to a block months after adding it to a channel.
 
 TL;DR -- I figured I could use a Readwise for are.na blocks, which led me to
 building this.
+
+
+### Other notes + bugs:
+As of 9/25/2019, the `docker-compose.yml` file <i>may</i> not work as expected
+due to proxy issues that need to be fixed. I would recommend either running
+the web application locally, or explicitly defining your access token, are.na
+username, etc. in the `config.py` file as opposed to in your `.env` file -- this
+seems to be a temporary fix for now.

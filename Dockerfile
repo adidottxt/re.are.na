@@ -43,14 +43,14 @@ EXPOSE 5000
 ########
 
 # pick up from base
-FROM base as flask-dev
+FROM base as server
 
 # run make flask to start the server
-ENTRYPOINT make flask
+ENTRYPOINT make server
 
 ########
 
-FROM node:latest as react-dev
+FROM node:latest as client
 
 # switch to node user given we're using the node base image
 USER node
@@ -70,7 +70,7 @@ COPY --chown=node:node client client
 RUN npm install
 
 # run make react to start the client
-ENTRYPOINT make react
+ENTRYPOINT make client
 
 ########
 

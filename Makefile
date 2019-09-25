@@ -29,13 +29,13 @@ clean:
 	@rm -rf server/tests/snapshots/__pycache__/;
 	@rm -rf .pytest_cache/;
 
-.PHONY: flask
-flask:
+.PHONY: server
+server:
 	@cd server; \
 	poetry run python3 main.py; \
 
-.PHONY: react
-react:
+.PHONY: client
+client:
 	@cd client/; \
 	yarn start; \
 
