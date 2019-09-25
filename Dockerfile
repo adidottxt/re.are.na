@@ -31,20 +31,33 @@ RUN poetry install
 COPY --chown=kip:kip Makefile .
 COPY --chown=kip:kip server server
 
+# copy all required files for testing
+COPY --chown=kip:kip MANIFEST.in .
+COPY --chown=kip:kip mypy.ini .
+COPY --chown=kip:kip pytest.ini .
+COPY --chown=kip:kip tox.ini .
+
 # expose endpoint
 EXPOSE 5000
 
 ########
 
 # pick up from base
-FROM base as flask
+FROM base as flask-dev
 
 # run make flask to start the server
 ENTRYPOINT make flask
 
 ########
 
-FROM node:latest as node
+FROM base as test
+
+# run tox to go through pylint, mypy, and pytest
+ENTRYPOINT tox
+
+########
+
+FROM node:latest as react-dev
 
 # switch to node user given we're using the node base image
 USER node
@@ -53,32 +66,15 @@ USER node
 RUN mkdir /home/node/src
 WORKDIR /home/node/src
 
-# copy client setup files
-COPY --chown=node:node Makefile .
-COPY --chown=node:node client client
-
 # expose endpoint
 EXPOSE 3000
 
-########
-
-FROM node as react
+# copy client setup files
+COPY --chown=node:node Makefile .
+COPY --chown=node:node client client
 
 # install node packages using npm
 RUN npm install
 
 # run make react to start the client
 ENTRYPOINT make react
-
-########
-
-FROM base as test
-
-# copy all required files for testing
-COPY --chown=kip:kip MANIFEST.in .
-COPY --chown=kip:kip mypy.ini .
-COPY --chown=kip:kip pytest.ini .
-COPY --chown=kip:kip tox.ini .
-
-# run tox to go through pylint, mypy, and pytest
-ENTRYPOINT tox

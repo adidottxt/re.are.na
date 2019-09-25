@@ -4,7 +4,7 @@ services:
   server:
     build:
       context: .
-      target: flask
+      target: flask-dev
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
@@ -16,7 +16,7 @@ services:
     container_name: client
     build:
       context: .
-      target: react
+      target: react-dev
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app

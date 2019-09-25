@@ -62,6 +62,7 @@ function Content() {
     // if loading is False but a request was sent
     // we have data to update the UI with
     if (!loading && requestSent.current) {
+      console.log(data);
       var new_data = data.allBlocks.edges.slice(data.allBlocks.edges.length - 3);
       addRows(new_data);
       requestSent.current = false;

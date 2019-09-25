@@ -23,7 +23,7 @@ from .db import (
 CLIENT = Arena(ACCESS_TOKEN)
 
 
-def get_all_user_channels(username: str) -> List[Channel]:
+def get_all_user_channels(username: Optional[str]) -> List[Channel]:
     '''
     description:            get a list of all Channel objects tied to
                             the given user
@@ -136,7 +136,7 @@ def get_block_data(block_id: int, channel_title: str, channel_id: int) -> Dict:
     }
 
 
-def get_channels(number: int, username: str) -> List[int]:
+def get_channels(number: int, username: Optional[str]) -> List[int]:
     '''
     description:            get random channels from a list of
                             a user's channels

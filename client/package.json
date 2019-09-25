@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:5000/",
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "apollo-boost": "^0.4.4",
     "graphql": "^14.5.6",
