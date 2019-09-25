@@ -32,9 +32,9 @@ random blocks from your profile.
   EMAIL_FUNCTION_ID='your email ID'
   EMAIL_FUNCTION_PW='your email password'
   ```
-2. Once you've added the above info to your `config.py` file, run `make email`.
+2. Once you've added the above info to your `.env` file, run `make email`.
 
-  (this should go without saying, but do <b>not</b> commit `config.py` to any
+  (this should go without saying, but do <b>not</b> commit `.env` to any
   public repositories, and consider using a throwaway email ID/address for
   this particular project)
 
