@@ -7,7 +7,7 @@ from datetime import date
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from pkg.config import EMAIL_FUNCTION_PW, EMAIL_FUNCTION_ID
+from .config import EMAIL_FUNCTION_PW, EMAIL_FUNCTION_ID
 
 
 def create_content(data_id: str, data_content: str, block_type: str) -> str:
@@ -66,8 +66,8 @@ def send_email(html_content: str) -> None:
         date.today().month,
         date.today().day
     )
-    msg['From'] = EMAIL
-    msg['To'] = EMAIL
+    msg['From'] = EMAIL_FUNCTION_ID
+    msg['To'] = EMAIL_FUNCTION_ID
 
     # Record the MIME types of both parts - text/plain and text/html.
     content = MIMEText(html_content, 'html')
@@ -83,6 +83,6 @@ def send_email(html_content: str) -> None:
     mail.ehlo()
     mail.starttls()
 
-    mail.login(EMAIL, PW)
-    mail.sendmail(EMAIL, EMAIL, msg.as_string())
+    mail.login(EMAIL_FUNCTION_ID, EMAIL_FUNCTION_PW)
+    mail.sendmail(EMAIL_FUNCTION_ID, EMAIL_FUNCTION_ID, msg.as_string())
     mail.quit()

@@ -4,17 +4,19 @@ services:
   server:
     build:
       context: .
-      target: flask
+      target: server
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
     ports:
       - "5000:5000"
+    env_file:
+      - .env
   client:
     container_name: client
     build:
       context: .
-      target: react
+      target: client
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app

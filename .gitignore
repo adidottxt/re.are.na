@@ -4,10 +4,6 @@ TODO.md
 # package lock that changes w every install
 client/package-lock.json
 
-# Config/test files
-config.py
-test.py
-
 # Database file
 database.sqlite3
 

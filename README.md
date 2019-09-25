@@ -9,33 +9,34 @@ random blocks from your profile.
   should have a personal access token on the application's page, the link to
   which should look like this:
   `dev.are.na/oauth/applications/{APPLICATION NUMBER}`.
-3. Create the file `re.are.na/server/pkg/config.py`, as below:
+3. Create the file `re.are.na/.env`, as below:
   ```python
-  ACCESS_TOKEN = 'your are.na personal access token here'
-  USERNAME = 'your are.na username here'
+  ACCESS_TOKEN='your are.na personal access token here'
+  ARENA_USERNAME = 'your are.na username here'
   ```
 4. Run the following instructions:
   - `make venv` to set up a virtual environment.
   - `source venv/bin/activate` to activate the virtual environment.
   - `make install` to install the application.
 
+
 ### How to run the web app
-1. `make flask` to run the back-end / Flask server.
-2. `make react` (in a separate terminal window) to run the front-end / React
+1. `make server` to run the back-end / Flask server.
+2. `make client` (in a separate terminal window) to run the front-end / React
   portion of this application.
+
 
 ### How to run the (unsecure) email service
 1. Assuming you would like to schedule a job where you get three blocks
   sent to your email every day (for the sake of simplicity, sent to and from
-  your own email), first open `re.are.na/server/pkg/config.py` and add the
-  following info:
+  your own email), first open `re.are.na/.env` and add the following info:
   ```python
-  EMAIL = 'your email ID'
-  PW = 'your email password'
+  EMAIL_FUNCTION_ID='your email ID'
+  EMAIL_FUNCTION_PW='your email password'
   ```
-2. Once you've added the above info to your `config.py` file, run `make email`.
+2. Once you've added the above info to your `.env` file, run `make email`.
 
-  (this should go without saying, but do <b>not</b> commit `config.py` to any
+  (this should go without saying, but do <b>not</b> commit `.env` to any
   public repositories, and consider using a throwaway email ID/address for
   this particular project)
 
@@ -62,3 +63,11 @@ stumble into to come back to a block months after adding it to a channel.
 
 TL;DR -- I figured I could use a Readwise for are.na blocks, which led me to
 building this.
+
+
+### Other notes + bugs:
+As of 9/25/2019, the `docker-compose.yml` file <i>may</i> not work as expected
+due to proxy issues that need to be fixed. I would recommend either running
+the web application locally, or explicitly defining your access token, are.na
+username, etc. in the `config.py` file as opposed to in your `.env` file -- this
+seems to be a temporary fix for now.

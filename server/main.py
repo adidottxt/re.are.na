@@ -110,6 +110,7 @@ def shutdown_session(exception=None) -> None:  # pylint:disable=unused-argument
 
 
 if __name__ == '__main__':
+
     if len(sys.argv) > 1 and sys.argv[1] == '--email':
         # add test data to sqlite3 database
         add_test_data()
@@ -127,3 +128,4 @@ if __name__ == '__main__':
 
         # run Flask app
         APP.run(host='0.0.0.0', debug=True, use_reloader=False)
+        # APP.run(debug=True, use_reloader=False)
