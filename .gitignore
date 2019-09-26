@@ -9,7 +9,6 @@ database.sqlite3
 
 # react build files
 react/
-index.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
