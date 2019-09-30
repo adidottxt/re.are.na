@@ -2,6 +2,7 @@
 A web app that enables spaced repetition for Are.na blocks -- serving up three
 random blocks from your profile.
 
+![](img/rearena.png)
 
 ### How to install
 1. Clone this repository.
