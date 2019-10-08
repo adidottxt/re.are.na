@@ -12,30 +12,30 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
 RUN pip install --upgrade pip
 RUN pip install poetry==0.12.17
 
-# Set up and become kip user
-RUN useradd -u 1000 -m kip
-USER kip
+# Set up and become adi user
+RUN useradd -u 1000 -m adi
+USER adi
 
 # create and switch to src work directory
-RUN mkdir /home/kip/src
-WORKDIR /home/kip/src
+RUN mkdir /home/adi/src
+WORKDIR /home/adi/src
 
 # copy server setup files
-COPY --chown=kip:kip pyproject.toml .
-COPY --chown=kip:kip poetry.lock .
+COPY --chown=adi:adi pyproject.toml .
+COPY --chown=adi:adi poetry.lock .
 
 # install python packages using poetry
 RUN poetry install
 
 # copy remaining files
-COPY --chown=kip:kip Makefile .
-COPY --chown=kip:kip server server
+COPY --chown=adi:adi Makefile .
+COPY --chown=adi:adi server server
 
 # copy all required files for testing
-COPY --chown=kip:kip MANIFEST.in .
-COPY --chown=kip:kip mypy.ini .
-COPY --chown=kip:kip pytest.ini .
-COPY --chown=kip:kip tox.ini .
+COPY --chown=adi:adi MANIFEST.in .
+COPY --chown=adi:adi mypy.ini .
+COPY --chown=adi:adi pytest.ini .
+COPY --chown=adi:adi tox.ini .
 
 # expose endpoint
 EXPOSE 5000
