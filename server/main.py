@@ -127,5 +127,5 @@ if __name__ == '__main__':
         CORS(APP, resources={r'/graphql': {'origins': '*'}})
 
         # run Flask app
-        APP.run(host='0.0.0.0', debug=True, use_reloader=False)
+        APP.run(host='0.0.0.0', use_reloader=False)
         # APP.run(debug=True, use_reloader=False)
